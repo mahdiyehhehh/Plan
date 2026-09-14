@@ -5,12 +5,22 @@ const DAY_KEYS = ["mon","tue","wed","thu","fri","sat","sun"];
 const DAY_LABELS = {mon:"Monday",tue:"Tuesday",wed:"Wednesday",thu:"Thursday",fri:"Friday",sat:"Saturday",sun:"Sunday"};
 const GERMAN_GOAL = 64;
 
+/* ---------- icons (stroke/fill = currentColor) ---------- */
+const ICONS = {
+  german:  `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 4h13l3 4-3 4H4V4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  classes: `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 3L1 8l11 5 9-4.1V16h2V8L12 3z" fill="currentColor"/><path d="M5 10.5V16c0 1.7 3.1 4 7 4s7-2.3 7-4v-5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  money:   `<svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v10M9.5 9.3c0-1.3 1.1-2 2.5-2s2.5.8 2.5 2-1 1.7-2.5 2-2.5.7-2.5 2 1.1 2 2.5 2 2.5-.7 2.5-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  job:     `<svg viewBox="0 0 24 24" width="14" height="14"><rect x="3" y="8" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 13h18" stroke="currentColor" stroke-width="1.8"/></svg>`,
+  project: `<svg viewBox="0 0 24 24" width="14" height="14"><rect x="3" y="4" width="18" height="12" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M1 20h22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  cert:    `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 20V6a1 1 0 011-1h9l5 5v10a1 1 0 01-1 1H5a1 1 0 01-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 12h8M7 15.5h8M7 8.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`
+};
+
 const emptyDay = () => ({
   germanVideos:"", germanNotes:"",
   classesDone:false, classesNotes:"",
   money:"", moneyNotes:"",
   jobHours:"", jobNotes:"",
-  projectName:"", projectStatus:"", projectUsers:"", projectNotes:"",
+  projectStatus:"", projectUsers:"", projectNotes:"",
   certVideos:"", certNotes:""
 });
 
@@ -19,7 +29,10 @@ const emptyWeek = () => ({
   priorities:["","",""],
   notes:"",
   reflectGood:"",
-  reflectBetter:""
+  reflectBetter:"",
+  germanLevel:"",
+  projectName:"",
+  favorite:false
 });
 
 /* ---------- storage ---------- */
@@ -63,13 +76,32 @@ let currentYearCursor = new Date().getFullYear();
 
 function getWeek(mondayISO){
   if(!state.weeks[mondayISO]) state.weeks[mondayISO] = emptyWeek();
-  return state.weeks[mondayISO];
+  const w = state.weeks[mondayISO];
+  if(w.germanLevel===undefined) w.germanLevel="";
+  if(w.projectName===undefined) w.projectName="";
+  if(w.favorite===undefined) w.favorite=false;
+  return w;
+}
+
+function num(v){ const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+function esc(v){
+  if(v===undefined||v===null) return "";
+  return String(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 }
 
 /* ---------- category definitions ---------- */
 const CATEGORIES = [
   {
-    id:"german", label:"German Learning", sub:`Goal: ${GERMAN_GOAL} videos`, accent:true,
+    id:"german", label:"German Learning", icon:ICONS.german, accent:true,
+    labelExtra:(week)=>{
+      const total = DAY_KEYS.reduce((s,dk)=>s+num(week.days[dk].germanVideos),0);
+      return `
+        <div class="label-field">
+          <label>Current level</label>
+          <input type="text" data-weekfield="germanLevel" value="${esc(week.germanLevel)}" placeholder="e.g. A1">
+        </div>
+        <span class="sub">Videos watched: <strong>${total} / ${GERMAN_GOAL}</strong></span>`;
+    },
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -80,7 +112,7 @@ const CATEGORIES = [
       </div>`
   },
   {
-    id:"classes", label:"University Classes", sub:"",
+    id:"classes", label:"University Classes", icon:ICONS.classes,
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -91,7 +123,7 @@ const CATEGORIES = [
       </div>`
   },
   {
-    id:"money", label:"Money Saved", sub:"",
+    id:"money", label:"Amount of Money Saved", icon:ICONS.money,
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -102,7 +134,8 @@ const CATEGORIES = [
       </div>`
   },
   {
-    id:"job", label:"Job", sub:"Hours worked",
+    id:"job", label:"Job", icon:ICONS.job,
+    labelExtra:()=>`<span class="sub">Hours worked</span>`,
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -113,17 +146,25 @@ const CATEGORIES = [
       </div>`
   },
   {
-    id:"project", label:"Project", sub:"",
+    id:"project", label:"Project", icon:ICONS.project,
+    labelExtra:(week)=>`
+      <div class="label-field">
+        <label>Project name</label>
+        <input type="text" data-weekfield="projectName" value="${esc(week.projectName)}" placeholder="Project name">
+      </div>`,
     cell:(d)=>`
       <div class="cell-field">
-        <input type="text" data-field="projectName" value="${esc(d.projectName)}" placeholder="Project name">
         <input type="text" data-field="projectStatus" value="${esc(d.projectStatus)}" placeholder="Status">
         <input type="text" data-field="projectUsers" value="${esc(d.projectUsers)}" placeholder="Users">
         <textarea data-field="projectNotes" placeholder="Notes">${esc(d.projectNotes)}</textarea>
       </div>`
   },
   {
-    id:"cert", label:"Accounting Certificate", sub:"YouTube videos watched",
+    id:"cert", label:"Accounting Certificate", icon:ICONS.cert,
+    labelExtra:(week)=>{
+      const total = DAY_KEYS.reduce((s,dk)=>s+num(week.days[dk].certVideos),0);
+      return `<span class="sub">YouTube videos watched: <strong>${total}</strong></span>`;
+    },
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -135,11 +176,6 @@ const CATEGORIES = [
   }
 ];
 
-function esc(v){
-  if(v===undefined||v===null) return "";
-  return String(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
-}
-
 /* ---------- render: week view ---------- */
 function renderWeekView(){
   const mondayISO = toISO(currentMonday);
@@ -147,16 +183,27 @@ function renderWeekView(){
   const sunday = addDays(currentMonday,6);
   document.getElementById("weekRange").textContent = `${fmtShort(currentMonday)} – ${fmtLong(sunday)}`;
 
+  const favBtn = document.getElementById("favWeek");
+  favBtn.setAttribute("aria-pressed", week.favorite ? "true" : "false");
+  favBtn.onclick = ()=>{ week.favorite = !week.favorite; saveData(); renderWeekView(); };
+
   const tbody = document.getElementById("trackerBody");
   tbody.innerHTML = "";
   CATEGORIES.forEach(cat=>{
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td class="row-label"><div class="row-label-inner">${cat.accent?'<span class="dot"></span>':''}${cat.label}</div>${cat.sub?`<span class="sub">${cat.sub}</span>`:""}</td>` +
+    const extra = cat.labelExtra ? cat.labelExtra(week) : "";
+    tr.innerHTML = `<td class="row-label">
+        <div class="row-label-inner">
+          <span class="row-icon">${cat.icon}</span>
+          <span class="row-label-title">${cat.label}</span>
+        </div>
+        ${extra}
+      </td>` +
       DAY_KEYS.map(dk=>`<td data-day="${dk}" data-day-label="${DAY_LABELS[dk]}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</td>`).join("");
     tbody.appendChild(tr);
   });
 
-  // bind inputs
+  // bind per-day inputs
   tbody.querySelectorAll("[data-field]").forEach(el=>{
     const handler = ()=>{
       const td = el.closest("td");
@@ -165,8 +212,17 @@ function renderWeekView(){
       const val = el.type==="checkbox" ? el.checked : el.value;
       week.days[dk][field] = val;
       saveData();
+      if(field==="germanVideos" || field==="certVideos") renderWeekView();
     };
     el.addEventListener(el.tagName==="TEXTAREA"||el.type==="text"||el.type==="number" ? "input" : "change", handler);
+  });
+
+  // bind week-level fields (row label column)
+  tbody.querySelectorAll("[data-weekfield]").forEach(el=>{
+    el.addEventListener("input", ()=>{
+      week[el.dataset.weekfield] = el.value;
+      saveData();
+    });
   });
 
   // priorities / notes / reflection
@@ -188,8 +244,6 @@ function renderWeekView(){
 }
 
 /* ---------- aggregation helpers ---------- */
-function num(v){ const n = parseFloat(v); return isNaN(n) ? 0 : n; }
-
 function aggregateWeek(week){
   let g=0,c=0,m=0,j=0,cv=0;
   DAY_KEYS.forEach(dk=>{
@@ -204,7 +258,6 @@ function aggregateWeek(week){
 }
 
 function weeksOverlappingRange(startDate,endDate){
-  // returns [{mondayISO, week}] for every stored week whose 7-day span intersects [startDate,endDate]
   const out = [];
   Object.keys(state.weeks).forEach(mondayISO=>{
     const monday = new Date(mondayISO+"T00:00:00");
@@ -348,4 +401,5 @@ document.getElementById("importData").onchange = (e)=>{
 };
 
 /* ---------- init ---------- */
+document.getElementById("yearNow").textContent = new Date().getFullYear();
 renderWeekView();
