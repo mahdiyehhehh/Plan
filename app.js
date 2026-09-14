@@ -152,7 +152,7 @@ function renderWeekView(){
   CATEGORIES.forEach(cat=>{
     const tr = document.createElement("tr");
     tr.innerHTML = `<td class="row-label"><div class="row-label-inner">${cat.accent?'<span class="dot"></span>':''}${cat.label}</div>${cat.sub?`<span class="sub">${cat.sub}</span>`:""}</td>` +
-      DAY_KEYS.map(dk=>`<td data-day="${dk}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</td>`).join("");
+      DAY_KEYS.map(dk=>`<td data-day="${dk}" data-day-label="${DAY_LABELS[dk]}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</td>`).join("");
     tbody.appendChild(tr);
   });
 
@@ -240,12 +240,12 @@ function renderMonthView(){
     Object.keys(totals).forEach(k=> totals[k]+=a[k]);
     const sunday = addDays(r.monday,6);
     tbody.innerHTML += `<tr>
-      <td>${fmtShort(r.monday)} – ${fmtShort(sunday)}</td>
-      <td>${a.germanVideos}</td>
-      <td>${a.classes} / 7</td>
-      <td>$${a.money.toFixed(2)}</td>
-      <td>${a.jobHours}</td>
-      <td>${a.certVideos}</td>
+      <td data-label="Week of">${fmtShort(r.monday)} – ${fmtShort(sunday)}</td>
+      <td data-label="German videos">${a.germanVideos}</td>
+      <td data-label="Classes attended">${a.classes} / 7</td>
+      <td data-label="Money saved">$${a.money.toFixed(2)}</td>
+      <td data-label="Job hours">${a.jobHours}</td>
+      <td data-label="Certificate videos">${a.certVideos}</td>
     </tr>`;
   });
 
@@ -277,12 +277,12 @@ function renderYearView(){
     Object.keys(yearTotals).forEach(k=> yearTotals[k]+=totals[k]);
     const monthName = start.toLocaleDateString(undefined,{month:"long"});
     tbody.innerHTML += `<tr>
-      <td>${monthName}</td>
-      <td>${totals.germanVideos}</td>
-      <td>${totals.classes}</td>
-      <td>$${totals.money.toFixed(2)}</td>
-      <td>${totals.jobHours}</td>
-      <td>${totals.certVideos}</td>
+      <td data-label="Month">${monthName}</td>
+      <td data-label="German videos">${totals.germanVideos}</td>
+      <td data-label="Classes attended">${totals.classes}</td>
+      <td data-label="Money saved">$${totals.money.toFixed(2)}</td>
+      <td data-label="Job hours">${totals.jobHours}</td>
+      <td data-label="Certificate videos">${totals.certVideos}</td>
     </tr>`;
   }
 
