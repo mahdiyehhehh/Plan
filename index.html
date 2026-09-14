@@ -6,7 +6,7 @@
 <title>7 Day Plan — Weekly Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,28 +15,39 @@
   <div class="brand">
     <span class="brand-mark">7</span>
     <div class="brand-text">
-      <h1>7 Day Plan</h1>
-      <p>Small steps. Big goals.</p>
+      <h1>7&nbsp;Days&nbsp;Plan</h1>
+      <p>Small steps <span class="dash">—</span> big goals</p>
     </div>
   </div>
+
   <nav class="view-switch" id="viewSwitch">
     <button data-view="week" class="active">Week</button>
     <button data-view="month">Month</button>
     <button data-view="year">Year</button>
   </nav>
+
+  <div class="week-badge">
+    <span class="week-badge-label">Week</span>
+    <span id="weekRange" class="week-badge-range">—</span>
+    <button id="favWeek" class="heart-btn" aria-pressed="false" aria-label="Mark this week as a favorite" title="Favorite this week">
+      <svg viewBox="0 0 24 24" width="17" height="17"><path d="M12 20.2s-7.6-4.6-10.1-9.3C.4 8 1.6 4.6 4.8 3.6c2-.6 4 .1 5.2 1.9 1.2-1.8 3.2-2.5 5.2-1.9 3.2 1 4.4 4.4 2.9 7.3C19.6 15.6 12 20.2 12 20.2z" fill="currentColor"/></svg>
+    </button>
+  </div>
 </header>
 
 <main id="app">
 
   <!-- WEEK VIEW -->
   <section id="weekView" class="view">
+
     <div class="week-nav">
-      <button id="prevWeek" class="nav-arrow" aria-label="Previous week">←</button>
-      <div class="week-label">
-        <span id="weekRange">—</span>
-        <button id="jumpToday" class="link-btn">Jump to this week</button>
-      </div>
-      <button id="nextWeek" class="nav-arrow" aria-label="Next week">→</button>
+      <button id="prevWeek" class="nav-arrow" aria-label="Previous week">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="jumpToday" class="link-btn">Jump to this week</button>
+      <button id="nextWeek" class="nav-arrow" aria-label="Next week">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
 
     <div class="table-scroll">
@@ -44,13 +55,13 @@
         <thead>
           <tr>
             <th class="row-label-col"></th>
-            <th data-day="mon">Mon</th>
-            <th data-day="tue">Tue</th>
-            <th data-day="wed">Wed</th>
-            <th data-day="thu">Thu</th>
-            <th data-day="fri">Fri</th>
-            <th data-day="sat">Sat</th>
-            <th data-day="sun">Sun</th>
+            <th data-day="mon">Monday</th>
+            <th data-day="tue">Tuesday</th>
+            <th data-day="wed">Wednesday</th>
+            <th data-day="thu">Thursday</th>
+            <th data-day="fri">Friday</th>
+            <th data-day="sat">Saturday</th>
+            <th data-day="sun">Sunday</th>
           </tr>
         </thead>
         <tbody id="trackerBody">
@@ -61,7 +72,7 @@
 
     <div class="bottom-grid">
       <div class="panel">
-        <h3><span class="dot"></span>Top 3 priorities this week</h3>
+        <h3><span class="panel-icon"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2l1.9 5.9L20 9l-6.1 1.1L12 16l-1.9-5.9L4 9l6.1-1.1L12 2z" fill="currentColor"/></svg></span>Top 3 Priorities This Week</h3>
         <ol class="priority-list" id="priorityList">
           <li><input type="text" data-priority="0" placeholder="Priority one"></li>
           <li><input type="text" data-priority="1" placeholder="Priority two"></li>
@@ -69,25 +80,35 @@
         </ol>
       </div>
       <div class="panel">
-        <h3>Notes &amp; reminders</h3>
+        <h3><span class="panel-icon"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 20.2s-7.6-4.6-10.1-9.3C.4 8 1.6 4.6 4.8 3.6c2-.6 4 .1 5.2 1.9 1.2-1.8 3.2-2.5 5.2-1.9 3.2 1 4.4 4.4 2.9 7.3C19.6 15.6 12 20.2 12 20.2z" fill="currentColor"/></svg></span>Notes &amp; Reminders</h3>
         <textarea id="weekNotes" rows="6" placeholder="Anything you don't want to forget this week..."></textarea>
       </div>
       <div class="panel">
-        <h3>Weekly reflection</h3>
+        <h3><span class="panel-icon"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2C7 4 4 8 4 13a8 8 0 0016 0c0-5-3-9-8-11zm0 16a5 5 0 01-5-5c0-2 1-4 5-6 4 2 5 4 5 6a5 5 0 01-5 5z" fill="currentColor"/></svg></span>Weekly Reflection</h3>
         <label class="reflect-label">What went well?</label>
         <textarea id="reflectGood" rows="2"></textarea>
         <label class="reflect-label">What can be better?</label>
         <textarea id="reflectBetter" rows="2"></textarea>
       </div>
     </div>
+
+    <div class="page-foot">
+      <span class="rule"></span>
+      <span class="page-foot-text">Consistency creates results</span>
+      <span class="rule"></span>
+    </div>
   </section>
 
   <!-- MONTH VIEW -->
   <section id="monthView" class="view hidden">
     <div class="week-nav">
-      <button id="prevMonth" class="nav-arrow" aria-label="Previous month">←</button>
+      <button id="prevMonth" class="nav-arrow" aria-label="Previous month">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
       <div class="week-label"><span id="monthRange">—</span></div>
-      <button id="nextMonth" class="nav-arrow" aria-label="Next month">→</button>
+      <button id="nextMonth" class="nav-arrow" aria-label="Next month">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
     <div class="stat-grid" id="monthStats"></div>
     <div class="table-scroll">
@@ -103,9 +124,13 @@
   <!-- YEAR VIEW -->
   <section id="yearView" class="view hidden">
     <div class="week-nav">
-      <button id="prevYear" class="nav-arrow" aria-label="Previous year">←</button>
+      <button id="prevYear" class="nav-arrow" aria-label="Previous year">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
       <div class="week-label"><span id="yearRange">—</span></div>
-      <button id="nextYear" class="nav-arrow" aria-label="Next year">→</button>
+      <button id="nextYear" class="nav-arrow" aria-label="Next year">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
     <div class="stat-grid" id="yearStats"></div>
     <div class="table-scroll">
@@ -121,8 +146,10 @@
 </main>
 
 <footer class="foot">
-  <span>Consistency creates results.</span>
+  <span>© <span id="yearNow"></span> 7 Days Plan</span>
+  <span class="foot-sep">·</span>
   <button id="exportData" class="link-btn">Export backup</button>
+  <span class="foot-sep">·</span>
   <label class="link-btn file-import">Import backup<input type="file" id="importData" accept="application/json" hidden></label>
 </footer>
 
