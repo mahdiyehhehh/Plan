@@ -325,6 +325,20 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
   background:var(--red-tint);border:1px solid #f0d3cf;border-radius:8px;padding:11px 13px;font-size:12px;
   line-height:1.55;color:#7a2a20;font-style:italic;
 }
+.challenge-box{
+  background:var(--white);border:1px solid var(--line);border-left:3px solid var(--black);
+  border-radius:8px;padding:11px 13px;font-size:12.5px;line-height:1.55;
+}
+.bonus-tag{
+  font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  color:#2e7d32;background:#e8f5e9;padding:2px 8px;border-radius:999px;margin-left:2px;
+}
+.postA1-box{
+  background:var(--white);border:1px dashed var(--line);border-radius:8px;
+  padding:9px 13px;font-size:12.5px;line-height:1.5;margin-bottom:7px;
+}
+.postA1-box:last-child{margin-bottom:0;}
+.postA1-box strong{color:var(--red);margin-right:3px;}
 .daily-block textarea{width:100%;min-height:64px;resize:vertical;font-size:12.5px;background:var(--white);}
 .daily-block textarea.notes-area{min-height:50px;}
 .daily-done-row{display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:14px;border-top:1px dashed var(--line);}
