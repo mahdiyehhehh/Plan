@@ -644,6 +644,87 @@ const GERMAN_DAYS = [
   ]}
 ];
 
+/* ---- 60-day A2 curriculum (Days 31-90), being written in batches.
+   Days 31-40 written so far — covers Präteritum, Perfekt review,
+   Genitiv, adjective endings, reflexive verbs, subordinate/relative
+   clauses, and indirect questions, with office/Ausbildung vocabulary
+   woven in from Day 40 onward since that's the end goal. ---- */
+const GERMAN_DAYS_A2 = [
+  {lessons:[ // Day 31
+    L("Präteritum: sein, haben & Modal Verbs","Rewrite 8 sentences about your childhood or last year using war, hatte, konnte, musste, wollte.","Ich war letztes Jahr in Berlin. Ich hatte keine Zeit. Ich musste viel arbeiten.","Ich war letztes Jahr in Berlin, hatte aber kaum Zeit — musste die ganze Zeit arbeiten."),
+    L("When to Use Präteritum vs. Perfekt","Write 4 sentences you'd say out loud (Perfekt) and rewrite the same 4 as you'd write them in a story or email (Präteritum).","Ich habe gestern gearbeitet. → Ich arbeitete gestern viel.","Ich hab gestern echt viel gearbeitet, war stressig.")
+  ]},
+  {lessons:[ // Day 32
+    L("Perfekt Review: Irregular Participles","Write 10 sentences about last week, using 10 different irregular past participles (gegangen, gesehen, genommen, geschrieben...).","Ich bin ins Büro gegangen. Ich habe einen Brief geschrieben. Ich habe das Formular genommen.","Ich bin heut ins Büro gegangen und hab noch schnell nen Brief geschrieben.")
+  ]},
+  {lessons:[ // Day 33
+    L("Genitiv Case Basics","Write 6 sentences showing possession with the genitive (des Mannes, der Frau, meines Bruders).","Das Büro des Chefs ist im ersten Stock. Die Tasche meiner Kollegin ist neu.","Das ist glaub ich der Schreibtisch von unserem Chef."),
+    L("Genitiv vs. \"von\" in Spoken German","Rewrite 5 genitive sentences the way Germans actually say them in speech, using von + Dativ.","Das Auto meines Vaters ist rot. → formal genitive.","Das Auto von meinem Vater ist rot. — so sagt man das eigentlich meistens.")
+  ]},
+  {lessons:[ // Day 34
+    L("Adjective Endings after der/die/das","Write 8 sentences describing things using adjectives after definite articles (der große Tisch, die neue Kollegin).","Der neue Kollege ist sehr freundlich. Ich mag die große Küche im Büro.","Der Neue ist echt nett, hab ich gemerkt."),
+    L("Adjective Endings after ein/kein/mein","Rewrite the same 8 ideas using indefinite/possessive articles instead (ein großer Tisch, meine neue Kollegin).","Das ist ein großer Tisch. Meine neue Kollegin heißt Julia.","Wir haben n großen Tisch bekommen fürs neue Büro.")
+  ]},
+  {lessons:[ // Day 35
+    L("Adjective Endings with No Article","Write 5 sentences describing general things with no article at all (kalter Kaffee, frische Luft).","Ich trinke gern starken Kaffee. Frisches Obst ist gesund.","Ich brauch jetzt echt n starken Kaffee.")
+  ]},
+  {lessons:[ // Day 36
+    L("Reflexive Verbs (Akkusativ)","Write 6 sentences about your daily routine using reflexive verbs (sich freuen, sich setzen, sich beeilen, sich erinnern).","Ich freue mich auf das Wochenende. Ich muss mich beeilen.","Ich freu mich schon voll aufs Wochenende, ehrlich."),
+    L("Reflexive Verbs (Dativ)","Write 4 sentences using dative reflexive verbs (sich etwas vorstellen, sich die Zähne putzen).","Ich kann mir das gut vorstellen. Ich putze mir jeden Morgen die Zähne.","Kann ich mir gut vorstellen, ehrlich gesagt.")
+  ]},
+  {lessons:[ // Day 37
+    L("Subordinate Clauses: obwohl, wenn, als","Write 6 sentences using obwohl (although), wenn (if/whenever), and als (when, single past event).","Obwohl es regnete, sind wir spazieren gegangen. Als ich jung war, wollte ich Lehrerin werden.","Wir sind trotzdem raus, obwohl's geregnet hat.")
+  ]},
+  {lessons:[ // Day 38
+    L("Relative Clauses (Nominativ & Akkusativ)","Write 6 sentences describing people or things using der/die/das as relative pronouns.","Das ist die Kollegin, die im ersten Stock arbeitet. Der Bericht, den ich schreibe, ist fast fertig.","Das ist die Kollegin, die immer so früh kommt."),
+    L("Relative Clauses (Dativ)","Write 4 sentences using dative relative pronouns (dem, der, denen).","Das ist der Kollege, dem ich geholfen habe. Die Leute, denen ich vertraue, sind wenige.","Das ist der Typ, dem ich neulich geholfen hab.")
+  ]},
+  {lessons:[ // Day 39
+    L("Indirect Questions","Rewrite 6 direct questions as indirect ones using ob or a question word (Weißt du, ob...? / Ich weiß nicht, wann...).","Weißt du, ob das Büro heute offen ist? Ich weiß nicht, wann die Besprechung anfängt.","Weißt du zufällig, ob das Büro heut offen hat?"),
+    L("Comparisons Review (A2 depth)","Write 5 sentences comparing two work situations, using je... desto (the more... the more).","Je mehr ich übe, desto besser spreche ich Deutsch.","Je mehr ich übe, umso besser wird's, ganz ehrlich.")
+  ]},
+  {lessons:[ // Day 40
+    L("Office & Ausbildung Vocabulary I","Write 10 sentences using office vocabulary: die Rechnung, der Beleg, die Buchhaltung, der Auftrag, die Abteilung.","Ich bearbeite heute die Rechnungen. Die Buchhaltung braucht den Beleg bis Freitag.","Ich muss heut noch die Rechnungen fertig machen, sonst gibt's Stress."),
+    L("A2 Checkpoint: Talking About Your Goals","Write a short paragraph (6-8 sentences) explaining why you want to do an Ausbildung in accounting, using Perfekt, Präteritum, and at least one relative clause.","Ich habe schon immer gern mit Zahlen gearbeitet. Letztes Jahr habe ich beschlossen, dass ich eine Ausbildung machen möchte, die zu mir passt.","Ich wollt schon immer irgendwas mit Zahlen machen, deshalb mach ich jetzt die Ausbildung.")
+  ]},
+  {lessons:[ // Day 41
+    L("Futur I: werden + Infinitiv","Write 6 sentences about your plans for next year using werden (e.g. \"Ich werde eine Ausbildung machen\").","Ich werde nächstes Jahr eine Ausbildung in Buchhaltung beginnen. Ich werde jeden Tag Deutsch lernen.","Ich mach nächstes Jahr die Ausbildung, das steht schon fest."),
+    L("Future: werden vs. Present Tense","Rewrite 5 of your Futur I sentences the way Germans usually say them instead — present tense + time word.","Ich werde morgen anrufen. → Ich rufe morgen an.","Ich ruf morgen einfach an, kein Ding.")
+  ]},
+  {lessons:[ // Day 42
+    L("Passive Voice: Present Tense","Write 6 sentences describing office processes in the passive (werden + Partizip II) — e.g. \"Die Rechnung wird geprüft.\"","Die Rechnung wird von der Buchhaltung geprüft. Die Formulare werden jeden Montag verschickt.","Die Rechnung wird grad geprüft, dauert noch n bisschen."),
+    L("Passive Voice: Past Tense (wurde)","Write 4 sentences about something that was done, using wurde + Partizip II.","Der Auftrag wurde gestern bearbeitet. Die E-Mail wurde schon beantwortet.","Der Auftrag wurde schon erledigt, keine Sorge.")
+  ]},
+  {lessons:[ // Day 43
+    L("Konjunktiv II: würde + Infinitiv","Write 6 polite requests or hypothetical sentences using würde (e.g. \"Ich würde gern...\", \"Würden Sie...?\").","Ich würde gern einen Termin vereinbaren. Würden Sie mir bitte helfen?","Würdest du mir kurz helfen? Das wär echt nett."),
+    L("Konjunktiv II: hätte & wäre","Write 4 sentences about how things would be different, using hätte gern or wäre.","Ich hätte gern mehr Zeit. Das wäre eine gute Lösung.","Wär schon cool, wenn ich mehr Zeit hätte, ehrlich.")
+  ]},
+  {lessons:[ // Day 44
+    L("dass-Sätze vs. Infinitiv mit zu","Write 4 pairs of sentences: one with dass, one rephrased with um...zu or ohne...zu.","Ich lerne Deutsch, um die Ausbildung zu bekommen. Ich glaube, dass ich das schaffe.","Ich lern Deutsch, um die Ausbildung zu kriegen, ganz einfach.")
+  ]},
+  {lessons:[ // Day 45
+    L("Doppelkonjunktionen","Write 6 sentences using sowohl...als auch, entweder...oder, and weder...noch.","Ich spreche sowohl Deutsch als auch Englisch. Ich habe weder Zeit noch Geld dafür.","Ich sprech sowohl Deutsch als auch Englisch, geht schon ganz gut.")
+  ]},
+  {lessons:[ // Day 46
+    L("Wechselpräpositionen Review (in, an, auf)","Write 8 sentences showing the difference between location (Dativ) and movement (Akkusativ) with in, an, auf.","Ich lege den Beleg auf den Tisch. Der Beleg liegt auf dem Tisch.","Ich leg den Beleg einfach auf'n Tisch, findest du dann.")
+  ]},
+  {lessons:[ // Day 47
+    L("Telefonate im Büro","Write a formal business phone call (8+ lines): answering, stating your name/company, asking how you can help.","Guten Tag, hier ist [Name] von der Firma Müller. Wie kann ich Ihnen helfen?","Hallo, hier [Name] von Müller — wie kann ich helfen?"),
+    L("Formelle E-Mails schreiben","Write a formal business email (6-8 sentences) requesting information or confirming an appointment, with proper Anrede and Grußformel.","Sehr geehrte Frau Schmidt, ich schreibe Ihnen bezüglich... Mit freundlichen Grüßen","Hi Frau Schmidt, kurze Frage wegen...")
+  ]},
+  {lessons:[ // Day 48
+    L("Rechnungen & Zahlen im Detail","Write 6 sentences with invoice details: amounts, due dates, invoice numbers, spelled out in German.","Die Rechnungsnummer ist 4521. Der Betrag beträgt 350 Euro und ist bis zum 15. Mai fällig.","Die Rechnung ist über 350 Euro und muss bis zum 15. bezahlt werden.")
+  ]},
+  {lessons:[ // Day 49
+    L("Höflich reklamieren","Write a polite complaint (6+ lines) about a mistake or delay, using Konjunktiv II to stay formal.","Es wäre schön, wenn Sie das so schnell wie möglich korrigieren könnten. Das wäre sehr hilfreich.","Wär echt nett, wenn ihr das schnell fixen könntet.")
+  ]},
+  {lessons:[ // Day 50
+    L("A2 Checkpoint: Bewerbungsgespräch","Write out full answers (2-3 sentences each) to 4 common interview questions: Warum diese Ausbildung? Was sind Ihre Stärken? Warum sollten wir Sie nehmen? Haben Sie Fragen?","Ich möchte diese Ausbildung machen, weil ich gerne mit Zahlen arbeite und sehr organisiert bin. Meine größte Stärke ist meine Sorgfalt.","Ich mach die Ausbildung gern, weil ich echt gut mit Zahlen bin und immer organisiert."),
+    L("A2 Grammar Review","Pick 5 grammar points from Days 31-49 that felt hardest and write one fresh example sentence for each, from memory.","Review sentence using your weakest point, written without looking at the answer key.","Same, but how you'd actually say it out loud.")
+  ]}
+];
+GERMAN_DAYS.push(...GERMAN_DAYS_A2);
+
 /* ---- Full plan: A1 -> A2 -> B1, sized for a 6-7 month timeline at
    ~2.5 hrs/day (roughly matches Goethe's published hour estimates per
    level). A1 (Days 1-30) is fully written out above. A2 and B1 content
@@ -651,19 +732,27 @@ const GERMAN_DAYS = [
    real lessons currently reach; days beyond that still track your daily
    writing/listening/speaking so nothing goes unlogged while content
    catches up. ---- */
+/* ---- Full plan: A1 -> A2 -> B1 -> B2, restructured for an 8-month
+   timeline (240 days) aimed at genuine working/comfortable fluency,
+   not just an exam pass — B1 lands around month 5 so applications can
+   go out while B2 work continues underneath. Content is written phase
+   by phase — CONTENT_END_DAY marks how far the real lessons currently
+   reach; days beyond that still track your daily writing/immersion/
+   speaking so nothing goes unlogged while content catches up. ---- */
 const PHASES = [
-  {id:"a1",  from:1,   to:30,  label:"A1 — Foundations",              months:"Month 1"},
-  {id:"a2",  from:31,  to:90,  label:"A2 — Building Fluency",         months:"Months 2–3"},
-  {id:"b1g", from:91,  to:150, label:"B1 — Grammar Core",             months:"Months 4–5"},
-  {id:"b1p", from:151, to:180, label:"B1 — Exam Prep & Mock Tests",   months:"Month 6"},
-  {id:"buf", from:181, to:210, label:"Buffer & Review",               months:"Month 7 (if needed)"}
+  {id:"a1",  from:1,   to:30,  label:"A1 — Foundations",                        months:"Month 1"},
+  {id:"a2",  from:31,  to:90,  label:"A2 — Building Fluency",                   months:"Months 2–3"},
+  {id:"b1",  from:91,  to:150, label:"B1 — Grammar + Application-Ready",        months:"Months 4–5"},
+  {id:"b2w", from:151, to:210, label:"B2 — Workplace & Everyday Fluency",       months:"Months 6–7"},
+  {id:"b2p", from:211, to:240, label:"B2 — Exam Prep & Mock Tests",             months:"Month 8"},
+  {id:"buf", from:241, to:270, label:"Buffer & Review",                        months:"Month 9 (if needed)"}
 ];
 function phaseForDay(day){
   return PHASES.find(p=>day>=p.from && day<=p.to) || PHASES[PHASES.length-1];
 }
 const A1_PHASE_END = 30;
-const CONTENT_END_DAY = 30; // raise this as more phases get written
-const TOTAL_CORE_DAYS = 180; // 6-month core plan (Days 1-180), buffer is extra
+const CONTENT_END_DAY = 50; // raise this as more phases get written
+const TOTAL_CORE_DAYS = 240; // 8-month core plan (Days 1-240) to B2, buffer is extra
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
    Always shown alongside the normal homework, before AND after A1 is finished. */
@@ -697,7 +786,27 @@ const DAILY_CHALLENGES = [
   "Tell your husband about a trip you'd like to take, in simple German.",
   "Tell your husband one thing you like and one thing you don't like, in German.",
   "Ask your husband 3 simple questions in German and let him answer.",
-  "Introduce yourself fully to your husband in German — as if it's the first time you're meeting."
+  "Introduce yourself fully to your husband in German — as if it's the first time you're meeting.",
+  "Tell your husband what you did yesterday and what you're doing tomorrow, in German — past and future in one breath.",
+  "Retell your husband a short story from your day using at least 3 Perfekt-tense verbs.",
+  "Tell your husband something that belongs to someone else, using a genitive phrase (e.g. \"das Auto meines Bruders\").",
+  "Describe your husband to your husband, in German, using at least 3 adjectives with correct endings.",
+  "Describe your dream apartment or house to your husband, using adjectives with correct endings.",
+  "Tell your husband one thing you do for yourself every day, using a reflexive verb (e.g. \"Ich freue mich...\").",
+  "Tell your husband something you'd do if you had more time, starting with \"Obwohl...\" or \"Wenn...\".",
+  "Describe a person you know to your husband using a relative clause (e.g. \"Das ist die Frau, die...\").",
+  "Ask your husband an indirect question in German (e.g. \"Weißt du, ob...\").",
+  "Tell your husband three things about your ideal office job, in German — what you'd do, organize, or manage.",
+  "Tell your husband one thing you'll do next week, using werden + infinitive.",
+  "Describe a task at work or home as if someone else does it, using the passive voice (e.g. \"Die Rechnung wird bezahlt\").",
+  "Ask your husband politely for something using würde or könnte (e.g. \"Würdest du mir bitte helfen?\").",
+  "Tell your husband a reason for something using \"um...zu\" (in order to).",
+  "Tell your husband two things you're doing at once, using \"sowohl...als auch\" or \"weder...noch\".",
+  "Tell your husband where you put something, using a Wechselpräposition correctly (in, an, auf).",
+  "Pretend to call your husband about a work matter and leave a short formal voicemail in German.",
+  "Tell your husband a made-up invoice number and due date out loud, in German.",
+  "Politely complain to your husband about something small, using Konjunktiv II (e.g. \"Das wäre schön, wenn...\").",
+  "Practice answering \"Warum möchten Sie diese Ausbildung machen?\" out loud to your husband, in German."
 ];
 
 /* ---- extra homework that unlocks once all 30 A1 days are complete.
@@ -896,9 +1005,11 @@ function renderDayPicker(){
   });
 }
 
-/* ---- Writing / Listening / Speaking logs. Goethe grades all four
+/* ---- Writing / Immersion / Speaking logs. Goethe grades all four
    skills separately, so these run every day, in every phase — including
-   days whose full lesson content hasn't been written yet. ---- */
+   days whose full lesson content hasn't been written yet. The Immersion
+   block is deliberately modeled on how you got to C1 English — social
+   media, music, shows — not formal listening drills. ---- */
 function skillTracksHtml(rec){
   return `
     <div class="daily-block">
@@ -906,9 +1017,9 @@ function skillTracksHtml(rec){
       <textarea class="skill-writing notes-area" placeholder="Write a few sentences in German — today's topic, your day, anything...">${esc(rec.writing)}</textarea>
     </div>
     <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Listening Practice</div>
-      <label class="skill-check-row"><input type="checkbox" class="skill-listening-done" ${rec.listeningDone?"checked":""}> Watched/listened to German today</label>
-      <textarea class="skill-listening-notes notes-area" placeholder="What did you watch or hear? What did you understand?">${esc(rec.listeningNotes)}</textarea>
+      <div class="daily-block-label"><span class="dot"></span>Immersion (the way you did English)</div>
+      <label class="skill-check-row"><input type="checkbox" class="skill-listening-done" ${rec.listeningDone?"checked":""}> Got German into my ears/eyes today — TikTok, music, a show, a podcast</label>
+      <textarea class="skill-listening-notes notes-area" placeholder="What did you scroll, watch, or listen to? What did you catch — even just the vibe or a few words?">${esc(rec.listeningNotes)}</textarea>
     </div>
     <div class="daily-block">
       <div class="daily-block-label"><span class="dot"></span>Speaking Practice</div>
@@ -927,6 +1038,36 @@ function wireSkillTracks(card, rec){
   if(sCb) sCb.onchange = (e)=>{ rec.speakingDone = e.target.checked; saveData(); };
   const sTa = card.querySelector(".skill-speaking-notes");
   if(sTa) sTa.oninput = (e)=>{ rec.speakingNotes = e.target.value; saveData(); };
+}
+
+/* ---- Goal-progress toast: shown for a few seconds every time a lesson
+   is marked complete, so "how close am I to the Ausbildung goal" is
+   always visible right when it matters, not buried in another tab. ---- */
+let goalToastTimer = null;
+function goalProgressStats(){
+  let completedDays = 0;
+  for(let d=1; d<=TOTAL_CORE_DAYS; d++){ if(dayIsDone(d)) completedDays++; }
+  const percent = Math.round((completedDays/TOTAL_CORE_DAYS)*100);
+  const daysLeft = TOTAL_CORE_DAYS - completedDays;
+  const phase = phaseForDay(germanCurrentDay);
+  return {completedDays, percent, daysLeft, phase};
+}
+function showGoalProgressToast(){
+  const {completedDays, percent, daysLeft, phase} = goalProgressStats();
+  let toast = document.getElementById("goalToast");
+  if(!toast){
+    toast = document.createElement("div");
+    toast.id = "goalToast";
+    toast.className = "goal-toast";
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = `
+    <div class="goal-toast-title">${percent}% toward your Ausbildung goal</div>
+    <div class="goal-toast-bar"><div class="goal-toast-fill" style="width:${percent}%"></div></div>
+    <div class="goal-toast-sub">Day ${completedDays}/${TOTAL_CORE_DAYS} complete · ${esc(phase.label)} · ${daysLeft} days left in the plan</div>`;
+  toast.classList.add("show");
+  if(goalToastTimer) clearTimeout(goalToastTimer);
+  goalToastTimer = setTimeout(()=>{ toast.classList.remove("show"); }, 4000);
 }
 
 function renderDailyCard(){
@@ -1029,6 +1170,7 @@ function renderDailyCard(){
       renderDayPicker();
       renderGermanProgressRing();
       renderDailyCard();
+      if(e.target.checked) showGoalProgressToast();
     };
   });
   wireSkillTracks(card, rec);
