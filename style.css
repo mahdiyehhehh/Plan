@@ -339,8 +339,9 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 
 .german-page{max-width:800px;}
 
-.german-goal-note{font-size:12.5px;line-height:1.6;color:var(--grey-dark);margin:14px 0 0;max-width:72ch;}
+.german-goal-note{font-size:12.5px;line-height:1.6;color:var(--grey-dark);margin:10px 0 0;max-width:72ch;}
 .german-goal-note strong{color:var(--black);}
+.goal-note-dim{color:var(--grey-dark);opacity:.65;}
 
 .german-nav-btn{color:var(--red) !important;}
 .view-switch button.german-nav-btn.active{background:var(--red);color:var(--white) !important;}
@@ -396,6 +397,7 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 /* ---- exam-correct vs. how-Germans-actually-say-it, side by side ---- */
 .example-pair{display:grid;grid-template-columns:1fr;gap:8px;}
 @media (min-width:560px){ .example-pair{grid-template-columns:1fr 1fr;} }
+.example-en{grid-column:1/-1;font-size:12.5px;font-style:italic;color:var(--grey-dark);margin-top:-2px;}
 .example-box{position:relative;}
 .example-box .example-tag{
   display:block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
@@ -468,6 +470,7 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
 .daily-block{margin-bottom:16px;}
 .daily-block:last-child{margin-bottom:0;}
 .daily-block-label{display:flex;align-items:center;gap:6px;font-family:var(--font);font-weight:600;font-size:13px;margin-bottom:7px;}
+.daily-block-label .tap-hint{font-weight:400;font-size:10.5px;color:var(--grey-dark);margin-left:auto;}
 .daily-block-label .dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex:none;}
 .lesson-block{padding-top:16px;margin-top:16px;border-top:1px dashed var(--line);}
 .lesson-block:first-child{padding-top:0;margin-top:0;border-top:none;}
