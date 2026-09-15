@@ -7,12 +7,12 @@ const GERMAN_GOAL = 64;
 
 /* ---------- icons (stroke/fill = currentColor) ---------- */
 const ICONS = {
-  german:  `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 4h13l3 4-3 4H4V4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
-  classes: `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 3L1 8l11 5 9-4.1V16h2V8L12 3z" fill="currentColor"/><path d="M5 10.5V16c0 1.7 3.1 4 7 4s7-2.3 7-4v-5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
-  money:   `<svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v10M9.5 9.3c0-1.3 1.1-2 2.5-2s2.5.8 2.5 2-1 1.7-2.5 2-2.5.7-2.5 2 1.1 2 2.5 2 2.5-.7 2.5-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
-  job:     `<svg viewBox="0 0 24 24" width="14" height="14"><rect x="3" y="8" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 13h18" stroke="currentColor" stroke-width="1.8"/></svg>`,
-  project: `<svg viewBox="0 0 24 24" width="14" height="14"><rect x="3" y="4" width="18" height="12" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M1 20h22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
-  cert:    `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 20V6a1 1 0 011-1h9l5 5v10a1 1 0 01-1 1H5a1 1 0 01-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 12h8M7 15.5h8M7 8.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`
+  german:  `<svg viewBox="0 0 24 24" width="12" height="12"><path d="M4 4h13l3 4-3 4H4V4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  classes: `<svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 3L1 8l11 5 9-4.1V16h2V8L12 3z" fill="currentColor"/><path d="M5 10.5V16c0 1.7 3.1 4 7 4s7-2.3 7-4v-5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  money:   `<svg viewBox="0 0 24 24" width="12" height="12"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v10M9.5 9.3c0-1.3 1.1-2 2.5-2s2.5.8 2.5 2-1 1.7-2.5 2-2.5.7-2.5 2 1.1 2 2.5 2 2.5-.7 2.5-2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  job:     `<svg viewBox="0 0 24 24" width="12" height="12"><rect x="3" y="8" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 13h18" stroke="currentColor" stroke-width="1.8"/></svg>`,
+  project: `<svg viewBox="0 0 24 24" width="12" height="12"><rect x="3" y="4" width="18" height="12" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M1 20h22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  cert:    `<svg viewBox="0 0 24 24" width="12" height="12"><path d="M4 20V6a1 1 0 011-1h9l5 5v10a1 1 0 01-1 1H5a1 1 0 01-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 12h8M7 15.5h8M7 8.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`
 };
 
 const emptyDay = () => ({
@@ -92,21 +92,21 @@ function esc(v){
 /* ---------- category definitions ---------- */
 const CATEGORIES = [
   {
-    id:"german", label:"German Learning", icon:ICONS.german, accent:true,
+    id:"german", label:"German Learning", icon:ICONS.german,
     labelExtra:(week)=>{
       const total = DAY_KEYS.reduce((s,dk)=>s+num(week.days[dk].germanVideos),0);
       return `
         <div class="label-field">
-          <label>Current level</label>
+          <label>Level</label>
           <input type="text" data-weekfield="germanLevel" value="${esc(week.germanLevel)}" placeholder="e.g. A1">
         </div>
-        <span class="sub">Videos watched: <strong>${total} / ${GERMAN_GOAL}</strong></span>`;
+        <span class="sub">Watched <strong id="germanTotal">${total}/${GERMAN_GOAL}</strong></span>`;
     },
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
           <input type="number" min="0" data-field="germanVideos" value="${esc(d.germanVideos)}" placeholder="0">
-          <span class="suffix">/ ${GERMAN_GOAL} videos</span>
+          <span class="suffix">/${GERMAN_GOAL}</span>
         </div>
         <textarea data-field="germanNotes" placeholder="Notes">${esc(d.germanNotes)}</textarea>
       </div>`
@@ -123,7 +123,7 @@ const CATEGORIES = [
       </div>`
   },
   {
-    id:"money", label:"Amount of Money Saved", icon:ICONS.money, iconClass:"gold",
+    id:"money", label:"Amount of Money Saved", icon:ICONS.money,
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -149,7 +149,7 @@ const CATEGORIES = [
     id:"project", label:"Project", icon:ICONS.project,
     labelExtra:(week)=>`
       <div class="label-field">
-        <label>Project name</label>
+        <label>Name</label>
         <input type="text" data-weekfield="projectName" value="${esc(week.projectName)}" placeholder="Project name">
       </div>`,
     cell:(d)=>`
@@ -163,7 +163,7 @@ const CATEGORIES = [
     id:"cert", label:"Accounting Certificate", icon:ICONS.cert,
     labelExtra:(week)=>{
       const total = DAY_KEYS.reduce((s,dk)=>s+num(week.days[dk].certVideos),0);
-      return `<span class="sub">YouTube videos watched: <strong>${total}</strong></span>`;
+      return `<span class="sub">Watched <strong id="certTotal">${total}</strong> videos</span>`;
     },
     cell:(d)=>`
       <div class="cell-field">
@@ -176,7 +176,7 @@ const CATEGORIES = [
   }
 ];
 
-/* ---------- render: week view ---------- */
+/* ---------- render: week view (single-page grid sheet) ---------- */
 function renderWeekView(){
   const mondayISO = toISO(currentMonday);
   const week = getWeek(mondayISO);
@@ -187,38 +187,47 @@ function renderWeekView(){
   favBtn.setAttribute("aria-pressed", week.favorite ? "true" : "false");
   favBtn.onclick = ()=>{ week.favorite = !week.favorite; saveData(); renderWeekView(); };
 
-  const tbody = document.getElementById("trackerBody");
-  tbody.innerHTML = "";
+  const grid = document.getElementById("sheetGrid");
+  let html = `<div class="head-cell corner"></div>` +
+    DAY_KEYS.map(dk=>`<div class="head-cell">${DAY_LABELS[dk]}</div>`).join("");
+
   CATEGORIES.forEach(cat=>{
-    const tr = document.createElement("tr");
     const extra = cat.labelExtra ? cat.labelExtra(week) : "";
-    tr.innerHTML = `<td class="row-label">
+    html += `<div class="row-label">
         <div class="row-label-inner">
-          <span class="row-icon${cat.iconClass?" "+cat.iconClass:""}">${cat.icon}</span>
+          <span class="row-icon">${cat.icon}</span>
           <span class="row-label-title">${cat.label}</span>
         </div>
         ${extra}
-      </td>` +
-      DAY_KEYS.map(dk=>`<td data-day="${dk}" data-day-label="${DAY_LABELS[dk]}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</td>`).join("");
-    tbody.appendChild(tr);
+      </div>`;
+    html += DAY_KEYS.map(dk=>`<div class="day-cell" data-day="${dk}" data-day-label="${DAY_LABELS[dk]}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</div>`).join("");
   });
 
+  grid.innerHTML = html;
+
   // bind per-day inputs
-  tbody.querySelectorAll("[data-field]").forEach(el=>{
+  grid.querySelectorAll("[data-field]").forEach(el=>{
     const handler = ()=>{
-      const td = el.closest("td");
-      const dk = td.dataset.day;
+      const cell = el.closest("[data-day]");
+      const dk = cell.dataset.day;
       const field = el.dataset.field;
       const val = el.type==="checkbox" ? el.checked : el.value;
       week.days[dk][field] = val;
       saveData();
-      if(field==="germanVideos" || field==="certVideos") renderWeekView();
+      if(field==="germanVideos"){
+        const t = document.getElementById("germanTotal");
+        if(t) t.textContent = `${DAY_KEYS.reduce((s,k)=>s+num(week.days[k].germanVideos),0)}/${GERMAN_GOAL}`;
+      }
+      if(field==="certVideos"){
+        const t = document.getElementById("certTotal");
+        if(t) t.textContent = DAY_KEYS.reduce((s,k)=>s+num(week.days[k].certVideos),0);
+      }
     };
     el.addEventListener(el.tagName==="TEXTAREA"||el.type==="text"||el.type==="number" ? "input" : "change", handler);
   });
 
   // bind week-level fields (row label column)
-  tbody.querySelectorAll("[data-weekfield]").forEach(el=>{
+  grid.querySelectorAll("[data-weekfield]").forEach(el=>{
     el.addEventListener("input", ()=>{
       week[el.dataset.weekfield] = el.value;
       saveData();
@@ -241,6 +250,49 @@ function renderWeekView(){
   const betterEl = document.getElementById("reflectBetter");
   betterEl.value = week.reflectBetter || "";
   betterEl.oninput = ()=>{ week.reflectBetter = betterEl.value; saveData(); };
+
+  fitPlanner();
+}
+
+/* ---------- fit-to-screen: scale the whole sheet so it always shows
+   in full, with no page scrolling, like a printable planner sheet ---------- */
+let fitRaf = null;
+function fitPlanner(){
+  if(fitRaf) cancelAnimationFrame(fitRaf);
+  fitRaf = requestAnimationFrame(()=>{
+    const stage = document.getElementById("plannerStage");
+    const canvas = document.getElementById("plannerCanvas");
+    if(!stage || !canvas) return;
+    if(document.getElementById("weekView").classList.contains("hidden")) return;
+
+    canvas.style.transform = "scale(1)";
+    const stageW = stage.clientWidth;
+    const stageH = stage.clientHeight;
+    const naturalW = canvas.offsetWidth;
+    const naturalH = canvas.offsetHeight;
+    if(!stageW || !stageH || !naturalW || !naturalH) return;
+
+    const scale = Math.min(stageW/naturalW, stageH/naturalH, 1.4);
+    canvas.style.transform = `scale(${scale})`;
+  });
+}
+
+function debounce(fn,ms){
+  let t;
+  return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args),ms); };
+}
+const debouncedFit = debounce(fitPlanner,80);
+window.addEventListener("resize", debouncedFit);
+window.addEventListener("orientationchange", debouncedFit);
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(fitPlanner);
+}
+if(window.ResizeObserver){
+  const ro = new ResizeObserver(debouncedFit);
+  window.addEventListener("DOMContentLoaded", ()=>{
+    const stage = document.getElementById("plannerStage");
+    if(stage) ro.observe(stage);
+  });
 }
 
 /* ---------- aggregation helpers ---------- */
@@ -367,7 +419,7 @@ document.getElementById("viewSwitch").addEventListener("click",(e)=>{
   document.querySelectorAll("#viewSwitch button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
   Object.entries(views).forEach(([k,el])=>el.classList.toggle("hidden", k!==btn.dataset.view));
-  if(btn.dataset.view==="week") renderWeekView();
+  if(btn.dataset.view==="week"){ renderWeekView(); }
   if(btn.dataset.view==="month") renderMonthView();
   if(btn.dataset.view==="year") renderYearView();
 });
@@ -401,5 +453,4 @@ document.getElementById("importData").onchange = (e)=>{
 };
 
 /* ---------- init ---------- */
-document.getElementById("yearNow").textContent = new Date().getFullYear();
 renderWeekView();
