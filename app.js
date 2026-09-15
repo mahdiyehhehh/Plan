@@ -1713,13 +1713,11 @@ function renderSlangCard(){
   if(!card) return;
   const item = SLANG_OF_DAY[(germanCurrentDay-1) % SLANG_OF_DAY.length];
   card.innerHTML = `
-    <span class="slang-card-eyebrow">How Germans Actually Say It <span class="day-of">· Day ${germanCurrentDay}</span></span>
-    <div class="slang-card-pair">
-      <div class="slang-card-phrase"><h4>${forvoWords(item.natural)}</h4></div>
-      <span class="slang-card-exam">Exam-correct: <strong>${forvoWords(item.exam)}</strong></span>
-    </div>
-    <p class="slang-card-meaning">${esc(item.meaning)}</p>
-    <p class="slang-card-note">${esc(item.note)}</p>
+    <span class="slang-eyebrow">How Germans Actually Say It <span class="day-of">· Day ${germanCurrentDay}</span></span>
+    <h3 class="slang-phrase">${forvoWords(item.natural)}</h3>
+    <p class="slang-exam">Exam-correct: <strong>${forvoWords(item.exam)}</strong></p>
+    <p class="slang-meaning">${esc(item.meaning)}</p>
+    <p class="slang-note">${esc(item.note)}</p>
   `;
 }
 
