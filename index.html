@@ -180,8 +180,8 @@
 
       <div class="sheet-header report-header german-hero">
         <div class="sheet-title">
-          <h1>Goethe B1/B2 Path</h1>
-          <p>A1 <span class="sep">&rarr;</span> B2 <span class="sep">&mdash;</span> exam-ready &amp; street-ready</p>
+          <h1>Goethe B1 Path</h1>
+          <p>A1 <span class="sep">&rarr;</span> A2 <span class="sep">&rarr;</span> B1 <span class="sep">&mdash;</span> 6–7 months, exam-ready &amp; street-ready</p>
         </div>
         <div class="german-progress-badge">
           <div class="german-progress-ring-wrap">
@@ -189,16 +189,16 @@
               <circle cx="30" cy="30" r="26" fill="none" class="progress-ring-track" stroke-width="6"/>
               <circle id="germanRingFg" cx="30" cy="30" r="26" fill="none" stroke="#c0392b" stroke-width="6" stroke-linecap="round" transform="rotate(-90 30 30)"/>
             </svg>
-            <span id="germanRingLabel" class="progress-ring-label">0/30</span>
+            <span id="germanRingLabel" class="progress-ring-label">0/180</span>
           </div>
           <div class="german-progress-text">
             <strong>Days Completed</strong>
-            <span>Keep the streak alive — every day counts.</span>
+            <span id="germanProgressSub">Now in: A1 — Foundations (Month 1)</span>
           </div>
         </div>
       </div>
 
-      <p class="german-goal-note">The goal isn't just a passing score — it's both: <strong>full marks on the Goethe exam</strong> and <strong>real, comfortable, everyday German</strong>. Every day mixes textbook grammar with the way people actually talk.</p>
+      <p class="german-goal-note">B1 is the priority — full marks on the Goethe B1 exam, all four skills (reading, listening, writing, speaking) — with B2 as the stretch goal if the pace holds. Every day mixes textbook grammar with the way people actually talk.</p>
 
       <div class="sheet-rule"><span></span><em>Never Miss This Page</em></div>
 
@@ -207,6 +207,7 @@
       <nav class="german-subnav" id="germanSubnav">
         <button data-sub="daily" class="active">Daily Learning</button>
         <button data-sub="tests">A1 Tests</button>
+        <button data-sub="mock">Mock Exams</button>
       </nav>
 
       <!-- DAILY LEARNING SUB-VIEW -->
@@ -223,6 +224,12 @@
       <div class="german-sub hidden" id="germanTests">
         <p class="tests-intro">Ten short A1 tests covering everything you need for the Goethe/telc A1 exam. Take one a day, mark it done, check your answers, and write down what to review.</p>
         <div class="tests-list" id="testsList"></div>
+      </div>
+
+      <!-- MOCK EXAMS SUB-VIEW -->
+      <div class="german-sub hidden" id="germanMock">
+        <p class="tests-intro">Log every practice attempt across all four Goethe skills — reading, listening, writing, speaking — plus full mock exams once you reach the exam-prep phase.</p>
+        <div id="mockExamTracker"><!-- injected by app.js --></div>
       </div>
 
     </div>
