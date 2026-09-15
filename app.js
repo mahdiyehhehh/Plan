@@ -1256,20 +1256,137 @@ const GERMAN_DAYS_B2_PART2 = [
 ];
 GERMAN_DAYS.push(...GERMAN_DAYS_B2_PART2);
 
-/* ---- Full plan: A1 -> A2 -> B1, sized for a 6-7 month timeline at
-   ~2.5 hrs/day (roughly matches Goethe's published hour estimates per
-   level). A1 (Days 1-30) is fully written out above. A2 and B1 content
-   is being added phase by phase — CONTENT_END_DAY marks how far the
-   real lessons currently reach; days beyond that still track your daily
-   writing/listening/speaking so nothing goes unlogged while content
-   catches up. ---- */
-/* ---- Full plan: A1 -> A2 -> B1 -> B2, restructured for an 8-month
-   timeline (240 days) aimed at genuine working/comfortable fluency,
-   not just an exam pass — B1 lands around month 5 so applications can
-   go out while B2 work continues underneath. Content is written phase
-   by phase — CONTENT_END_DAY marks how far the real lessons currently
-   reach; days beyond that still track your daily writing/immersion/
-   speaking so nothing goes unlogged while content catches up. ---- */
+/* ---- B2 curriculum, Part 3 (Days 205-240) — the final 40% of the B2
+   phase, completing the 240-day core plan. Days 205-210 close out the
+   Workplace & Everyday Fluency phase with remaining B2 grammar
+   (Plusquamperfekt Passiv, subjektive Modalverben, Partizip I/II as
+   adjectives, more Funktionsverbgefüge) and Ausbildung exam-prep talk.
+   Days 211-240 are the dedicated Exam Prep & Mock Tests phase: strategy
+   and practice for every real B2 exam part (Lesen 1-5, Hören 1-4,
+   Schreiben — Brief/Aufsatz/Grafik, Sprechen — Kurzvortrag/Diskussion/
+   Bildbeschreibung), a full timed mock exam split across three days,
+   error-analysis, and a final self-assessment/graduation checkpoint
+   looking ahead to C1. ---- */
+const GERMAN_DAYS_B2_PART3 = [
+  {lessons:[ // Day 205
+    L("Plusquamperfekt Passiv (war gemacht worden)","Write 5 sentences describing something that had already been done before another past event, using Plusquamperfekt Passiv (war/waren + Partizip II + worden).","Das Projekt war bereits abgeschlossen worden, bevor ich in die Firma eintrat. Die Unterlagen waren schon geprüft worden, als der Chef danach fragte.","War schon alles fertig, bevor ich überhaupt angefangen hab.","The project had already been completed before I joined the company. The documents had already been checked when the boss asked about them.")
+  ]},
+  {lessons:[ // Day 206
+    L("Subjektive Modalverben: dürfte, soll angeblich, will","Write 6 sentences expressing probability or hearsay using subjective modal verbs: dürfte (probability), soll (reportedly), will (claims to).","Er dürfte um die 40 Jahre alt sein. Sie soll früher in München gearbeitet haben. Er will das nicht gewusst haben, aber ich glaube es nicht.","Der ist bestimmt so um die 40, würd ich sagen.","He's probably around 40 years old. She reportedly used to work in Munich. He claims he didn't know, but I don't believe it.")
+  ]},
+  {lessons:[ // Day 207
+    L("Partizip I und II als Adjektiv (fortgeschritten)","Write 6 sentences using Partizip I (die wachsende Nachfrage) and Partizip II (das gelöste Problem) as attributive adjectives before a noun.","Die stetig wachsende Nachfrage überrascht viele Experten. Das endlich gelöste Problem hatte uns wochenlang beschäftigt.","Die Nachfrage wächst halt immer weiter, echt überraschend.","The steadily growing demand surprises many experts. The finally solved problem had occupied us for weeks.")
+  ]},
+  {lessons:[ // Day 208
+    L("Funktionsverbgefüge (fortgeschritten II): in Kraft treten, Berücksichtigung finden, zur Verfügung stellen","Write 5 sentences using in Kraft treten, Berücksichtigung finden, and zur Verfügung stellen in a workplace or official context.","Die neue Regelung tritt ab Januar in Kraft. Ihr Vorschlag hat bei der Leitung Berücksichtigung gefunden. Die Firma stellt uns ein neues Notebook zur Verfügung.","Ab Januar gilt die neue Regel, dann müssen wir uns dran halten.","The new regulation takes effect in January. Your proposal was taken into consideration by management. The company is providing us with a new laptop.")
+  ]},
+  {lessons:[ // Day 209
+    L("Über die Abschlussprüfung der Ausbildung sprechen","Write a paragraph (8+ sentences) about preparing for the IHK Abschlussprüfung: what it covers, how you're studying, and what makes you nervous.","Die Abschlussprüfung besteht aus einem schriftlichen und einem mündlichen Teil. Ich wiederhole gerade die Themen Buchführung und Kostenrechnung, aber der mündliche Teil macht mir am meisten Sorgen.","Die Prüfung ist schriftlich und mündlich, und ehrlich, der mündliche Teil macht mir am meisten Angst.","The final exam consists of a written and an oral part. I'm currently reviewing bookkeeping and cost accounting, but the oral part worries me the most.")
+  ]},
+  {lessons:[ // Day 210
+    L("B2 Checkpoint: Selbsteinschätzung (Tage 178-210) — Ende der Workplace-Phase","Rate yourself 1-5 on Hören, Lesen, Schreiben, and Sprechen, and write 2 sentences on how confident you feel that B2 workplace German is now solid before moving into pure exam prep.","Hören: 4/5. Lesen: 4/5. Schreiben: 4/5. Sprechen: 4/5. Ich fühle mich im Berufsalltag inzwischen ziemlich sicher, jetzt geht es nur noch um die Prüfungsform.","Fühl mich im Job-Deutsch echt schon sicher, jetzt nur noch die Prüfung an sich üben.","Listening: 4/5. Reading: 4/5. Writing: 4/5. Speaking: 4/5. I feel fairly confident in everyday workplace German now, it's really just the exam format left to practice.")
+  ]},
+  {lessons:[ // Day 211
+    L("B2-Prüfung: Lesen Teil 1 — Globalverständnis","Read a longer article and write a one-sentence summary of its main idea, without worrying about every detail — practicing the skim-for-gist strategy for Lesen Teil 1.","Der Artikel handelt hauptsächlich davon, wie sich Homeoffice auf die Teamkultur in Unternehmen auswirkt.","Don't read word for word — skim headline, first and last sentence of each paragraph first.","The article is mainly about how working from home affects team culture in companies.")
+  ]},
+  {lessons:[ // Day 212
+    L("B2-Prüfung: Lesen Teil 2 — Detailverständnis (Aussagen zuordnen)","Read a text and write 5 true/false statements about specific details in it, then check them against the text — practicing the statement-matching format of Lesen Teil 2.","Aussage: Die Firma hat die Umstellung ohne Probleme geschafft. → Falsch, laut Text gab es anfangs technische Schwierigkeiten.","This part rewards close reading of single sentences, not overall impressions.","Statement: The company managed the transition without problems. → False, according to the text there were initial technical difficulties.")
+  ]},
+  {lessons:[ // Day 213
+    L("B2-Prüfung: Lesen Teil 3 — Meinungen und Standpunkte erkennen","Read an opinion piece or commentary and write down which position the author takes and 2 phrases that signal it (meiner Ansicht nach, es lässt sich nicht leugnen, dass).","Der Autor vertritt die Ansicht, dass Homeoffice langfristig die Produktivität steigert. Erkennbar ist das an Formulierungen wie 'es lässt sich nicht leugnen, dass...'.","Look for opinion-signal phrases first, then decide which side they're arguing for.","The author holds the view that working from home increases productivity in the long run. This is recognizable from phrasings like 'it cannot be denied that...'.")
+  ]},
+  {lessons:[ // Day 214
+    L("B2-Prüfung: Lesen Teil 4/5 — Lückentext (Grammatik & Wortschatz)","Take a short text with 8 gaps and fill each one choosing between 3 similar words/grammar forms — practicing the cloze-test format that tests grammar and vocabulary precision.","Die Firma hat sich (dazu / darüber / dafür) entschieden, das Projekt zu verschieben. Trotz (des / dem / der) schlechten Wetters fand die Veranstaltung statt.","These trip people up on prepositions and case — go slowly and check each gap grammatically.","The company decided to postpone the project. Despite the bad weather, the event took place.")
+  ]},
+  {lessons:[ // Day 215
+    L("B2 Checkpoint: Mock-Leseverstehen (komplett, zeitlich begrenzt)","Do a full timed mock Leseverstehen (all parts, ~65 minutes if you can find a practice test online, or combine this week's texts), then write 3 sentences on which part felt hardest.","Teil 3 war für mich am schwierigsten, weil die Meinungen manchmal sehr indirekt ausgedrückt wurden.","Time yourself strictly — the real exam punishes lingering on one text.","Part 3 was the hardest for me because the opinions were sometimes expressed very indirectly.")
+  ]},
+  {lessons:[ // Day 216
+    L("B2-Prüfung: Hören Teil 1 — Alltagsgespräche (Globalverständnis)","Listen to a short everyday dialogue (announcement, phone call, conversation) and write the main topic and setting in one sentence each — practicing Hören Teil 1's global-listening strategy.","Thema: eine Terminverschiebung beim Arzt. Setting: ein Telefonat zwischen Patientin und Arztpraxis.","First listen just for who's talking and why — details come on the second pass.","Topic: a rescheduled doctor's appointment. Setting: a phone call between a patient and a doctor's office.")
+  ]},
+  {lessons:[ // Day 217
+    L("B2-Prüfung: Hören Teil 2 — Vortrag oder Interview (Detailverständnis)","Listen to a longer talk or interview (a podcast segment works) and write down 5 specific facts or numbers mentioned — practicing detail-tracking for Hören Teil 2.","Laut dem Interview arbeiten inzwischen über 30 Prozent der Angestellten mindestens teilweise im Homeoffice.","Jot down numbers and names the moment you hear them — they're easy to lose.","According to the interview, more than 30 percent of employees now work at least partly from home.")
+  ]},
+  {lessons:[ // Day 218
+    L("B2-Prüfung: Hören Teil 3 — Diskussion (Meinungen der Sprecher unterscheiden)","Listen to a discussion with 2-3 speakers and write down which position each speaker takes — practicing the speaker-differentiation skill needed for Hören Teil 3.","Sprecher A findet, dass die Regelung sinnvoll ist. Sprecherin B ist eher skeptisch und nennt praktische Bedenken.","Note each speaker's tone of voice too — it often signals agreement or disagreement before the words do.","Speaker A thinks the regulation makes sense. Speaker B is more skeptical and raises practical concerns.")
+  ]},
+  {lessons:[ // Day 219
+    L("B2-Prüfung: Hören Teil 4 — Kurze Texte (selektives Hören)","Listen to several short announcements or messages back to back and write the one key piece of information from each — practicing selective listening under time pressure for Hören Teil 4.","Durchsage 1: Der Zug hat 10 Minuten Verspätung. Durchsage 2: Gleis 3 wird zu Gleis 5 geändert.","You usually only hear these once in the real exam — resist the urge to relisten while practicing.","Announcement 1: The train is 10 minutes late. Announcement 2: The platform is changing from 3 to 5.")
+  ]},
+  {lessons:[ // Day 220
+    L("B2 Checkpoint: Mock-Hörverstehen (komplett, zeitlich begrenzt)","Do a full timed mock Hörverstehen (all 4 parts back to back), then write 3 sentences on which listening strategy (global, detail, or selective) still needs the most work.","Bei Teil 3 verliere ich manchmal den Überblick, wer was gesagt hat — das möchte ich noch üben.","No pausing, no rewinding — that's the whole point of a mock test.","In part 3 I sometimes lose track of who said what — I want to practice that more.")
+  ]},
+  {lessons:[ // Day 221
+    L("B2-Prüfung: Formeller Brief — vollständige Wiederholung","Write a complete, timed formal letter (Beschwerde, Anfrage, or Bewerbung — your choice) covering all required parts: Anrede, Einleitung, Hauptteil, Schluss, Grußformel.","Sehr geehrte Frau Müller, hiermit möchte ich mich nach dem aktuellen Stand meiner Anfrage vom letzten Monat erkundigen. Für eine kurze Rückmeldung wäre ich sehr dankbar.","Check afterward: did you use Sie consistently and at least one Konjunktiv-II politeness form?","Dear Ms. Müller, with this letter I would like to inquire about the current status of my request from last month. I would be very grateful for a brief reply.")
+  ]},
+  {lessons:[ // Day 222
+    L("B2-Prüfung: Meinungsaufsatz — mit allen Konnektoren","Write a complete, timed pro-contra essay (12+ sentences), deliberately using at least 4 different connector types from this course (obwohl, sodass, je...desto, zumal).","Je mehr Unternehmen auf Homeoffice setzen, desto wichtiger wird digitale Kommunikation — zumal viele Teams inzwischen über mehrere Standorte verteilt sind.","This is your chance to show off variety, not just correctness — mix short and long sentences.","The more companies rely on working from home, the more important digital communication becomes — especially since many teams are now spread across several locations.")
+  ]},
+  {lessons:[ // Day 223
+    L("B2-Prüfung: Grafikbeschreibung — vollständige Wiederholung","Find a new chart or statistic and write a complete, timed description (8+ sentences) following the fixed structure: Einleitung, Beschreibung der Hauptdaten, Vermutung zu den Gründen, Schluss/Ausblick.","Die Grafik zeigt die Entwicklung der Studierendenzahlen in Deutschland zwischen 2015 und 2025. Besonders auffällig ist der Anstieg internationaler Studierender.","Stick to the fixed skeleton every time — examiners reward the structure as much as the content.","The chart shows the development of student numbers in Germany between 2015 and 2025. The rise in international students is especially notable.")
+  ]},
+  {lessons:[ // Day 224
+    L("B2 Checkpoint: Timed Schreiben-Mock (Brief + Aufsatz in einer Sitzung)","Do a full timed writing mock: one letter and one essay, back to back within the real exam's time limit, then self-grade both against the B2 criteria (structure, connectors, register).","A complete timed double-task writing mock, self-graded on structure, connectors, and register.","Switching register between a formal letter and an opinion essay in one sitting is its own skill — notice how it feels.")
+  ]},
+  {lessons:[ // Day 225
+    L("B2-Prüfung: Kurzvortrag wiederholen — mit Rückfragen","Redo the short presentation format from Day 203 on a new topic, then have your husband ask you 2 follow-up questions in German that you answer on the spot — practicing the real exam's Q&A add-on.","Zum Abschluss möchte ich betonen, dass beide Optionen ihre Vorteile haben. — Und was würden Sie persönlich wählen? — Ich persönlich würde mich für die flexiblere Option entscheiden.","The follow-up question is where examiners really test spontaneous speech — don't over-rehearse the answer.","In conclusion, I'd like to emphasize that both options have their advantages. — And what would you personally choose? — Personally, I would choose the more flexible option.")
+  ]},
+  {lessons:[ // Day 226
+    L("B2-Prüfung: Diskussion führen (Sprechen Teil 2)","With your husband, hold a 4-minute discussion in German on a given topic, practicing agreement/disagreement phrases (da stimme ich dir zu, das sehe ich anders, das kommt darauf an) — the real B2 speaking task 2 format.","Das sehe ich etwas anders — ich glaube, dass gerade für junge Familien Flexibilität wichtiger ist als ein hohes Gehalt.","Aim to actually react to what your partner says, not just deliver prepared points.","I see that a bit differently — I think that for young families in particular, flexibility is more important than a high salary.")
+  ]},
+  {lessons:[ // Day 227
+    L("Sprechen: Ein Bild oder Foto beschreiben (Bildbeschreibung)","Pick a photo and describe it out loud for 1-2 minutes, then write 6 sentences using spatial prepositions and descriptive vocabulary (im Vordergrund, im Hintergrund, es scheint, dass).","Im Vordergrund des Bildes sieht man eine Familie am Frühstückstisch. Im Hintergrund erkennt man eine große Fensterfront. Es scheint, dass die Szene an einem Wochenende spielt.","This skill also helps with Grafikbeschreibung — describing what you see before interpreting it.","In the foreground of the picture you can see a family at the breakfast table. In the background you can make out a large window front. It seems the scene takes place on a weekend.")
+  ]},
+  {lessons:[ // Day 228
+    L("B2 Checkpoint: Mock-Sprechen (komplett, zeitlich begrenzt)","Do a full timed mock Sprechen exam with your husband: Kurzvortrag with Rückfragen, then a 4-minute Diskussion, then write 3 self-corrections.","Ich habe in der Diskussion zu wenig widersprochen — ich sollte auch mal klar anderer Meinung sein.","Record it on your phone if you can — hearing yourself back is more useful than it feels in the moment.","I didn't disagree enough during the discussion — I should also be more willing to clearly hold a different opinion.")
+  ]},
+  {lessons:[ // Day 229
+    L("B2 Wortschatz: Idiome und Redewendungen","Learn 6 common B2-level idioms (die Kirche im Dorf lassen, ins Wasser fallen, den Nagel auf den Kopf treffen, unter die Arme greifen, aus allen Wolken fallen, Schwein haben) and write one sentence with each.","Lass uns die Kirche im Dorf lassen, das Problem ist wirklich nicht so groß. Der Ausflug ist leider ins Wasser gefallen.","Don't translate these literally to your husband — guess the meaning from context first, then check.","Let's not blow this out of proportion, the problem really isn't that big. Unfortunately, the trip fell through.")
+  ]},
+  {lessons:[ // Day 230
+    L("Grammatik-Wiederholung: Konjunktiv II der Vergangenheit (hypothetisch)","Write 6 sentences about hypothetical past scenarios using Konjunktiv II Vergangenheit (hätte gemacht, wäre gegangen) — what you would have done differently.","Wenn ich das gewusst hätte, wäre ich früher losgefahren. Hätte ich mehr Zeit gehabt, hätte ich das Projekt gründlicher vorbereitet.","Ich wär früher losgefahren, wenn ich's gewusst hätte, ehrlich.","If I had known that, I would have left earlier. If I'd had more time, I would have prepared the project more thoroughly.")
+  ]},
+  {lessons:[ // Day 231
+    L("Grammatik-Wiederholung: Alle Konnektoren im Überblick","Write 6 sentences, each using a different connector type from across the whole B2 phase (concessive, causal, conditional, result, comparative) to check you can still call on all of them.","Obwohl das Wetter schlecht war, sind wir gewandert. Je länger ich hier lebe, desto besser verstehe ich die Kultur. Sofern nichts dazwischenkommt, treffen wir uns am Freitag.","Try this without looking anything up first, then check which connector type felt shakiest.","Although the weather was bad, we went hiking. The longer I live here, the better I understand the culture. Provided nothing comes up, we'll meet on Friday.")
+  ]},
+  {lessons:[ // Day 232
+    L("Über kulturelle Unterschiede sprechen (Leben in Deutschland)","Write a paragraph (8+ sentences) reflecting on cultural differences you've noticed living in Germany, and how your perspective has changed over time.","Am Anfang fand ich die Direktheit der Deutschen ungewohnt, aber inzwischen schätze ich sie sehr. Es gibt vieles, das ich anders mache als früher.","Am Anfang fand ich das mit der direkten Art schon komisch, ehrlich, aber jetzt mag ich's.","At first I found the directness of Germans unfamiliar, but now I really appreciate it. There's a lot I do differently than I used to.")
+  ]},
+  {lessons:[ // Day 233
+    L("Über die eigene Sprachlernreise sprechen","Write a paragraph (8+ sentences) reflecting on your German-learning journey so far: what motivated you, what was hardest, and what you're proud of.","Als ich angefangen habe, konnte ich kaum einen ganzen Satz bilden, und jetzt kann ich über komplexe Themen diskutieren. Am schwierigsten fiel mir am Anfang die Grammatik, aber mit der Zeit wurde es leichter.","Am Anfang konnt ich kaum n ganzen Satz raus bringen, ehrlich, und jetzt red ich einfach drauf los.","When I started, I could barely form a whole sentence, and now I can discuss complex topics. Grammar was hardest for me at the start, but it got easier over time.")
+  ]},
+  {lessons:[ // Day 234
+    L("Small Talk und Networking auf Deutsch","Write a short dialogue (10+ lines) making professional small talk at a networking event: introducing yourself, asking about someone's work, and exchanging contact details.","Darf ich mich kurz vorstellen? Ich arbeite gerade als Auszubildende im Bereich Buchhaltung. Und Sie, womit beschäftigen Sie sich beruflich? — Hätten Sie vielleicht eine Visitenkarte für mich?","Darf ich mich kurz vorstellen? Ich mach grad ne Ausbildung in der Buchhaltung.","May I introduce myself? I'm currently training as an apprentice in accounting. And you, what's your line of work? — Would you happen to have a business card for me?")
+  ]},
+  {lessons:[ // Day 235
+    L("Volle Mock-Prüfung, Teil 1: Lesen + Hören (zeitlich begrenzt)","Do the reading and listening sections of a full B2 mock exam back to back, under real time limits, then write your estimated score for each.","Lesen: ca. 80% richtig geschätzt. Hören: ca. 75% richtig geschätzt.","Simulate real conditions as closely as you can — no phone, no pausing, one sitting.","Reading: roughly 80% correct estimated. Listening: roughly 75% correct estimated.")
+  ]},
+  {lessons:[ // Day 236
+    L("Volle Mock-Prüfung, Teil 2: Schreiben (zeitlich begrenzt)","Do the writing section of a full B2 mock exam (letter + essay or letter + Grafikbeschreibung) under real time limits, then self-grade using the B2 criteria you've practiced.","A complete timed writing mock exam, self-graded on task fulfillment, structure, connectors, and register.","Resist editing as you go — writing under real time pressure means moving forward, not perfecting each sentence.")
+  ]},
+  {lessons:[ // Day 237
+    L("Volle Mock-Prüfung, Teil 3: Sprechen (zeitlich begrenzt)","With your husband, do the speaking section of a full B2 mock exam (Kurzvortrag + Rückfragen + Diskussion) under real time limits, then write 3 sentences of self-feedback.","Der Kurzvortrag lief gut, aber bei der Diskussion habe ich manchmal nach Wörtern gesucht.","The short presentation went well, but during the discussion I sometimes searched for words.")
+  ]},
+  {lessons:[ // Day 238
+    L("Fehleranalyse: Die Mock-Prüfung auswerten","Go back through all three mock-exam days (235-237) and list your 8 most common mistakes, grouped by type (Grammatik, Wortschatz, Struktur), with a correction for each.","Fehler: 'trotz des schlechte Wetter' → Korrektur: 'trotz des schlechten Wetters' (Genitiv-Endung vergessen).","Grouping by type shows you patterns a single mistake never would — that's the real value of this exercise.","Mistake: 'despite the bad weather' with the wrong ending → Correction: with the correct genitive ending (I forgot the genitive ending).")
+  ]},
+  {lessons:[ // Day 239
+    L("Letzte gezielte Wiederholung: schwächster Bereich","Based on Day 238's error analysis, pick your single weakest category and spend today entirely on it: write 8 new sentences deliberately targeting that exact weakness.","8 new sentences, all deliberately targeting whichever error category showed up most in your Day 238 analysis.","One category, eight sentences, no exceptions — depth beats variety today.")
+  ]},
+  {lessons:[ // Day 240
+    L("B2 Checkpoint: Abschluss-Selbsteinschätzung & Ausblick auf C1","Rate yourself 1-5 on Hören, Lesen, Schreiben, and Sprechen for the whole B2 phase, write 3 sentences on your biggest overall improvement since Day 151, and 2 sentences on what you'd want to focus on first in C1.","Hören: 4/5. Lesen: 5/5. Schreiben: 4/5. Sprechen: 4/5. Der größte Fortschritt seit Tag 151 ist, dass ich jetzt frei und ohne viel Nachdenken über komplexe Themen sprechen kann. Für C1 möchte ich vor allem an einem noch differenzierteren Wortschatz arbeiten.","Hab seit Tag 151 echt riesige Fortschritte gemacht, vor allem beim freien Reden — für C1 will ich jetzt an nuanciertem Wortschatz feilen.","Listening: 4/5. Reading: 5/5. Writing: 4/5. Speaking: 4/5. My biggest progress since Day 151 is that I can now speak about complex topics freely and without much hesitation. For C1 I especially want to work on more nuanced vocabulary.")
+  ]}
+];
+GERMAN_DAYS.push(...GERMAN_DAYS_B2_PART3);
+
+/* ---- Full plan: A1 -> A2 -> B1 -> B2, an 8-month timeline (240 days)
+   aimed at genuine working/comfortable fluency, not just an exam pass —
+   B1 lands around month 5 so applications can go out while B2 work
+   continues underneath. A1 through B2 (Days 1-240) are now fully
+   written with real daily lessons; CONTENT_END_DAY marks how far that
+   reaches. Days 241+ (Buffer & Review) still just track your daily
+   writing/immersion/speaking so nothing goes unlogged if you need
+   extra time before moving on. ---- */
 const PHASES = [
   {id:"a1",  from:1,   to:30,  label:"A1 — Foundations",                        months:"Month 1"},
   {id:"a2",  from:31,  to:90,  label:"A2 — Building Fluency",                   months:"Months 2–3"},
@@ -1282,7 +1399,7 @@ function phaseForDay(day){
   return PHASES.find(p=>day>=p.from && day<=p.to) || PHASES[PHASES.length-1];
 }
 const A1_PHASE_END = 30;
-const CONTENT_END_DAY = 204; // raise this as more phases get written (A2 + B1 fully written, B2 Part 1 + Part 2 written: 1-204; B2 Days 205-240 — the last 40% — still to come)
+const CONTENT_END_DAY = 240; // A1 through B2 fully written (Days 1-240) — the entire 8-month core plan now has real daily lessons; Days 241+ are buffer/review weeks (see PHASES) and still just track logging until written
 const TOTAL_CORE_DAYS = 240; // 8-month core plan (Days 1-240) to B2, buffer is extra
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
