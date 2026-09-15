@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>7 Day Plan — Weekly Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,100 +11,92 @@
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-row">
-    <div class="brand">
-      <span class="brand-mark">7</span>
-      <div class="brand-text">
-        <h1>7 Days Plan</h1>
-        <p>Small steps &nbsp;—&nbsp; big goals</p>
-      </div>
-    </div>
-
-    <nav class="view-switch" id="viewSwitch">
-      <button data-view="week" class="active">Week</button>
-      <button data-view="month">Month</button>
-      <button data-view="year">Year</button>
-    </nav>
-
-    <div class="week-box">
-      <div class="week-badge">
-        <span class="week-badge-label">Week:</span>
-        <span id="weekRange" class="week-badge-range">—</span>
-        <button id="favWeek" class="heart-btn" aria-pressed="false" aria-label="Mark this week as a favorite" title="Favorite this week">
-          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 20.2s-7.6-4.6-10.1-9.3C.4 8 1.6 4.6 4.8 3.6c2-.6 4 .1 5.2 1.9 1.2-1.8 3.2-2.5 5.2-1.9 3.2 1 4.4 4.4 2.9 7.3C19.6 15.6 12 20.2 12 20.2z" fill="currentColor"/></svg>
-        </button>
-      </div>
-    </div>
+<header class="chrome">
+  <div class="chrome-brand">
+    <span class="chrome-mark">7</span>
+    <span class="chrome-word">7 Days Plan</span>
   </div>
 
-  <div class="topbar-rule">
-    <span class="rule"></span>
-    <span class="tagline-small">A Better Me</span>
+  <div class="chrome-weeknav">
+    <button id="prevWeek" class="mini-arrow" aria-label="Previous week">
+      <svg viewBox="0 0 24 24" width="12" height="12"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="jumpToday" class="mini-link">Today</button>
+    <button id="nextWeek" class="mini-arrow" aria-label="Next week">
+      <svg viewBox="0 0 24 24" width="12" height="12"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="favWeek" class="heart-btn" aria-pressed="false" aria-label="Favorite this week">
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 20.2s-7.6-4.6-10.1-9.3C.4 8 1.6 4.6 4.8 3.6c2-.6 4 .1 5.2 1.9 1.2-1.8 3.2-2.5 5.2-1.9 3.2 1 4.4 4.4 2.9 7.3C19.6 15.6 12 20.2 12 20.2z" fill="currentColor"/></svg>
+    </button>
+  </div>
+
+  <nav class="view-switch" id="viewSwitch">
+    <button data-view="week" class="active">Week</button>
+    <button data-view="month">Month</button>
+    <button data-view="year">Year</button>
+  </nav>
+
+  <div class="chrome-actions">
+    <button id="exportData" class="chrome-link">Export</button>
+    <label class="chrome-link file-import">Import<input type="file" id="importData" accept="application/json" hidden></label>
   </div>
 </header>
 
 <main id="app">
 
-  <!-- WEEK VIEW -->
-  <section id="weekView" class="view">
+  <!-- WEEK VIEW — the entire planner as one fit-to-screen sheet -->
+  <section id="weekView" class="view stage-view">
+    <div class="planner-stage" id="plannerStage">
+      <div class="planner-canvas" id="plannerCanvas">
 
-    <div class="week-nav">
-      <button id="prevWeek" class="nav-arrow" aria-label="Previous week">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button id="jumpToday" class="link-btn">Jump to this week</button>
-      <button id="nextWeek" class="nav-arrow" aria-label="Next week">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
+        <div class="sheet-header">
+          <div class="sheet-title">
+            <h1>7 Days Plan</h1>
+            <p>Small steps <span class="sep">&mdash;</span> big goals</p>
+          </div>
+          <div class="sheet-week">
+            <span class="sheet-week-label">Week:</span>
+            <span id="weekRange" class="sheet-week-value">&mdash;</span>
+          </div>
+        </div>
 
-    <div class="table-scroll">
-      <table class="tracker-table" id="trackerTable">
-        <thead>
-          <tr>
-            <th class="row-label-col"></th>
-            <th data-day="mon">Monday</th>
-            <th data-day="tue">Tuesday</th>
-            <th data-day="wed">Wednesday</th>
-            <th data-day="thu">Thursday</th>
-            <th data-day="fri">Friday</th>
-            <th data-day="sat">Saturday</th>
-            <th data-day="sun">Sunday</th>
-          </tr>
-        </thead>
-        <tbody id="trackerBody">
-          <!-- rows injected by app.js -->
-        </tbody>
-      </table>
-    </div>
+        <div class="sheet-rule"><span></span><em>A Better Me</em></div>
 
-    <div class="bottom-grid">
-      <div class="panel">
-        <h3><span class="panel-icon gold"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2l1.9 5.9L20 9l-6.1 1.1L12 16l-1.9-5.9L4 9l6.1-1.1L12 2z" fill="currentColor"/></svg></span>Top 3 Priorities This Week</h3>
-        <ol class="priority-list" id="priorityList">
-          <li><input type="text" data-priority="0" placeholder="Priority one"></li>
-          <li><input type="text" data-priority="1" placeholder="Priority two"></li>
-          <li><input type="text" data-priority="2" placeholder="Priority three"></li>
-        </ol>
+        <div class="sheet-grid" id="sheetGrid">
+          <!-- day-header row + 6 category rows injected by app.js -->
+        </div>
+
+        <div class="sheet-bottom">
+          <div class="sheet-panel">
+            <h3><i class="p-ic">
+              <svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 2l1.9 5.9L20 9l-6.1 1.1L12 16l-1.9-5.9L4 9l6.1-1.1L12 2z" fill="currentColor"/></svg>
+            </i>Top 3 Priorities This Week</h3>
+            <ol class="priority-list" id="priorityList">
+              <li><input type="text" data-priority="0" placeholder="Priority one"></li>
+              <li><input type="text" data-priority="1" placeholder="Priority two"></li>
+              <li><input type="text" data-priority="2" placeholder="Priority three"></li>
+            </ol>
+          </div>
+          <div class="sheet-panel">
+            <h3><i class="p-ic">
+              <svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 20.2s-7.6-4.6-10.1-9.3C.4 8 1.6 4.6 4.8 3.6c2-.6 4 .1 5.2 1.9 1.2-1.8 3.2-2.5 5.2-1.9 3.2 1 4.4 4.4 2.9 7.3C19.6 15.6 12 20.2 12 20.2z" fill="currentColor"/></svg>
+            </i>Notes / Reminders</h3>
+            <textarea id="weekNotes" placeholder="Anything you don't want to forget this week..."></textarea>
+          </div>
+          <div class="sheet-panel">
+            <h3><i class="p-ic">
+              <svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 2C7 4 4 8 4 13a8 8 0 0016 0c0-5-3-9-8-11zm0 16a5 5 0 01-5-5c0-2 1-4 5-6 4 2 5 4 5 6a5 5 0 01-5 5z" fill="currentColor"/></svg>
+            </i>Weekly Reflection</h3>
+            <label class="reflect-label">What went well?</label>
+            <textarea id="reflectGood" class="reflect-area"></textarea>
+            <label class="reflect-label">What can be better?</label>
+            <textarea id="reflectBetter" class="reflect-area"></textarea>
+          </div>
+        </div>
+
+        <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
+
       </div>
-      <div class="panel">
-        <h3><span class="panel-icon pink"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 20.2s-7.6-4.6-10.1-9.3C.4 8 1.6 4.6 4.8 3.6c2-.6 4 .1 5.2 1.9 1.2-1.8 3.2-2.5 5.2-1.9 3.2 1 4.4 4.4 2.9 7.3C19.6 15.6 12 20.2 12 20.2z" fill="currentColor"/></svg></span>Notes / Reminders</h3>
-        <textarea id="weekNotes" rows="6" placeholder="Anything you don't want to forget this week..."></textarea>
-      </div>
-      <div class="panel">
-        <h3><span class="panel-icon green"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 2C7 4 4 8 4 13a8 8 0 0016 0c0-5-3-9-8-11zm0 16a5 5 0 01-5-5c0-2 1-4 5-6 4 2 5 4 5 6a5 5 0 01-5 5z" fill="currentColor"/></svg></span>Weekly Reflection</h3>
-        <label class="reflect-label">What went well?</label>
-        <textarea id="reflectGood" rows="2"></textarea>
-        <label class="reflect-label">What can be better?</label>
-        <textarea id="reflectBetter" rows="2"></textarea>
-      </div>
-    </div>
-
-    <div class="page-foot">
-      <span class="rule"></span>
-      <span class="page-foot-text">Consistency creates results</span>
-      <span class="rule"></span>
     </div>
   </section>
 
@@ -114,7 +106,7 @@
       <button id="prevMonth" class="nav-arrow" aria-label="Previous month">
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div class="week-label"><span id="monthRange">—</span></div>
+      <div class="week-label"><span id="monthRange">&mdash;</span></div>
       <button id="nextMonth" class="nav-arrow" aria-label="Next month">
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -136,7 +128,7 @@
       <button id="prevYear" class="nav-arrow" aria-label="Previous year">
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div class="week-label"><span id="yearRange">—</span></div>
+      <div class="week-label"><span id="yearRange">&mdash;</span></div>
       <button id="nextYear" class="nav-arrow" aria-label="Next year">
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -153,14 +145,6 @@
   </section>
 
 </main>
-
-<footer class="foot">
-  <span>© <span id="yearNow"></span> 7 Days Plan</span>
-  <span class="foot-sep">·</span>
-  <button id="exportData" class="link-btn">Export backup</button>
-  <span class="foot-sep">·</span>
-  <label class="link-btn file-import">Import backup<input type="file" id="importData" accept="application/json" hidden></label>
-</footer>
 
 <script src="app.js"></script>
 </body>
