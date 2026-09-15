@@ -178,34 +178,51 @@
   <section id="germanView" class="view hidden">
     <div class="report-page german-page">
 
-      <div class="sheet-header report-header german-hero">
-        <div class="sheet-title">
-          <h1>Goethe B1 Path</h1>
-          <p>A1 <span class="sep">&rarr;</span> A2 <span class="sep">&rarr;</span> B1 <span class="sep">&mdash;</span> 6–7 months, exam-ready &amp; street-ready</p>
-        </div>
-        <div class="german-progress-badge">
-          <div class="german-progress-ring-wrap">
-            <svg viewBox="0 0 60 60" width="56" height="56" class="progress-ring">
-              <circle cx="30" cy="30" r="26" fill="none" class="progress-ring-track" stroke-width="6"/>
-              <circle id="germanRingFg" cx="30" cy="30" r="26" fill="none" stroke="#c0392b" stroke-width="6" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+      <div class="g-hero">
+        <p class="g-eyebrow">Language Path</p>
+        <h1 class="g-title">Goethe B1 Path</h1>
+        <p class="g-subtitle">A1 <span class="sep">&rarr;</span> A2 <span class="sep">&rarr;</span> B1 <span class="sep">&mdash;</span> 6–7 months, exam-ready &amp; street-ready</p>
+
+        <div class="g-progress-row">
+          <div class="g-progress-ring-wrap">
+            <svg viewBox="0 0 60 60" width="60" height="60">
+              <circle cx="30" cy="30" r="26" fill="none" class="g-ring-track" stroke-width="5"/>
+              <circle id="germanRingFg" class="g-ring-fg" cx="30" cy="30" r="26" fill="none" stroke-width="5" stroke-linecap="round" transform="rotate(-90 30 30)"/>
             </svg>
-            <span id="germanRingLabel" class="progress-ring-label">0/180</span>
+            <span id="germanRingLabel" class="g-ring-label">0/180</span>
           </div>
-          <div class="german-progress-text">
+          <div class="g-progress-copy">
             <strong>Days Completed</strong>
             <span id="germanProgressSub">Now in: A1 — Foundations (Month 1)</span>
           </div>
+          <span class="g-progress-chevron">
+            <svg viewBox="0 0 24 24" width="15" height="15"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+
+        <div class="g-goal-row">
+          <span class="g-goal-icon">
+            <svg viewBox="0 0 24 24" width="13" height="13"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M17 7l3-3m0 0h-2.4M20 4v2.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <p class="g-goal-text"><strong>Goal:</strong> pass the Goethe B1 exam <span class="g-goal-dim">(B2 if the pace holds)</span></p>
         </div>
       </div>
 
-      <p class="german-goal-note">Goal: pass the Goethe B1 exam <span class="goal-note-dim">(B2 if the pace holds)</span></p>
-
       <div class="slang-card" id="slangCard"><!-- injected by app.js --></div>
 
-      <nav class="german-subnav" id="germanSubnav">
-        <button data-sub="daily" class="active">Daily Learning</button>
-        <button data-sub="tests">A1 Tests</button>
-        <button data-sub="mock">Mock Exams</button>
+      <nav class="g-tabs" id="germanSubnav">
+        <button data-sub="daily" class="active">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 014 18.5v-13z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5A1.5 1.5 0 0020 18.5v-13z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          Daily Learning
+        </button>
+        <button data-sub="tests">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 3.5h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 12h5M9.5 15.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          A1 Tests
+        </button>
+        <button data-sub="mock">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 9h17M8 3v3M16 3v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Mock Exams
+        </button>
       </nav>
 
       <!-- DAILY LEARNING SUB-VIEW -->
