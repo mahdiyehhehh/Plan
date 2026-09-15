@@ -287,7 +287,21 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
    instead of being shrunk down. It used to inherit `overflow:hidden`
    from <main>, which silently clipped the bottom half of the page;
    this rule is the fix for that. */
-#germanView{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 30px 40px;}
+#germanView{
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  padding:22px 18px 48px;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0/16px 16px,
+    var(--offwhite);
+}
+/* THE FIX: inside a flex column (.view), a block child with only
+   max-width won't shrink below its content's natural size — that's
+   why the page rendered ~1120px wide on a 390px phone and had to be
+   swiped sideways to read. Forcing width:100% + min-width:0 makes it
+   behave like a normal responsive page. */
+#germanView > .report-page{width:100%;min-width:0;}
+
+.german-page{max-width:800px;}
 
 .german-goal-note{font-size:12.5px;line-height:1.6;color:var(--grey-dark);margin:14px 0 0;max-width:72ch;}
 .german-goal-note strong{color:var(--black);}
@@ -296,7 +310,12 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 .view-switch button.german-nav-btn.active{background:var(--red);color:var(--white) !important;}
 
 .german-hero{align-items:center;}
-.german-progress-badge{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:999px;padding:8px 18px 8px 8px;background:var(--offwhite);white-space:nowrap;}
+.german-progress-badge{
+  display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:999px;
+  padding:8px 18px 8px 8px;
+  background:linear-gradient(135deg,#fff 0%,var(--offwhite) 100%);
+  white-space:nowrap;box-shadow:var(--shadow-sm);
+}
 .german-progress-ring-wrap{position:relative;width:56px;height:56px;flex:none;}
 .progress-ring circle{transition:stroke-dashoffset .4s ease;}
 .progress-ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:12px;color:var(--black);}
@@ -315,14 +334,40 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 
 /* ---- phrase / slang of the day (pinned above the tabs) ---- */
 .slang-card{
-  border:1px solid var(--line);border-left:4px solid var(--red);border-radius:var(--radius-md);
-  background:var(--offwhite);padding:14px 16px;margin-bottom:18px;
+  position:relative;overflow:hidden;
+  border:1px solid #2a2a2a;border-radius:14px;
+  background:linear-gradient(150deg,#171717 0%,#111111 60%,#1c1210 100%);
+  padding:18px 20px 20px;margin-bottom:20px;
+  box-shadow:0 10px 26px rgba(17,17,17,.16);
 }
-.slang-card-eyebrow{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);display:block;margin-bottom:6px;}
-.slang-card-phrase{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
-.slang-card-phrase h4{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0;}
-.slang-card-meaning{font-size:12.5px;color:var(--black);margin:4px 0 0;}
-.slang-card-note{font-size:11.5px;color:var(--grey-dark);margin:5px 0 0;font-style:italic;line-height:1.5;}
+.slang-card::after{
+  content:"";position:absolute;top:-40px;right:-40px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,rgba(192,57,43,.35),transparent 70%);pointer-events:none;
+}
+.slang-card-eyebrow{
+  font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#ff8a75;
+  display:flex;align-items:center;gap:6px;margin-bottom:10px;
+}
+.slang-card-eyebrow .day-of{color:rgba(255,255,255,.4);font-weight:700;}
+.slang-card-pair{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;margin-bottom:8px;}
+.slang-card-phrase h4{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin:0;color:var(--white);}
+.slang-card-exam{font-size:11px;color:rgba(255,255,255,.55);font-weight:600;}
+.slang-card-exam strong{color:rgba(255,255,255,.85);font-weight:600;font-style:normal;}
+.slang-card-meaning{font-size:12.5px;color:rgba(255,255,255,.88);margin:2px 0 0;}
+.slang-card-note{font-size:11.5px;color:rgba(255,255,255,.55);margin:8px 0 0;line-height:1.55;position:relative;z-index:1;}
+
+/* ---- exam-correct vs. how-Germans-actually-say-it, side by side ---- */
+.example-pair{display:grid;grid-template-columns:1fr;gap:8px;}
+@media (min-width:560px){ .example-pair{grid-template-columns:1fr 1fr;} }
+.example-box{position:relative;}
+.example-box .example-tag{
+  display:block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  margin-bottom:6px;font-style:normal;
+}
+.example-box.exam-box{background:var(--red-tint);border:1px solid #f0d3cf;color:#7a2a20;}
+.example-box.exam-box .example-tag{color:var(--red);}
+.example-box.natural-box{background:#eef6f0;border:1px solid #cfe6d5;color:#245b34;}
+.example-box.natural-box .example-tag{color:#2e7d32;}
 
 /* ---- Forvo pronunciation link (used next to vocab & slang) ---- */
 .forvo-btn{
@@ -355,7 +400,7 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 }
 
 /* ---- daily learning card ---- */
-.daily-card{border:1px solid var(--line);border-radius:var(--radius-md);padding:20px 22px;background:var(--offwhite);}
+.daily-card{border:1px solid var(--line);border-radius:var(--radius-md);padding:20px 22px;background:var(--offwhite);box-shadow:var(--shadow-sm);}
 .daily-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:4px;}
 .daily-card-head h2{font-family:'Fraunces',serif;font-size:22px;font-weight:600;}
 .daily-card-head .day-topic-tag{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--red);background:var(--red-tint);padding:4px 10px;border-radius:999px;}
