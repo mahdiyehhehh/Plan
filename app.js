@@ -89,6 +89,59 @@ function esc(v){
   return String(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 }
 
+/* ---- Forvo pronunciation links: every German word (and now every number)
+   inside an example or phrase sentence becomes a link straight to that
+   word's Forvo page, so tapping "ich" or "bin" opens forvo.com/word/ich/
+   or /word/bin/, and tapping "22" opens the page for "zweiundzwanzig". ---- */
+function forvoLink(word){
+  return `https://forvo.com/word/${encodeURIComponent(word.toLowerCase())}/#de`;
+}
+const GERMAN_ONES = ["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn","elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"];
+const GERMAN_TENS = {2:"zwanzig",3:"dreißig",4:"vierzig",5:"fünfzig",6:"sechzig",7:"siebzig",8:"achtzig",9:"neunzig"};
+function germanBelowHundred(n){
+  if(n<20) return GERMAN_ONES[n];
+  const t = Math.floor(n/10), r = n%10;
+  if(r===0) return GERMAN_TENS[t];
+  return (r===1?"ein":GERMAN_ONES[r]) + "und" + GERMAN_TENS[t];
+}
+function germanBelowThousand(n){
+  if(n<100) return germanBelowHundred(n);
+  const h = Math.floor(n/100), r = n%100;
+  const hPart = (h===1?"":GERMAN_ONES[h]) + "hundert";
+  return r===0 ? hPart : hPart + germanBelowHundred(r);
+}
+function germanNumberWord(n){
+  if(n===0) return "null";
+  if(n<1000) return germanBelowThousand(n);
+  const th = Math.floor(n/1000), r = n%1000;
+  const thPart = (th===1?"":germanBelowThousand(th)) + "tausend";
+  return r===0 ? thPart : thPart + germanBelowThousand(r);
+}
+function forvoWords(text){
+  if(!text) return "";
+  return String(text).split(/([A-Za-zÄÖÜäöüß]+|\d+)/).map(part=>{
+    if(/^[A-Za-zÄÖÜäöüß]+$/.test(part)){
+      return `<a class="fv-word" href="${forvoLink(part)}" target="_blank" rel="noopener noreferrer" title="Hear &quot;${esc(part)}&quot; on Forvo">${esc(part)}</a>`;
+    }
+    if(/^\d+$/.test(part)){
+      // Numbers like "0153" (phone digits) are spoken digit-by-digit in
+      // German, so link each digit on its own. Plain numbers like "22"
+      // are spoken as one word, so link the whole thing at once.
+      if(part.length>1 && part[0]==="0"){
+        return part.split("").map(d=>{
+          const w = GERMAN_ONES[+d];
+          return `<a class="fv-word" href="${forvoLink(w)}" target="_blank" rel="noopener noreferrer" title="Hear &quot;${w}&quot; on Forvo">${d}</a>`;
+        }).join("");
+      }
+      const n = parseInt(part,10);
+      if(n>999999) return esc(part);
+      const w = germanNumberWord(n);
+      return `<a class="fv-word" href="${forvoLink(w)}" target="_blank" rel="noopener noreferrer" title="Hear &quot;${w}&quot; (${esc(part)}) on Forvo">${esc(part)}</a>`;
+    }
+    return esc(part);
+  }).join("");
+}
+
 /* ---------- category definitions ---------- */
 const CATEGORIES = [
   {
@@ -430,6 +483,7 @@ function ensureGerman(){
   if(!state.german) state.german = {};
   if(!state.german.days) state.german.days = {};
   if(!state.german.tests) state.german.tests = {};
+  if(!state.german.mockExams) state.german.mockExams = [];
   if(!state.german.currentDay) state.german.currentDay = 1;
   germanCurrentDay = state.german.currentDay;
 }
@@ -438,7 +492,8 @@ let germanOpenTest = null;
 
 function lessonCountForDay(day){
   const d = GERMAN_DAYS[day-1];
-  return (d && d.lessons && d.lessons.length) || 1;
+  if(!d) return 0; // phase not authored yet
+  return (d.lessons && d.lessons.length) || 1;
 }
 function getDayRecord(day){
   let rec = state.german.days[day];
@@ -453,6 +508,11 @@ function getDayRecord(day){
   }
   const count = lessonCountForDay(day);
   while(rec.lessons.length < count) rec.lessons.push({answer:"", notes:"", done:false});
+  if(rec.writing===undefined) rec.writing = "";
+  if(rec.listeningDone===undefined) rec.listeningDone = false;
+  if(rec.listeningNotes===undefined) rec.listeningNotes = "";
+  if(rec.speakingDone===undefined) rec.speakingDone = false;
+  if(rec.speakingNotes===undefined) rec.speakingNotes = "";
   return rec;
 }
 function dayIsDone(day){
@@ -584,6 +644,27 @@ const GERMAN_DAYS = [
   ]}
 ];
 
+/* ---- Full plan: A1 -> A2 -> B1, sized for a 6-7 month timeline at
+   ~2.5 hrs/day (roughly matches Goethe's published hour estimates per
+   level). A1 (Days 1-30) is fully written out above. A2 and B1 content
+   is being added phase by phase — CONTENT_END_DAY marks how far the
+   real lessons currently reach; days beyond that still track your daily
+   writing/listening/speaking so nothing goes unlogged while content
+   catches up. ---- */
+const PHASES = [
+  {id:"a1",  from:1,   to:30,  label:"A1 — Foundations",              months:"Month 1"},
+  {id:"a2",  from:31,  to:90,  label:"A2 — Building Fluency",         months:"Months 2–3"},
+  {id:"b1g", from:91,  to:150, label:"B1 — Grammar Core",             months:"Months 4–5"},
+  {id:"b1p", from:151, to:180, label:"B1 — Exam Prep & Mock Tests",   months:"Month 6"},
+  {id:"buf", from:181, to:210, label:"Buffer & Review",               months:"Month 7 (if needed)"}
+];
+function phaseForDay(day){
+  return PHASES.find(p=>day>=p.from && day<=p.to) || PHASES[PHASES.length-1];
+}
+const A1_PHASE_END = 30;
+const CONTENT_END_DAY = 30; // raise this as more phases get written
+const TOTAL_CORE_DAYS = 180; // 6-month core plan (Days 1-180), buffer is extra
+
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
    Always shown alongside the normal homework, before AND after A1 is finished. */
 const DAILY_CHALLENGES = [
@@ -632,7 +713,7 @@ const POST_A1_SPEAKING_TEMPLATES = [
 ];
 function isA1FullyComplete(){
   if(!state.german || !state.german.days) return false;
-  for(let d=1; d<=30; d++){
+  for(let d=1; d<=A1_PHASE_END; d++){
     if(!dayIsDone(d)) return false;
   }
   return true;
@@ -754,14 +835,20 @@ const GERMAN_TESTS = [
 
 function renderGermanProgressRing(){
   let doneCount = 0;
-  for(let d=1; d<=30; d++) if(dayIsDone(d)) doneCount++;
+  for(let d=1; d<=CONTENT_END_DAY; d++) if(dayIsDone(d)) doneCount++;
   const label = document.getElementById("germanRingLabel");
   const fg = document.getElementById("germanRingFg");
   if(!label || !fg) return;
-  label.textContent = `${doneCount}/30`;
+  label.textContent = `${doneCount}/${TOTAL_CORE_DAYS}`;
   const circumference = 2*Math.PI*26;
+  const pct = doneCount/TOTAL_CORE_DAYS;
   fg.style.strokeDasharray = `${circumference}`;
-  fg.style.strokeDashoffset = `${circumference * (1 - doneCount/30)}`;
+  fg.style.strokeDashoffset = `${circumference * (1 - pct)}`;
+  const sub = document.getElementById("germanProgressSub");
+  if(sub){
+    const phase = phaseForDay(germanCurrentDay);
+    sub.textContent = `Now in: ${phase.label} (${phase.months})`;
+  }
 }
 
 function renderSlangCard(){
@@ -771,8 +858,8 @@ function renderSlangCard(){
   card.innerHTML = `
     <span class="slang-card-eyebrow">How Germans Actually Say It <span class="day-of">· Day ${germanCurrentDay}</span></span>
     <div class="slang-card-pair">
-      <div class="slang-card-phrase"><h4>${esc(item.natural)}</h4></div>
-      <span class="slang-card-exam">Exam-correct: <strong>${esc(item.exam)}</strong></span>
+      <div class="slang-card-phrase"><h4>${forvoWords(item.natural)}</h4></div>
+      <span class="slang-card-exam">Exam-correct: <strong>${forvoWords(item.exam)}</strong></span>
     </div>
     <p class="slang-card-meaning">${esc(item.meaning)}</p>
     <p class="slang-card-note">${esc(item.note)}</p>
@@ -782,11 +869,19 @@ function renderSlangCard(){
 function renderDayPicker(){
   const wrap = document.getElementById("dayPicker");
   let html = "";
-  for(let d=1; d<=30; d++){
-    const done = dayIsDone(d);
-    const multi = lessonCountForDay(d) > 1;
-    html += `<button class="day-pill ${d===germanCurrentDay?"active":""} ${done?"done":""} ${multi?"multi":""}" data-day="${d}">${d}</button>`;
-  }
+  PHASES.forEach(ph=>{
+    if(ph.id==="buf") return; // buffer days only show once you're actually in Month 7
+    html += `<div class="phase-group">
+      <div class="phase-group-label">${esc(ph.label)} <span class="phase-months">${esc(ph.months)}</span></div>
+      <div class="phase-pills">`;
+    for(let d=ph.from; d<=ph.to; d++){
+      const done = dayIsDone(d);
+      const multi = lessonCountForDay(d) > 1;
+      const upcoming = d > CONTENT_END_DAY;
+      html += `<button class="day-pill ${d===germanCurrentDay?"active":""} ${done?"done":""} ${multi?"multi":""} ${upcoming?"upcoming":""}" data-day="${d}">${d}</button>`;
+    }
+    html += `</div></div>`;
+  });
   wrap.innerHTML = html;
   wrap.querySelectorAll(".day-pill").forEach(btn=>{
     btn.onclick = ()=>{
@@ -796,8 +891,42 @@ function renderDayPicker(){
       renderDayPicker();
       renderDailyCard();
       renderSlangCard();
+      renderGermanProgressRing();
     };
   });
+}
+
+/* ---- Writing / Listening / Speaking logs. Goethe grades all four
+   skills separately, so these run every day, in every phase — including
+   days whose full lesson content hasn't been written yet. ---- */
+function skillTracksHtml(rec){
+  return `
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Writing Practice</div>
+      <textarea class="skill-writing notes-area" placeholder="Write a few sentences in German — today's topic, your day, anything...">${esc(rec.writing)}</textarea>
+    </div>
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Listening Practice</div>
+      <label class="skill-check-row"><input type="checkbox" class="skill-listening-done" ${rec.listeningDone?"checked":""}> Watched/listened to German today</label>
+      <textarea class="skill-listening-notes notes-area" placeholder="What did you watch or hear? What did you understand?">${esc(rec.listeningNotes)}</textarea>
+    </div>
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Speaking Practice</div>
+      <label class="skill-check-row"><input type="checkbox" class="skill-speaking-done" ${rec.speakingDone?"checked":""}> Spoke German out loud today</label>
+      <textarea class="skill-speaking-notes notes-area" placeholder="What did you talk about? With who?">${esc(rec.speakingNotes)}</textarea>
+    </div>`;
+}
+function wireSkillTracks(card, rec){
+  const wTa = card.querySelector(".skill-writing");
+  if(wTa) wTa.oninput = (e)=>{ rec.writing = e.target.value; saveData(); };
+  const lCb = card.querySelector(".skill-listening-done");
+  if(lCb) lCb.onchange = (e)=>{ rec.listeningDone = e.target.checked; saveData(); };
+  const lTa = card.querySelector(".skill-listening-notes");
+  if(lTa) lTa.oninput = (e)=>{ rec.listeningNotes = e.target.value; saveData(); };
+  const sCb = card.querySelector(".skill-speaking-done");
+  if(sCb) sCb.onchange = (e)=>{ rec.speakingDone = e.target.checked; saveData(); };
+  const sTa = card.querySelector(".skill-speaking-notes");
+  if(sTa) sTa.oninput = (e)=>{ rec.speakingNotes = e.target.value; saveData(); };
 }
 
 function renderDailyCard(){
@@ -805,6 +934,30 @@ function renderDailyCard(){
   const day = germanCurrentDay;
   const dayContent = GERMAN_DAYS[day-1];
   const rec = getDayRecord(day);
+  const phase = phaseForDay(day);
+
+  if(!dayContent){
+    // This phase's full lessons haven't been written yet — the daily
+    // habit (challenge + writing/listening/speaking) still works today.
+    const challenge = DAILY_CHALLENGES[(day-1) % DAILY_CHALLENGES.length];
+    card.innerHTML = `
+      <div class="daily-card-head">
+        <h2>Day ${day}</h2>
+        <span class="day-topic-tag">${esc(phase.label)} · Day ${day}/${TOTAL_CORE_DAYS}</span>
+      </div>
+      <div class="daily-card-sub">${esc(phase.months)} — full lessons for this phase are coming in a future update. Keep the daily habit going below in the meantime.</div>
+
+      <div class="daily-block">
+        <div class="daily-block-label"><span class="dot"></span>Speaking Challenge</div>
+        <div class="challenge-box">${esc(challenge)}</div>
+      </div>
+
+      ${skillTracksHtml(rec)}
+    `;
+    wireSkillTracks(card, rec);
+    return;
+  }
+
   const challenge = DAILY_CHALLENGES[day-1];
   const a1Done = isA1FullyComplete();
   const topicsLabel = dayContent.lessons.map(l=>l.topic).join(" & ");
@@ -832,8 +985,8 @@ function renderDailyCard(){
       <div class="daily-block">
         <div class="daily-block-label"><span class="dot"></span>Example: Exam vs. Everyday</div>
         <div class="example-pair">
-          <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${esc(lesson.example)}</div>
-          <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${esc(lesson.natural)}</div>
+          <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${forvoWords(lesson.example)}</div>
+          <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${forvoWords(lesson.natural)}</div>
         </div>
       </div>
       <div class="daily-block">
@@ -849,7 +1002,7 @@ function renderDailyCard(){
   card.innerHTML = `
     <div class="daily-card-head">
       <h2>Day ${day}</h2>
-      <span class="day-topic-tag">A1 · Day ${day}/30</span>
+      <span class="day-topic-tag">${esc(phase.label)} · Day ${day}/${TOTAL_CORE_DAYS}</span>
     </div>
     <div class="daily-card-sub">${esc(topicsLabel)} — small steps today, closer to B1 tomorrow.</div>
 
@@ -859,6 +1012,7 @@ function renderDailyCard(){
     </div>
 
     ${lessonsHtml}
+    ${skillTracksHtml(rec)}
     ${postA1Html}
   `;
 
@@ -877,6 +1031,7 @@ function renderDailyCard(){
       renderDailyCard();
     };
   });
+  wireSkillTracks(card, rec);
 }
 
 function renderQuestion(test,q,qi,rec){
@@ -998,6 +1153,61 @@ function bindTestEvents(){
   });
 }
 
+/* ---- Mock exam tracker: log practice attempts across the four Goethe
+   skills (Reading/Listening/Writing/Speaking) plus full mock exams.
+   Manual log for now — real practice-test content comes with the
+   exam-prep phase content. ---- */
+function renderMockExams(){
+  const wrap = document.getElementById("mockExamTracker");
+  if(!wrap) return;
+  const entries = state.german.mockExams.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  const rows = entries.map(e=>`
+    <div class="mock-entry">
+      <div class="mock-entry-head">
+        <span class="mock-skill-tag">${esc(e.skill)}</span>
+        <span class="mock-date">${esc(e.date)}</span>
+        <button class="mock-delete" data-id="${esc(e.id)}" aria-label="Delete entry">&times;</button>
+      </div>
+      ${e.score?`<div class="mock-score">${esc(e.score)}</div>`:""}
+      ${e.notes?`<div class="mock-notes">${esc(e.notes)}</div>`:""}
+    </div>`).join("");
+  wrap.innerHTML = `
+    <div class="mock-form">
+      <div class="mock-form-row">
+        <select id="mockSkill">
+          <option value="Reading">Reading</option>
+          <option value="Listening">Listening</option>
+          <option value="Writing">Writing</option>
+          <option value="Speaking">Speaking</option>
+          <option value="Full Mock Exam">Full Mock Exam</option>
+        </select>
+        <input type="date" id="mockDate" value="${toISO(new Date())}">
+      </div>
+      <input type="text" id="mockScore" placeholder="Score / result (e.g. 78%, 3/4 correct...)">
+      <textarea id="mockNotes" placeholder="What to review, mistakes made..."></textarea>
+      <button id="mockAddBtn" class="mock-add-btn">Log this attempt</button>
+    </div>
+    <div class="mock-list">${rows || '<p class="mock-empty">No practice attempts logged yet — this fills in once you reach the exam-prep phase, or start it early if you want.</p>'}</div>
+  `;
+  document.getElementById("mockAddBtn").onclick = ()=>{
+    const skill = document.getElementById("mockSkill").value;
+    const date = document.getElementById("mockDate").value || toISO(new Date());
+    const score = document.getElementById("mockScore").value.trim();
+    const notes = document.getElementById("mockNotes").value.trim();
+    if(!score && !notes) return;
+    state.german.mockExams.push({id:Date.now()+"", skill, date, score, notes});
+    saveData();
+    renderMockExams();
+  };
+  wrap.querySelectorAll(".mock-delete").forEach(btn=>{
+    btn.onclick = ()=>{
+      state.german.mockExams = state.german.mockExams.filter(e=>e.id!==btn.dataset.id);
+      saveData();
+      renderMockExams();
+    };
+  });
+}
+
 function renderGermanView(){
   ensureGerman();
   renderGermanProgressRing();
@@ -1005,6 +1215,7 @@ function renderGermanView(){
   renderDayPicker();
   renderDailyCard();
   renderTestsList();
+  renderMockExams();
 }
 
 document.getElementById("germanSubnav").addEventListener("click",(e)=>{
@@ -1014,6 +1225,7 @@ document.getElementById("germanSubnav").addEventListener("click",(e)=>{
   btn.classList.add("active");
   document.getElementById("germanDaily").classList.toggle("hidden", btn.dataset.sub!=="daily");
   document.getElementById("germanTests").classList.toggle("hidden", btn.dataset.sub!=="tests");
+  document.getElementById("germanMock").classList.toggle("hidden", btn.dataset.sub!=="mock");
 });
 
 /* ---------- navigation ---------- */
