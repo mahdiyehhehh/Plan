@@ -1816,6 +1816,13 @@ function showGoalProgressToast(){
   goalToastTimer = setTimeout(()=>{ toast.classList.remove("show"); }, 4000);
 }
 
+// ---- Step 4 icons: reused across the Day header / Real-Life Challenge /
+// Lesson header components below. Kept as plain SVG strings so both
+// renderDailyCard() branches can share them without extra DOM work. ----
+const G_TARGET_SVG = `<svg viewBox="0 0 24 24" width="13" height="13"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M17 7l3-3m0 0h-2.4M20 4v2.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const G_CHAT_SVG = `<svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 5.5C4 4.7 4.7 4 5.5 4h13c.8 0 1.5.7 1.5 1.5v10c0 .8-.7 1.5-1.5 1.5H9l-4 3.5V17H5.5A1.5 1.5 0 014 15.5v-10z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`;
+const G_BOOK_SVG = `<svg viewBox="0 0 24 24" width="14" height="14"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 014 18.5v-13z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5A1.5 1.5 0 0020 18.5v-13z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>`;
+
 function renderDailyCard(){
   const card = document.getElementById("dailyCard");
   const day = germanCurrentDay;
@@ -1828,15 +1835,21 @@ function renderDailyCard(){
     // habit (challenge + writing/listening/speaking) still works today.
     const challenge = DAILY_CHALLENGES[(day-1) % DAILY_CHALLENGES.length];
     card.innerHTML = `
-      <div class="daily-card-head">
-        <h2>Day ${day}</h2>
-        <span class="day-topic-tag">${esc(phase.label)} · Day ${day}/${TOTAL_CORE_DAYS}</span>
+      <div class="g-day-head">
+        <span class="g-day-badge">${esc(phase.label)} · Day ${day}/${TOTAL_CORE_DAYS}</span>
+        <h2 class="g-day-num">Day ${day}</h2>
+        <p class="g-day-tagline">${esc(phase.months)} — full lessons for this phase are coming in a future update. Keep the daily habit going below in the meantime.</p>
       </div>
-      <div class="daily-card-sub">${esc(phase.months)} — full lessons for this phase are coming in a future update. Keep the daily habit going below in the meantime.</div>
 
-      <div class="daily-block">
-        <div class="daily-block-label"><span class="dot"></span>Speaking Challenge</div>
-        <div class="challenge-box">${esc(challenge)}</div>
+      <div class="g-challenge">
+        <div class="g-challenge-head">
+          <span class="g-challenge-icon">${G_TARGET_SVG}</span>
+          <span class="g-challenge-title">Speaking Challenge</span>
+        </div>
+        <div class="g-challenge-box">
+          ${G_CHAT_SVG}
+          <p>${esc(challenge)}</p>
+        </div>
       </div>
 
       ${skillTracksHtml(rec)}
@@ -1860,16 +1873,17 @@ function renderDailyCard(){
   const lessonsHtml = dayContent.lessons.map((lesson,i)=>{
     const lrec = rec.lessons[i];
     return `
-    <div class="lesson-block">
-      <div class="lesson-block-head">
+    <div class="g-lesson lesson-block">
+      <div class="g-lesson-head">
+        <span class="g-lesson-icon">${G_BOOK_SVG}</span>
         <h3>${multi?`Lesson ${i+1} of ${dayContent.lessons.length} — `:""}${esc(lesson.topic)}</h3>
       </div>
-      <div class="daily-block">
-        <div class="daily-block-label"><span class="dot"></span>Learn This First <span class="tap-hint">tap any word to hear it</span></div>
-        <div class="example-pair">
-          <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${forvoWords(lesson.example)}</div>
-          <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${forvoWords(lesson.natural)}</div>
-          ${lesson.en?`<div class="example-en">${esc(lesson.en)}</div>`:""}
+      <div class="g-learn">
+        <div class="g-learn-label"><span class="dot"></span>Learn This First <span class="g-tap-hint">tap any word to hear it</span></div>
+        <div class="g-phrase-pair">
+          <div class="g-phrase-box g-phrase-exam"><span class="g-phrase-tag">Goethe Exam-Correct</span>${forvoWords(lesson.example)}</div>
+          <div class="g-phrase-box g-phrase-natural"><span class="g-phrase-tag">How Germans Actually Say It</span>${forvoWords(lesson.natural)}</div>
+          ${lesson.en?`<div class="g-phrase-en">${esc(lesson.en)}</div>`:""}
         </div>
       </div>
       <div class="daily-block">
@@ -1888,15 +1902,22 @@ function renderDailyCard(){
   }).join("");
 
   card.innerHTML = `
-    <div class="daily-card-head">
-      <h2>Day ${day}</h2>
-      <span class="day-topic-tag">${esc(phase.label)} · Day ${day}/${TOTAL_CORE_DAYS}</span>
+    <div class="g-day-head">
+      <span class="g-day-badge">${esc(phase.label)} · Day ${day}/${TOTAL_CORE_DAYS}</span>
+      <h2 class="g-day-num">Day ${day}</h2>
+      <p class="g-day-topic">${esc(topicsLabel)}</p>
+      <p class="g-day-tagline">Small steps today, closer to B1 tomorrow.</p>
     </div>
-    <div class="daily-card-sub">${esc(topicsLabel)} — small steps today, closer to B1 tomorrow.</div>
 
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Real-Life Challenge</div>
-      <div class="challenge-box">${esc(challenge)}</div>
+    <div class="g-challenge">
+      <div class="g-challenge-head">
+        <span class="g-challenge-icon">${G_TARGET_SVG}</span>
+        <span class="g-challenge-title">Real-Life Challenge</span>
+      </div>
+      <div class="g-challenge-box">
+        ${G_CHAT_SVG}
+        <p>${esc(challenge)}</p>
+      </div>
     </div>
 
     ${lessonsHtml}
