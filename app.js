@@ -425,36 +425,36 @@ function getTestRecord(id){
 
 /* ---- 30-day A1 curriculum: topic, homework task, worked example ---- */
 const GERMAN_DAYS = [
-  {topic:"Greetings & Introductions", homework:"Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.", example:"Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch."},
-  {topic:"Numbers 0–20", homework:"Write the numbers 0–20 in German, then write out 5 simple addition sums in words.", example:"eins, zwei, drei ... zehn. Drei plus vier ist sieben."},
-  {topic:"The Alphabet & Spelling", homework:"Spell your first and last name out loud using the German alphabet, then write it letter by letter.", example:"M-A-R-I-A = Em – A – Er – I – A."},
-  {topic:"Personal Pronouns & \"sein\"", homework:"Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.", example:"ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde."},
-  {topic:"Family Members", homework:"List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).", example:"Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom."},
-  {topic:"Articles: der / die / das", homework:"Sort 10 household nouns into der / die / das using a dictionary or app.", example:"der Tisch, die Lampe, das Buch, der Stuhl, die Tür."},
-  {topic:"Present Tense — Regular Verbs", homework:"Fully conjugate 3 regular verbs: spielen, wohnen, lernen.", example:"ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen."},
-  {topic:"Numbers 20–100 & Age", homework:"Write your age and the ages of 5 family members in full German words.", example:"Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt."},
-  {topic:"Telling Time", homework:"Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").", example:"Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag."},
-  {topic:"Days, Months, Seasons", homework:"List the 7 days and 12 months in German, then write which season you like best and why.", example:"Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist."},
-  {topic:"Daily Routine (Separable Verbs)", homework:"Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).", example:"Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern."},
-  {topic:"Food & Drink Vocabulary", homework:"Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.", example:"der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße."},
-  {topic:"At the Restaurant", homework:"Write a short dialogue (at least 6 lines) ordering food at a restaurant.", example:"Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?"},
-  {topic:"Akkusativ Case", homework:"Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).", example:"Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze."},
-  {topic:"Shopping & Clothes", homework:"Describe an outfit you're wearing today using at least 6 clothing words and colors.", example:"Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe."},
-  {topic:"Modal Verbs: können, müssen, wollen", homework:"Write 6 sentences (two per verb) about things you can, must, and want to do.", example:"Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen."},
-  {topic:"The Weather", homework:"Describe the weather for each day of this week in German.", example:"Heute ist es sonnig und warm. Morgen regnet es und es ist windig."},
-  {topic:"Directions & Prepositions", homework:"Write directions from your home to the nearest supermarket using links, rechts, geradeaus.", example:"Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank."},
-  {topic:"Places in the City", homework:"List 10 places in a city with their articles and one sentence for each about what you do there.", example:"In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball."},
-  {topic:"Past Tense — Perfekt (basics)", homework:"Write 6 sentences about yesterday using the Perfekt tense with haben or sein.", example:"Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen."},
-  {topic:"Hobbies & Free Time", homework:"Write a paragraph (5–6 sentences) about your hobbies and how often you do them.", example:"Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern."},
-  {topic:"Making Plans & Invitations", homework:"Write a short dialogue inviting a friend to do something this weekend.", example:"Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?"},
-  {topic:"The Body & Health", homework:"Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").", example:"der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank."},
-  {topic:"At the Doctor's", homework:"Write a short dialogue at the doctor's office describing your symptoms.", example:"Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?"},
-  {topic:"Comparisons (Adjectives)", homework:"Write 6 comparative sentences comparing things around you.", example:"Berlin ist größer als München. Mein Bruder ist am größten in der Familie."},
-  {topic:"Housing & Furniture", homework:"Describe your home or room, listing at least 8 furniture items with their articles.", example:"In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch."},
-  {topic:"Public Transport & Travel", homework:"Write a dialogue buying a train ticket and asking about departure times.", example:"Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5."},
-  {topic:"Negation: nicht / kein", homework:"Write 8 sentences using nicht and kein correctly.", example:"Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig."},
-  {topic:"Question Words Review", homework:"Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.", example:"Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe."},
-  {topic:"Full A1 Self-Review", homework:"Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.", example:"Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt."}
+  {topic:"Greetings & Introductions", homework:"Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.", example:"Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch.", natural:"Ich bin Lisa, 22. Komm' aus Italien und spreche Italienisch und n bisschen Deutsch. Und du, wie heißt du?"},
+  {topic:"Numbers 0–20", homework:"Write the numbers 0–20 in German, then write out 5 simple addition sums in words.", example:"eins, zwei, drei ... zehn. Drei plus vier ist sieben.", natural:"Drei und vier macht sieben. — Warte, wie viel war das nochmal?"},
+  {topic:"The Alphabet & Spelling", homework:"Spell your first and last name out loud using the German alphabet, then write it letter by letter.", example:"M-A-R-I-A = Em – A – Er – I – A.", natural:"Buchstabier das nochmal, ich hab's nicht ganz verstanden."},
+  {topic:"Personal Pronouns & \"sein\"", homework:"Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.", example:"ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde.", natural:"Ich bin echt müde heute. Bist du auch so kaputt?"},
+  {topic:"Family Members", homework:"List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).", example:"Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom.", natural:"Das ist meine Mama, und das da ist mein kleiner Bruder."},
+  {topic:"Articles: der / die / das", homework:"Sort 10 household nouns into der / die / das using a dictionary or app.", example:"der Tisch, die Lampe, das Buch, der Stuhl, die Tür.", natural:"Kannst du mir mal das Buch da geben? Genau, das auf'm Tisch."},
+  {topic:"Present Tense — Regular Verbs", homework:"Fully conjugate 3 regular verbs: spielen, wohnen, lernen.", example:"ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen.", natural:"Ich lern grad Deutsch, deshalb spiel ich abends immer diese Vokabel-App."},
+  {topic:"Numbers 20–100 & Age", homework:"Write your age and the ages of 5 family members in full German words.", example:"Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt.", natural:"Meine Schwester ist einundzwanzig, glaub ich — oder ist sie schon zweiundzwanzig?"},
+  {topic:"Telling Time", homework:"Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").", example:"Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag.", natural:"Es ist halb neun, wir müssen los! — Wie spät ist es? — Kurz nach halb."},
+  {topic:"Days, Months, Seasons", homework:"List the 7 days and 12 months in German, then write which season you like best and why.", example:"Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.", natural:"Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten."},
+  {topic:"Daily Routine (Separable Verbs)", homework:"Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).", example:"Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern.", natural:"Ich steh um sieben auf, zieh mich schnell an, und abends häng ich vorm Fernseher."},
+  {topic:"Food & Drink Vocabulary", homework:"Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.", example:"der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.", natural:"Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend."},
+  {topic:"At the Restaurant", homework:"Write a short dialogue (at least 6 lines) ordering food at a restaurant.", example:"Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?", natural:"Für mich bitte 'nen Kaffee und n Stück Kuchen. — Kommt sofort! — Super, danke."},
+  {topic:"Akkusativ Case", homework:"Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).", example:"Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze.", natural:"Ich hol mir noch schnell nen Apfel, ich hab nämlich voll Hunger."},
+  {topic:"Shopping & Clothes", homework:"Describe an outfit you're wearing today using at least 6 clothing words and colors.", example:"Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe.", natural:"Ich hab heute meine blaue Jacke an und die schwarzen Schuhe von letzter Woche."},
+  {topic:"Modal Verbs: können, müssen, wollen", homework:"Write 6 sentences (two per verb) about things you can, must, and want to do.", example:"Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen.", natural:"Ich muss heut echt noch lernen, aber ich hab eigentlich keinen Bock."},
+  {topic:"The Weather", homework:"Describe the weather for each day of this week in German.", example:"Heute ist es sonnig und warm. Morgen regnet es und es ist windig.", natural:"Heute ist's richtig schön warm, aber morgen soll's angeblich wieder regnen."},
+  {topic:"Directions & Prepositions", homework:"Write directions from your home to the nearest supermarket using links, rechts, geradeaus.", example:"Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank.", natural:"Einfach geradeaus, dann links, das ist gleich neben der Bank — nicht zu verfehlen."},
+  {topic:"Places in the City", homework:"List 10 places in a city with their articles and one sentence for each about what you do there.", example:"In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.", natural:"Wir treffen uns im Park, ja? Da spielen wir immer Fußball."},
+  {topic:"Past Tense — Perfekt (basics)", homework:"Write 6 sentences about yesterday using the Perfekt tense with haben or sein.", example:"Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen.", natural:"Ich hab gestern noch Deutsch gelernt und bin dann ins Kino gegangen."},
+  {topic:"Hobbies & Free Time", homework:"Write a paragraph (5–6 sentences) about your hobbies and how often you do them.", example:"Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern.", natural:"Ich zock gern und spiel zweimal die Woche Fußball, sonst chill ich meistens."},
+  {topic:"Making Plans & Invitations", homework:"Write a short dialogue inviting a friend to do something this weekend.", example:"Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?", natural:"Hast du Samstag Bock auf Kino? — Klar, bin dabei!"},
+  {topic:"The Body & Health", homework:"Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").", example:"der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank.", natural:"Mir tut voll der Kopf weh, ich glaub ich werd krank."},
+  {topic:"At the Doctor's", homework:"Write a short dialogue at the doctor's office describing your symptoms.", example:"Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?", natural:"Ich hab seit gestern Fieber und mir tut voll der Hals weh."},
+  {topic:"Comparisons (Adjectives)", homework:"Write 6 comparative sentences comparing things around you.", example:"Berlin ist größer als München. Mein Bruder ist am größten in der Familie.", natural:"Berlin ist schon viel größer als München, find ich."},
+  {topic:"Housing & Furniture", homework:"Describe your home or room, listing at least 8 furniture items with their articles.", example:"In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch.", natural:"Meine Bude ist klein, aber ich hab n Bett, n Schrank und n Schreibtisch — reicht mir."},
+  {topic:"Public Transport & Travel", homework:"Write a dialogue buying a train ticket and asking about departure times.", example:"Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5.", natural:"Wann geht der nächste Zug nach Berlin? — Um zwei, Gleis fünf, beeil dich!"},
+  {topic:"Negation: nicht / kein", homework:"Write 8 sentences using nicht and kein correctly.", example:"Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig.", natural:"Ich hab kein Auto, deshalb nehm ich meistens den Bus. — Echt nicht? Krass."},
+  {topic:"Question Words Review", homework:"Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.", example:"Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe.", natural:"Wo wohnst du eigentlich? — In Berlin. — Ah cool, wieso lernst du dann Deutsch, kannst du's nicht schon?"},
+  {topic:"Full A1 Self-Review", homework:"Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.", example:"Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt.", natural:"Ich bin ... und komm aus ... Ich studier gerade und lern jetzt seit 30 Tagen Deutsch. Gestern hab ich echt viel gelernt, war anstrengend!"}
 ];
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
@@ -515,6 +515,42 @@ function getPostA1Speaking(day, topic){
   const tmpl = POST_A1_SPEAKING_TEMPLATES[(day-1) % POST_A1_SPEAKING_TEMPLATES.length];
   return tmpl(topic);
 }
+
+/* ---- "Never Miss This Page" — phrase Germans actually use every day,
+   paired with the textbook-correct version, cycling with the day picker
+   so it stays fresh alongside the daily lesson. ---- */
+const SLANG_OF_DAY = [
+  {natural:"Alles klar?", exam:"Wie geht es dir?", meaning:"You good? / Everything alright?", note:"The everyday check-in you'll hear constantly — from friends, cashiers, coworkers. Way more common than the textbook question."},
+  {natural:"Kein Ding.", exam:"Das ist kein Problem.", meaning:"No worries / no big deal.", note:"The casual reply when someone thanks you or apologizes for something small."},
+  {natural:"Mach's gut!", exam:"Auf Wiedersehen.", meaning:"Take care! (casual goodbye)", note:"Used with people you know reasonably well — friends, colleagues, neighbors. Not for formal settings."},
+  {natural:"Na?", exam:"Wie geht es dir?", meaning:"Hey. / What's up.", note:"One syllable, said constantly between people who see each other often. Tone carries the meaning."},
+  {natural:"Ich hab kein Bock.", exam:"Ich habe keine Lust.", meaning:"I don't feel like it.", note:"Extremely common, slightly informal — fine with friends, avoid with your boss."},
+  {natural:"Krass!", exam:"Das ist unglaublich!", meaning:"Wow! / No way! / Crazy!", note:"An all-purpose reaction to good or bad news alike — context decides the meaning."},
+  {natural:"Kein Plan.", exam:"Ich weiß es nicht.", meaning:"No idea.", note:"Quick, casual way to say you don't know — used far more than the full textbook sentence."},
+  {natural:"Passt schon.", exam:"Das ist in Ordnung.", meaning:"It's fine / good enough / don't worry about it.", note:"A very German shrug-in-words — reassuring, low-effort, said all the time."},
+  {natural:"Digga, ehrlich?", exam:"Wirklich? Im Ernst?", meaning:"Seriously? / For real?", note:"\"Digga\" (like \"dude\") is youth/casual slang — great to recognize, but save it for close friends."},
+  {natural:"Mega gut!", exam:"Sehr gut!", meaning:"Really good! / Awesome!", note:"\"Mega\" and \"voll\" are everyday intensifiers that replace \"sehr\" in casual speech."},
+  {natural:"Ich bin pleite.", exam:"Ich habe kein Geld.", meaning:"I'm broke.", note:"Common, mildly self-deprecating way to say you're low on cash — totally normal among friends."},
+  {natural:"Lass uns abhauen.", exam:"Lass uns gehen.", meaning:"Let's get out of here.", note:"\"Abhauen\" = to take off/bail — used when a party or place gets boring."},
+  {natural:"Ehrlich jetzt?", exam:"Ist das wirklich wahr?", meaning:"Are you serious right now?", note:"Reaction to surprising news, said with a rising, incredulous tone."},
+  {natural:"Es nieselt.", exam:"Es regnet ein bisschen.", meaning:"It's drizzling.", note:"A specific everyday weather word Germans use constantly — worth knowing beyond just \"es regnet\"."},
+  {natural:"Ich muss aufs Klo.", exam:"Ich muss zur Toilette.", meaning:"I need the bathroom.", note:"\"Klo\" is the normal, casual word for toilet — you'll hear it far more than \"Toilette\" in daily life."},
+  {natural:"Bock drauf?", exam:"Hast du Lust dazu?", meaning:"You up for it?", note:"Short version of \"Hast du Bock drauf?\" — a quick, casual way to propose plans."},
+  {natural:"Mir geht's nicht so gut.", exam:"Ich fühle mich nicht wohl.", meaning:"I'm not feeling great.", note:"Softer and more natural than the formal version — good for everyday small talk about health."},
+  {natural:"Ich chill nur.", exam:"Ich entspanne mich gerade.", meaning:"I'm just relaxing / hanging out.", note:"\"Chillen\" is a borrowed English verb fully at home in casual German now."},
+  {natural:"Nix da.", exam:"Nein, das gibt es nicht.", meaning:"Nothing doing / no way.", note:"Blunt, casual refusal — short for \"nichts da\". Common between friends, not for polite requests."},
+  {natural:"Wieso das denn?", exam:"Warum ist das so?", meaning:"Why's that, then?", note:"Adding \"denn\" makes questions sound more natural and conversational, less like an interrogation."},
+  {natural:"Bis dann!", exam:"Bis später. Auf Wiedersehen.", meaning:"See ya!", note:"Quick, friendly goodbye when you'll see someone again soon."},
+  {natural:"Ich nehm die Bahn.", exam:"Ich nehme die U-Bahn.", meaning:"I'll take the train.", note:"Dropping the final -e (\"nehm\" not \"nehme\") is standard in relaxed spoken German."},
+  {natural:"Alter, warte mal.", exam:"Moment bitte, warte.", meaning:"Dude, hold on a sec.", note:"\"Alter\" (lit. \"old man\") is a filler word among friends, like \"dude\" or \"man\" in English."},
+  {natural:"Läuft bei dir!", exam:"Das machst du sehr gut!", meaning:"You're doing great! / Nice one!", note:"An encouraging, playful compliment — common among younger speakers."},
+  {natural:"Ich schau mal.", exam:"Ich werde es überprüfen.", meaning:"I'll take a look / I'll see.", note:"A relaxed, noncommittal way to say you'll check on something."},
+  {natural:"Voll gut, ehrlich.", exam:"Wirklich sehr gut.", meaning:"Really good, honestly.", note:"\"Voll\" as an intensifier (like \"total\") is everywhere in spoken German — no direct textbook equivalent."},
+  {natural:"Ich hab's verpeilt.", exam:"Ich habe es vergessen.", meaning:"I totally forgot / spaced it.", note:"\"Verpeilen\" = to mess up or space out on something — very common, slightly self-mocking."},
+  {natural:"Geht klar.", exam:"Das ist in Ordnung. Ja, gerne.", meaning:"Sounds good / will do.", note:"A quick, agreeable \"okay\" — used constantly to confirm plans or requests."},
+  {natural:"Was geht ab?", exam:"Wie geht es dir? Was machst du?", meaning:"What's up? What's going on?", note:"Casual greeting among friends, especially younger speakers — livelier than \"Wie geht's?\"."},
+  {natural:"Bis bald, mach's gut!", exam:"Auf Wiedersehen, bis zum nächsten Mal.", meaning:"See you soon, take care!", note:"A warm, casual sign-off combining two phrases from this list — you've now got the whole toolkit."}
+];
 
 /* ---- 10 short A1 practice tests, 5 questions each ---- */
 const GERMAN_TESTS = [
@@ -601,6 +637,21 @@ function renderGermanProgressRing(){
   fg.style.strokeDashoffset = `${circumference * (1 - doneCount/30)}`;
 }
 
+function renderSlangCard(){
+  const card = document.getElementById("slangCard");
+  if(!card) return;
+  const item = SLANG_OF_DAY[(germanCurrentDay-1) % SLANG_OF_DAY.length];
+  card.innerHTML = `
+    <span class="slang-card-eyebrow">How Germans Actually Say It <span class="day-of">· Day ${germanCurrentDay}</span></span>
+    <div class="slang-card-pair">
+      <div class="slang-card-phrase"><h4>${esc(item.natural)}</h4></div>
+      <span class="slang-card-exam">Exam-correct: <strong>${esc(item.exam)}</strong></span>
+    </div>
+    <p class="slang-card-meaning">${esc(item.meaning)}</p>
+    <p class="slang-card-note">${esc(item.note)}</p>
+  `;
+}
+
 function renderDayPicker(){
   const wrap = document.getElementById("dayPicker");
   let html = "";
@@ -617,6 +668,7 @@ function renderDayPicker(){
       saveData();
       renderDayPicker();
       renderDailyCard();
+      renderSlangCard();
     };
   });
 }
@@ -652,8 +704,11 @@ function renderDailyCard(){
     </div>
     ${postA1Html}
     <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Example</div>
-      <div class="example-box">${esc(content.example)}</div>
+      <div class="daily-block-label"><span class="dot"></span>Example: Exam vs. Everyday</div>
+      <div class="example-pair">
+        <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${esc(content.example)}</div>
+        <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${esc(content.natural)}</div>
+      </div>
     </div>
 
     <div class="daily-block">
@@ -799,6 +854,7 @@ function bindTestEvents(){
 function renderGermanView(){
   ensureGerman();
   renderGermanProgressRing();
+  renderSlangCard();
   renderDayPicker();
   renderDailyCard();
   renderTestsList();
