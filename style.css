@@ -336,6 +336,12 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
   --g-crimson-wash:#fbf3f2;
   --g-crimson-line:rgba(154,43,43,.22);
 
+  /* green accent — used only for "how Germans actually say it" (real-life) */
+  --g-green:#2e6b3e;
+  --g-green-tint:#e7f1e9;
+  --g-green-wash:#f2f8f3;
+  --g-green-line:rgba(46,107,62,.22);
+
   /* warm neutrals — near-black ink, warm white surfaces, quiet complementary tint */
   --g-ink:#1c1a19;
   --g-ink-soft:#514c49;
@@ -383,6 +389,11 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
   --g-crimson-tint:rgba(224,119,107,.16);
   --g-crimson-wash:rgba(224,119,107,.08);
   --g-crimson-line:rgba(224,119,107,.3);
+
+  --g-green:#6fbf82;
+  --g-green-tint:rgba(111,191,130,.16);
+  --g-green-wash:rgba(111,191,130,.08);
+  --g-green-line:rgba(111,191,130,.32);
 
   --g-ink:#f4f0ee;
   --g-ink-soft:#c9c1bd;
@@ -640,8 +651,8 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
 .g-phrase-tag{display:block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
 .g-phrase-exam{background:var(--g-crimson-wash);border:1px solid var(--g-crimson-line);color:var(--g-ink);}
 .g-phrase-exam .g-phrase-tag{color:var(--g-crimson);}
-.g-phrase-natural{background:var(--g-warm-wash);border:1px solid var(--g-hairline);color:var(--g-ink);}
-.g-phrase-natural .g-phrase-tag{color:var(--g-ink-soft);}
+.g-phrase-natural{background:var(--g-green-wash);border:1px solid var(--g-green-line);color:var(--g-ink);}
+.g-phrase-natural .g-phrase-tag{color:var(--g-green);}
 .g-phrase-box a.fv-word{border-bottom-color:var(--g-crimson-soft);}
 .g-phrase-box a.fv-word:hover,.g-phrase-box a.fv-word:focus{background:var(--g-crimson-tint);color:var(--g-crimson-deep);border-bottom-style:solid;}
 
