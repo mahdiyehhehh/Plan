@@ -52,7 +52,14 @@ Because there's no database, your entries live in the browser you use to open th
 
 - **Export as Image** — download the current sheet (Week, Month, Year, or the German hub) as a crisp, print-ready PNG.
 - **Save backup / Restore backup** — same JSON backup as before, just renamed for clarity. "Save backup" downloads your data; "Restore backup" loads a `.json` file back in.
-- **Month & Year** are now styled as clean report pages, matching the look of the main weekly sheet.
-- **A1 → B1 tab** — a dedicated, hard-to-miss page for your German goal:
-  - **Daily Learning**: a 30-day A1 curriculum. Each day has a homework prompt, a worked example, a space for your answer, and a notes section. A progress ring tracks how many of the 30 days you've completed.
+- **Month & Year are now one-page, no-scroll sheets** — they use the exact same "fit-to-screen" trick as the Week view: the whole report scales down as one unit to fit your screen, so there's never any scrolling or sliding. Export as Image still exports them at full resolution.
+- **The German hub no longer gets clipped on mobile** — it used to inherit the app's "no scroll" behavior by accident, which cut off the bottom half of the page. It now scrolls normally (like any content-heavy page), with bigger touch targets and larger text on small screens.
+- **A1 → B2 tab** — reframed around the real goal: passing the Goethe/telc exam *and* speaking comfortably, not just one or the other:
+  - **Phrase of the Day** — a pinned card with a real German slang term, idiom, or everyday phrase (not textbook German), rotating automatically once a day.
+  - **Forvo pronunciation links** — a 🔊 button next to each day's key vocabulary word and next to the phrase of the day, opening that word's native-speaker pronunciations on Forvo.
+  - **Daily Learning**: a 30-day A1 curriculum. Each day has a key vocab word, a homework prompt, a worked example, a space for your answer, and a notes section. A progress ring tracks how many of the 30 days you've completed.
   - **A1 Tests**: ten short multiple-choice practice tests (5 questions each) covering core A1 topics. Check your answers, see explanations, log what to review, and mark each test complete.
+
+## A note on scope (A2 → B2)
+
+The 30-day curriculum currently covers A1. Getting to B1/B2 for the Goethe exam is a much bigger curriculum (grammar like Konjunktiv II, Passiv, subordinate clauses, plus exam-format writing/speaking practice) — it's intentionally left as a next step rather than rushed, so say the word and the same Daily Learning / Tests structure can be extended with A2, B1, and B2 modules.
