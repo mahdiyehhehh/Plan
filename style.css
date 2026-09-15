@@ -256,10 +256,138 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
   .stat-grid{grid-template-columns:repeat(2,1fr);}
 }
 
+.chrome-link-strong{color:var(--red);font-weight:800;}
+.chrome-link-strong:hover{color:var(--red);}
+
+/* ================= Report pages (Month / Year) — same paper feel as the week sheet ================= */
+.report-page{
+  max-width:1120px;margin:0 auto;
+  background:var(--white);border:1px solid var(--line);border-radius:14px;
+  padding:26px 30px 30px;box-shadow:0 8px 30px rgba(17,17,17,.08);
+}
+.report-header{align-items:center;}
+.report-header h1{font-size:32px;}
+.report-header .week-nav{margin:0;}
+.report-header .week-label span{font-size:14px;}
+.report-header .nav-arrow{width:28px;height:28px;}
+
+/* ================= German A1 → B1 hub ================= */
+.german-nav-btn{color:var(--red) !important;}
+.view-switch button.german-nav-btn.active{background:var(--red);color:var(--white) !important;}
+
+.german-hero{align-items:center;}
+.german-progress-badge{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:999px;padding:8px 18px 8px 8px;background:var(--offwhite);white-space:nowrap;}
+.german-progress-ring-wrap{position:relative;width:56px;height:56px;flex:none;}
+.progress-ring circle{transition:stroke-dashoffset .4s ease;}
+.progress-ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:12px;color:var(--black);}
+.german-progress-text{display:flex;flex-direction:column;line-height:1.3;}
+.german-progress-text strong{font-size:12.5px;font-weight:700;}
+.german-progress-text span{font-size:10.5px;color:var(--grey-dark);}
+
+.german-subnav{display:flex;gap:8px;margin:0 0 18px;}
+.german-subnav button{
+  border:1px solid var(--line);background:var(--offwhite);color:var(--grey-dark);
+  font-family:inherit;font-weight:700;font-size:12.5px;padding:8px 18px;border-radius:999px;cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.german-subnav button.active{background:var(--black);color:var(--white);border-color:var(--black);}
+.german-sub.hidden{display:none;}
+
+/* ---- day picker strip ---- */
+.day-picker{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px;}
+.day-pill{
+  flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--grey-dark);
+  cursor:pointer;transition:background .15s,color .15s,border-color .15s;position:relative;
+}
+.day-pill:hover{border-color:var(--black);}
+.day-pill.active{background:var(--black);color:var(--white);border-color:var(--black);}
+.day-pill.done::after{
+  content:"";position:absolute;bottom:-2px;right:-2px;width:11px;height:11px;border-radius:50%;
+  background:var(--red);border:2px solid var(--white);
+}
+
+/* ---- daily learning card ---- */
+.daily-card{border:1px solid var(--line);border-radius:var(--radius-md);padding:20px 22px;background:var(--offwhite);}
+.daily-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:4px;}
+.daily-card-head h2{font-family:'Fraunces',serif;font-size:22px;font-weight:600;}
+.daily-card-head .day-topic-tag{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--red);background:var(--red-tint);padding:4px 10px;border-radius:999px;}
+.daily-card-sub{font-size:11.5px;color:var(--grey-dark);margin-bottom:16px;}
+.daily-block{margin-bottom:16px;}
+.daily-block:last-child{margin-bottom:0;}
+.daily-block-label{display:flex;align-items:center;gap:6px;font-family:'Fraunces',serif;font-weight:600;font-size:13px;margin-bottom:7px;}
+.daily-block-label .dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex:none;}
+.homework-prompt{
+  background:var(--white);border:1px solid var(--line);border-left:3px solid var(--red);
+  border-radius:8px;padding:11px 13px;font-size:12.5px;line-height:1.55;margin-bottom:8px;
+}
+.example-box{
+  background:var(--red-tint);border:1px solid #f0d3cf;border-radius:8px;padding:11px 13px;font-size:12px;
+  line-height:1.55;color:#7a2a20;font-style:italic;
+}
+.daily-block textarea{width:100%;min-height:64px;resize:vertical;font-size:12.5px;background:var(--white);}
+.daily-block textarea.notes-area{min-height:50px;}
+.daily-done-row{display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:14px;border-top:1px dashed var(--line);}
+.daily-done-row label{font-size:12px;font-weight:700;color:var(--black);display:flex;align-items:center;gap:7px;cursor:pointer;}
+.daily-done-row input[type="checkbox"]{width:16px;height:16px;}
+
+/* ---- A1 tests ---- */
+.tests-intro{font-size:12.5px;color:var(--grey-dark);margin:0 0 16px;max-width:74ch;}
+.tests-list{display:flex;flex-direction:column;gap:12px;}
+.test-card{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--offwhite);overflow:hidden;}
+.test-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;cursor:pointer;}
+.test-card-title{display:flex;align-items:center;gap:10px;}
+.test-num{width:24px;height:24px;border-radius:50%;background:var(--black);color:var(--white);font-family:'Fraunces',serif;font-weight:700;font-size:11.5px;display:flex;align-items:center;justify-content:center;flex:none;}
+.test-card.done .test-num{background:var(--red);}
+.test-card-title h3{font-family:'Fraunces',serif;font-size:14.5px;font-weight:600;}
+.test-card-title .test-topic{display:block;font-size:10px;color:var(--grey-dark);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:1px;}
+.test-status{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--line);color:var(--grey-dark);white-space:nowrap;}
+.test-card.done .test-status{background:var(--red-tint);color:var(--red);}
+.test-chevron{transition:transform .15s;color:var(--grey-dark);flex:none;}
+.test-card.open .test-chevron{transform:rotate(180deg);}
+.test-body{display:none;padding:0 16px 18px;border-top:1px solid var(--line);}
+.test-card.open .test-body{display:block;padding-top:14px;}
+.test-question{margin-bottom:14px;background:var(--white);border:1px solid var(--line);border-radius:8px;padding:12px 14px;}
+.test-question p{margin:0 0 8px;font-size:12.5px;font-weight:600;}
+.test-options{display:flex;flex-direction:column;gap:6px;}
+.test-options label{display:flex;align-items:center;gap:8px;font-size:12px;padding:5px 6px;border-radius:6px;cursor:pointer;}
+.test-options label:hover{background:var(--offwhite);}
+.test-options input{accent-color:var(--red);}
+.test-question.correct{border-color:#2e7d32;}
+.test-question.wrong{border-color:var(--red);}
+.answer-tag{font-size:10.5px;font-weight:700;margin-top:6px;}
+.answer-tag.correct-tag{color:#2e7d32;}
+.answer-tag.wrong-tag{color:var(--red);}
+.test-explain{font-size:11.5px;color:var(--grey-dark);margin-top:4px;font-style:italic;}
+.test-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 12px;}
+.btn-mini{
+  border:1px solid var(--black);background:var(--black);color:var(--white);font-family:inherit;
+  font-size:11.5px;font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer;
+}
+.btn-mini.ghost{background:var(--white);color:var(--black);}
+.test-score{font-size:12px;font-weight:700;}
+.test-review-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-dark);display:block;margin:10px 0 5px;}
+.test-review textarea{width:100%;min-height:50px;font-size:12px;resize:vertical;background:var(--white);}
+.test-done-row{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.test-done-row label{font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;cursor:pointer;}
+
+@media (max-width:640px){
+  .report-page{padding:18px 16px 24px;}
+  .german-hero{flex-direction:column;align-items:flex-start;gap:14px;}
+}
+
 /* ================= Print ================= */
 @media print{
   .chrome{display:none !important;}
   body{overflow:visible;height:auto;}
+  main{overflow:visible !important;}
+  .view.hidden{display:none !important;}
   .planner-stage{overflow:visible;padding:0;background:none;}
   .planner-canvas{transform:none !important;box-shadow:none;border:none;}
+  #monthView,#yearView,#germanView{overflow:visible !important;padding:0 !important;}
+  .report-page{box-shadow:none;border:none;max-width:100%;}
+  .test-body{display:block !important;padding-top:14px;}
+  .test-chevron,.german-subnav,.day-picker{display:none !important;}
+  .german-sub.hidden{display:block !important;}
+  .test-card{break-inside:avoid;}
 }
