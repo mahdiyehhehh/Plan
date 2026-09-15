@@ -1061,6 +1061,101 @@ const GERMAN_DAYS_B1 = [
 ];
 GERMAN_DAYS.push(...GERMAN_DAYS_B1);
 
+/* ---- B2 curriculum, Part 1 (Days 151-177) — "Workplace & Everyday Fluency".
+   This is 27 of the 90 B2 days (151-240), i.e. the first ~30% of the B2
+   phase. Covers: Konjunktiv I (reported speech), extended participial
+   phrases, Nominalstil, advanced connectors (obwohl/trotzdem/während/
+   indem/sodass), Zustandspassiv, advanced Funktionsverbgefüge, real family
+   conversations (conflict, decisions, parenting opinions), workplace
+   communication (feedback, running a meeting, company change, conflict),
+   and the first real Goethe/telc B2 exam-format tasks (complaint letter,
+   pro-contra essay, graph description, discussion prep). Days 178-240
+   (the remaining 70%) are the next step. ---- */
+const GERMAN_DAYS_B2_PART1 = [
+  {lessons:[ // Day 151
+    L("Konjunktiv I: Indirekte Rede berichten","Write 5 sentences reporting what someone else said, using Konjunktiv I (er sei, sie habe, wir könnten).","Meine Kollegin sagte, sie sei mit dem Bericht fast fertig. Mein Chef meinte, wir müssten die Frist einhalten.","Meine Kollegin meinte, sie ist mit dem Bericht fast fertig, ehrlich gesagt eh klar.","My colleague said she was almost finished with the report. My boss said we had to meet the deadline.")
+  ]},
+  {lessons:[ // Day 152
+    L("Konjunktiv I: Indirekte Fragen und Aufforderungen","Write 5 sentences reporting questions or requests someone made, using ob/W-Wort + Konjunktiv I, or sollen for reported requests.","Er fragte, ob ich am Montag Zeit hätte. Sie bat mich, ich solle die Unterlagen mitbringen.","Er hat gefragt, ob ich Montag Zeit hab, glaub ich schon.","He asked whether I had time on Monday. She asked me to bring the documents.")
+  ]},
+  {lessons:[ // Day 153
+    L("Erweiterte Partizipialkonstruktion (das von mir geschriebene Dokument)","Write 5 sentences using an extended participial phrase before a noun, the way formal/written German often does.","Das von mir am Montag geschriebene Dokument liegt auf deinem Schreibtisch. Die von der Familie geplante Feier findet im Garten statt.","Das Dokument, das ich Montag geschrieben hab, liegt bei dir.","The document written by me on Monday is on your desk. The celebration planned by the family will take place in the garden.")
+  ]},
+  {lessons:[ // Day 154
+    L("Nominalstil vs. Verbalstil","Take 5 casual, verb-based sentences and rewrite them in formal Nominalstil, the way an official letter or report would.","Wir prüfen den Antrag sorgfältig. → Die sorgfältige Prüfung des Antrags ist im Gange.","Wir schauen uns den Antrag grad genau an.","We are carefully reviewing the application. → The careful review of the application is underway.")
+  ]},
+  {lessons:[ // Day 155
+    L("B2 Checkpoint: Konjunktiv I + Nominalstil","Write a paragraph (8+ sentences) reporting a work conversation using Konjunktiv I, with at least one nominalized phrase.","Mein Chef sagte, die Prüfung der Unterlagen sei fast abgeschlossen. Er meinte, wir könnten die Ergebnisse nächste Woche besprechen.","Say it out loud too — reported speech sounds stiff if you only ever write it.","My boss said the review of the documents was almost complete. He said we could discuss the results next week.")
+  ]},
+  {lessons:[ // Day 156
+    L("Konnektoren: obwohl, trotzdem, dennoch (Gegensatz)","Write 6 sentences expressing contrast: 3 with obwohl (subordinate clause, verb last) and 3 with trotzdem/dennoch (main clause, verb second).","Obwohl ich müde war, habe ich noch gelernt. Ich war müde, trotzdem habe ich noch gelernt.","War voll müde, hab aber trotzdem noch gelernt.","Although I was tired, I still studied. I was tired; nevertheless, I still studied.")
+  ]},
+  {lessons:[ // Day 157
+    L("Konnektoren: während, indem, sodass","Write 6 sentences: 2 with während (contrast/simultaneity), 2 with indem (means/how), 2 with sodass (result).","Während meine Schwester Ärztin ist, arbeite ich im Büro. Ich lerne Deutsch, indem ich jeden Tag ein Video anschaue. Ich habe viel geübt, sodass ich mich jetzt sicherer fühle.","Ich lern Deutsch halt einfach, indem ich jeden Tag was schau.","While my sister is a doctor, I work in an office. I learn German by watching a video every day. I've practiced a lot, so I feel more confident now.")
+  ]},
+  {lessons:[ // Day 158
+    L("Zustandspassiv vs. Vorgangspassiv (Ergebnis vs. Vorgang)","Write 6 sentences as pairs: one Vorgangspassiv (wird gemacht — the process) and its matching Zustandspassiv (ist gemacht — the result).","Der Bericht wird gerade geschrieben. → Der Bericht ist bereits geschrieben. Die Tür wird geöffnet. → Die Tür ist geöffnet.","Der Bericht ist schon fertig, kannst ihn dir anschauen.","The report is currently being written. → The report has already been written. The door is being opened. → The door is open.")
+  ]},
+  {lessons:[ // Day 159
+    L("Funktionsverbgefüge (fortgeschritten): Rücksprache halten, Stellung nehmen, Wert legen auf","Write 5 sentences using advanced office-German Funktionsverbgefüge: Rücksprache halten, Stellung nehmen zu, Wert legen auf, Anlass geben zu.","Ich möchte kurz Rücksprache mit dir halten. Sie legt großen Wert auf pünktliches Erscheinen.","Ich muss kurz mit dir quatschen wegen der Sache.","I'd like to briefly consult with you. She places great importance on punctuality.")
+  ]},
+  {lessons:[ // Day 160
+    L("B2 Checkpoint: Konnektoren + Passiv + Funktionsverbgefüge","Write a paragraph (10+ sentences) about a typical workday, using at least one obwohl/trotzdem, one Zustandspassiv, and one Funktionsverbgefüge.","Obwohl der Bericht schon geschrieben ist, muss ich noch Rücksprache mit meinem Chef halten. Die Zahlen sind bereits geprüft, trotzdem lege ich Wert auf eine zweite Kontrolle.","Der Bericht ist eh fertig, muss nur noch kurz mit dem Chef quatschen.","Although the report is already written, I still need to consult with my boss. The figures have already been checked, but I still value a second check.")
+  ]},
+  {lessons:[ // Day 161
+    L("Über Familienbeziehungen sprechen (erweiterter Wortschatz)","Write 6 sentences describing the relationships and dynamics in your family, using words like Schwiegereltern, Verwandtschaft, sich nahestehen, sich verstehen mit.","Ich stehe meiner Schwiegermutter sehr nah, obwohl wir aus unterschiedlichen Kulturen kommen. Meine Verwandtschaft trifft sich selten alle zusammen.","Ich versteh mich echt gut mit meiner Schwiegermutter, ehrlich.","I'm very close to my mother-in-law, even though we come from different cultures. My extended family rarely all meets together.")
+  ]},
+  {lessons:[ // Day 162
+    L("Einen Familienstreit ansprechen (Konjunktiv II zur Höflichkeit)","Write a short dialogue (8+ lines) resolving a family disagreement, using Konjunktiv II to soften what you say (ich würde sagen, es wäre besser).","Ich würde sagen, wir sollten in Ruhe darüber reden. — Das wäre mir auch lieber, ich wollte dich nicht verletzen.","Lass uns einfach in Ruhe drüber reden, okay?","I'd say we should talk about it calmly. — I'd prefer that too, I didn't mean to hurt you.")
+  ]},
+  {lessons:[ // Day 163
+    L("Eine schwierige Familienentscheidung besprechen","Write a paragraph (8+ sentences) about a difficult family decision (moving, money, an Ausbildung choice), weighing einerseits/andererseits together.","Meine Familie und ich haben lange überlegt, ob sich der Umzug wegen meiner Ausbildung lohnt. Einerseits wäre es finanziell schwierig, andererseits würde es sich langfristig auszahlen.","Wir haben ewig überlegt, ob sich der Umzug überhaupt lohnt.","My family and I thought for a long time about whether the move was worth it because of my apprenticeship. On one hand it would be financially difficult, on the other hand it would pay off in the long run.")
+  ]},
+  {lessons:[ // Day 164
+    L("Meinungen zur Kindererziehung austauschen","Write 6 sentences giving and countering an opinion about raising children, using meiner Meinung nach, ich bin der Ansicht, dass, im Gegensatz dazu.","Meiner Meinung nach sollten Kinder früh Verantwortung übernehmen. Im Gegensatz dazu findet meine Schwester, dass man Kinder länger schützen sollte.","Ich find, Kinder sollten früh lernen, Verantwortung zu übernehmen, ehrlich.","In my opinion, children should take on responsibility early. In contrast, my sister thinks children should be protected longer.")
+  ]},
+  {lessons:[ // Day 165
+    L("B2 Checkpoint: Familien-Diskussion (mündlich)","With your husband, discuss a family topic out loud for 3 minutes entirely in German, using at least one Konjunktiv-II softener and one opinion phrase, then write 3 sentences you'd improve.","Ich habe zu oft 'ich glaube' gesagt, statt 'meiner Meinung nach'. Ich sollte meine Sätze besser verbinden.","Ich hab voll oft nur 'ich glaub' gesagt, statt richtig 'meiner Meinung nach'.","I said 'I think' too often instead of 'in my opinion'. I should connect my sentences better.")
+  ]},
+  {lessons:[ // Day 166
+    L("Feedback geben und annehmen (formell)","Write 6 sentences: 3 giving constructive feedback formally, 3 responding to feedback gracefully.","Mir ist aufgefallen, dass die Frist knapp verpasst wurde. Könnten wir gemeinsam überlegen, wie wir nächstes Mal früher dran sind? — Danke für den Hinweis, ich werde darauf achten.","Ist mir aufgefallen, die Frist war knapp verpasst — sollten wir mal drüber quatschen.","I noticed that the deadline was narrowly missed. Could we think together about how to be on time next time? — Thanks for the feedback, I'll keep that in mind.")
+  ]},
+  {lessons:[ // Day 167
+    L("Ein Meeting leiten oder moderieren","Write a short script (8+ lines) opening and moderating a meeting: welcoming everyone, stating the agenda, inviting input, and wrapping up.","Ich begrüße alle herzlich und möchte kurz die Tagesordnung vorstellen. Gibt es Anmerkungen, bevor wir beginnen? Zum Abschluss fasse ich die wichtigsten Punkte zusammen.","Okay Leute, dann fangen wir an — hier die Punkte für heute.","I warmly welcome everyone and would like to briefly present the agenda. Are there any comments before we begin? To conclude, I'll summarize the key points.")
+  ]},
+  {lessons:[ // Day 168
+    L("Über Änderungen im Unternehmen sprechen (Passiv + Nominalstil)","Write a paragraph (8+ sentences) describing a company change (new software, reorganization), using Passiv and Nominalstil.","Ab nächstem Monat wird ein neues System eingeführt. Die Einführung soll die Abläufe vereinfachen, auch wenn eine kurze Umstellungsphase erwartet wird.","Ab nächstem Monat kriegen wir n neues System, soll alles einfacher machen.","Starting next month, a new system will be introduced. The introduction is meant to simplify workflows, even though a brief transition period is expected.")
+  ]},
+  {lessons:[ // Day 169
+    L("Konflikte am Arbeitsplatz ansprechen (diplomatisch)","Write a dialogue (10+ lines) addressing a workplace conflict diplomatically, then resolving it.","Mir ist aufgefallen, dass wir in letzter Zeit unterschiedlicher Meinung sind. Können wir das in Ruhe klären? — Ja, gerne, ich wollte das Thema auch schon ansprechen.","Wir sind grad irgendwie nicht einer Meinung, oder? Lass uns kurz reden.","I've noticed that we've had different opinions lately. Can we clear this up calmly? — Yes, gladly, I also wanted to bring this up.")
+  ]},
+  {lessons:[ // Day 170
+    L("B2 Checkpoint: Rollenspiel Meeting","Do a full mock meeting with your husband (one moderates, one gives feedback and raises a small conflict), 5+ minutes, then write 3 self-corrections.","Ich habe zu zögerlich moderiert. Ich sollte klarer sagen, wenn ich das Wort übergebe. Ich habe eine gute Gegenfrage vergessen.","Hab irgendwie zu zaghaft moderiert, muss selbstbewusster rüberkommen.","I moderated too hesitantly. I should say more clearly when I'm handing over the floor. I forgot a good follow-up question.")
+  ]},
+  {lessons:[ // Day 171
+    L("B2-Prüfung: Beschwerdebrief (formell, mit Nominalstil)","Write a complete, timed formal complaint letter (12+ sentences) in real B2 exam format, using Nominalstil and Konjunktiv II for politeness.","Sehr geehrte Damen und Herren, mit diesem Schreiben möchte ich auf ein Problem hinweisen, das seit einigen Wochen besteht. Ich wäre Ihnen dankbar, wenn Sie sich der Angelegenheit annehmen könnten.","This one should sound properly formal and a bit stiff — that's the point at B2.","Dear Sir or Madam, with this letter I would like to point out a problem that has existed for several weeks. I would be grateful if you could look into this matter.")
+  ]},
+  {lessons:[ // Day 172
+    L("B2-Prüfung: Für-und-Gegen-Aufsatz (Meinungsäußerung)","Write a complete, timed pro-contra essay (12+ sentences) on a given topic: introduction, two arguments per side, personal conclusion — the real B2 writing task format.","Einerseits bringt Homeoffice mehr Flexibilität, andererseits fehlt oft der persönliche Austausch mit Kollegen. Zusammenfassend denke ich, dass eine Mischung aus beidem am sinnvollsten wäre.","Practice this one timed — 25 minutes, no looking anything up.","On one hand, working from home brings more flexibility; on the other hand, personal exchange with colleagues is often lacking. In conclusion, I think a mix of both would make the most sense.")
+  ]},
+  {lessons:[ // Day 173
+    L("B2-Prüfung: Eine Grafik/Statistik beschreiben","Find a simple chart or statistic (about work, family, or Germany) and describe it in a structured paragraph (8+ sentences): intro, trends, a possible reason, a short conclusion — a real B2 task.","Die Grafik zeigt, wie sich die Arbeitszeit von Eltern in den letzten zehn Jahren verändert hat. Auffällig ist, dass der Anteil an Teilzeitarbeit deutlich gestiegen ist. Das könnte daran liegen, dass mehr Flexibilität gefragt ist.","This is a fixed format — Einleitung, Beschreibung, Vermutung, Schluss. Practice the structure, not just the vocabulary.","The chart shows how parents' working hours have changed over the last ten years. It's notable that the share of part-time work has clearly increased. This could be because more flexibility is in demand.")
+  ]},
+  {lessons:[ // Day 174
+    L("B2-Prüfung: Podiumsdiskussion vorbereiten (Argumente sammeln)","Pick a debate topic and write 4 arguments for and 4 against, each with one supporting sentence — prep for the real B2 speaking task 2 (Diskussion).","Dafür spricht, dass flexible Arbeitszeiten die Motivation steigern. Dagegen spricht, dass die Erreichbarkeit im Team leiden könnte.","Just brainstorm both sides honestly, even the side you don't personally agree with.","In favor is that flexible working hours increase motivation. Against it is that team availability could suffer.")
+  ]},
+  {lessons:[ // Day 175
+    L("B2 Checkpoint: Timed Pro-Contra-Aufsatz wiederholen","Redo Day 172's pro-contra essay on a new topic, timed (25 minutes), then self-grade: structure clear? Both sides balanced? Conclusion personal?","A complete, timed pro-contra essay, checked against real B2 exam criteria.","Read it out loud after — does it flow, or does it sound like a list?")
+  ]},
+  {lessons:[ // Day 176
+    L("B2 Wortschatz-Wiederholung: Beruf & Familie","Review the 10 Beruf/Familie words or phrases you feel least confident about from Days 151-174, and write one fresh sentence for each.","10 fresh sentences using your weakest work/family vocabulary from this stretch.","Say each one out loud once you've written it.")
+  ]},
+  {lessons:[ // Day 177
+    L("B2 Checkpoint: Selbsteinschätzung (Tage 151-177)","Rate yourself 1-5 on Hören, Lesen, Schreiben, and Sprechen for B2 so far, and write which areas still need review before continuing to Day 178.","Hören: 3/5. Lesen: 4/5. Schreiben: 4/5. Sprechen: 3/5. Ich möchte vor allem noch am freien Sprechen arbeiten.","Sprechen ist noch am schwersten, ehrlich — beim Schreiben fühl ich mich schon sicherer.","Listening: 3/5. Reading: 4/5. Writing: 4/5. Speaking: 3/5. I especially want to work on speaking freely.")
+  ]}
+];
+GERMAN_DAYS.push(...GERMAN_DAYS_B2_PART1);
+
 /* ---- Full plan: A1 -> A2 -> B1, sized for a 6-7 month timeline at
    ~2.5 hrs/day (roughly matches Goethe's published hour estimates per
    level). A1 (Days 1-30) is fully written out above. A2 and B1 content
@@ -1087,7 +1182,7 @@ function phaseForDay(day){
   return PHASES.find(p=>day>=p.from && day<=p.to) || PHASES[PHASES.length-1];
 }
 const A1_PHASE_END = 30;
-const CONTENT_END_DAY = 150; // raise this as more phases get written (A2 + B1 are fully written, 1-150)
+const CONTENT_END_DAY = 177; // raise this as more phases get written (A2 + B1 fully written, B2 Part 1 written: 1-177; B2 Days 178-240 still to come)
 const TOTAL_CORE_DAYS = 240; // 8-month core plan (Days 1-240) to B2, buffer is extra
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
