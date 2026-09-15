@@ -528,119 +528,119 @@ function getTestRecord(id){
 
 /* ---- 30-day A1 curriculum. Each day has 1–2 lessons, so every grammar
    point and vocab set a full A1 exam needs is covered by Day 30. ---- */
-function L(topic,homework,example,natural){ return {topic,homework,example,natural}; }
+function L(topic,homework,example,natural,en){ return {topic,homework,example,natural,en}; }
 const GERMAN_DAYS = [
   {lessons:[ // Day 1
-    L("Greetings & Introductions","Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.","Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch.","Ich bin Lisa, 22. Komm' aus Italien und spreche Italienisch und n bisschen Deutsch. Und du, wie heißt du?"),
-    L("Formal vs. Informal: du vs. Sie","Write the same self-introduction twice: once informally to a friend (du), once formally to a stranger (Sie).","Guten Tag, mein Name ist Frau Keller. Wie ist Ihr Name?","Hey, ich bin Lisa. Und du, wie heißt du?")
+    L("Greetings & Introductions","Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.","Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch.","Ich bin Lisa, 22. Komm' aus Italien und spreche Italienisch und n bisschen Deutsch. Und du, wie heißt du?","My name is Lisa. I am 22 years old. I come from Italy and I speak Italian and a little German."),
+    L("Formal vs. Informal: du vs. Sie","Write the same self-introduction twice: once informally to a friend (du), once formally to a stranger (Sie).","Guten Tag, mein Name ist Frau Keller. Wie ist Ihr Name?","Hey, ich bin Lisa. Und du, wie heißt du?","Good day, my name is Mrs. Keller. What is your name?")
   ]},
   {lessons:[ // Day 2
-    L("Numbers 0–20","Write the numbers 0–20 in German, then write out 5 simple addition sums in words.","eins, zwei, drei ... zehn. Drei plus vier ist sieben.","Drei und vier macht sieben. — Warte, wie viel war das nochmal?"),
-    L("Phone Numbers & Basic Math","Write your phone number out digit by digit in German, then write 3 subtraction sums in words.","Meine Nummer ist null-eins-fünf-drei... Zehn minus drei ist sieben.","Meine Nummer ist 0153... — Wart, sag's nochmal langsamer.")
+    L("Numbers 0–20","Write the numbers 0–20 in German, then write out 5 simple addition sums in words.","eins, zwei, drei ... zehn. Drei plus vier ist sieben.","Drei und vier macht sieben. — Warte, wie viel war das nochmal?","one, two, three ... ten. Three plus four is seven."),
+    L("Phone Numbers & Basic Math","Write your phone number out digit by digit in German, then write 3 subtraction sums in words.","Meine Nummer ist null-eins-fünf-drei... Zehn minus drei ist sieben.","Meine Nummer ist 0153... — Wart, sag's nochmal langsamer.","My number is zero-one-five-three... Ten minus three is seven.")
   ]},
   {lessons:[ // Day 3
-    L("The Alphabet & Spelling","Spell your first and last name out loud using the German alphabet, then write it letter by letter.","M-A-R-I-A = Em – A – Er – I – A.","Buchstabier das nochmal, ich hab's nicht ganz verstanden."),
-    L("Survival Classroom Phrases","Write 5 phrases you'd use if you don't understand something in a conversation.","Wie bitte? Können Sie das bitte wiederholen? Ich verstehe nicht.","Wie bitte? Kannst du das nochmal sagen? Ich check's grad nicht.")
+    L("The Alphabet & Spelling","Spell your first and last name out loud using the German alphabet, then write it letter by letter.","M-A-R-I-A = Em – A – Er – I – A.","Buchstabier das nochmal, ich hab's nicht ganz verstanden.","M-A-R-I-A, spelled out letter by letter."),
+    L("Survival Classroom Phrases","Write 5 phrases you'd use if you don't understand something in a conversation.","Wie bitte? Können Sie das bitte wiederholen? Ich verstehe nicht.","Wie bitte? Kannst du das nochmal sagen? Ich check's grad nicht.","Excuse me? Could you please repeat that? I don't understand.")
   ]},
   {lessons:[ // Day 4
-    L("Personal Pronouns & \"sein\"","Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.","ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde.","Ich bin echt müde heute. Bist du auch so kaputt?"),
-    L("Basic Adjectives with sein","Write 6 sentences describing people or things using sein + an adjective (groß, klein, glücklich, müde, nett...).","Er ist groß. Sie ist sehr nett. Das Wetter ist schlecht.","Er ist echt groß, oder? Und sie ist total nett.")
+    L("Personal Pronouns & \"sein\"","Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.","ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde.","Ich bin echt müde heute. Bist du auch so kaputt?","I am, you are, he/she/it is, we are, you (pl.) are, they are. I am tired."),
+    L("Basic Adjectives with sein","Write 6 sentences describing people or things using sein + an adjective (groß, klein, glücklich, müde, nett...).","Er ist groß. Sie ist sehr nett. Das Wetter ist schlecht.","Er ist echt groß, oder? Und sie ist total nett.","He is tall. She is very nice. The weather is bad.")
   ]},
   {lessons:[ // Day 5
-    L("Family Members","List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).","Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom.","Das ist meine Mama, und das da ist mein kleiner Bruder.")
+    L("Family Members","List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).","Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom.","Das ist meine Mama, und das da ist mein kleiner Bruder.","This is my mother. Her name is Anna. This is my brother. His name is Tom.")
   ]},
   {lessons:[ // Day 6
-    L("Articles: der / die / das","Sort 10 household nouns into der / die / das using a dictionary or app.","der Tisch, die Lampe, das Buch, der Stuhl, die Tür.","Kannst du mir mal das Buch da geben? Genau, das auf'm Tisch."),
-    L("Possessive Articles (mein/dein/sein/ihr)","Rewrite 6 sentences from Day 5 using possessive articles instead of der/die/das (mein Vater, meine Schwester...).","Das ist mein Vater. Das ist meine Schwester. Das ist unser Haus.","Das ist mein Dad, und das da meine Schwester.")
+    L("Articles: der / die / das","Sort 10 household nouns into der / die / das using a dictionary or app.","der Tisch, die Lampe, das Buch, der Stuhl, die Tür.","Kannst du mir mal das Buch da geben? Genau, das auf'm Tisch.","the table, the lamp, the book, the chair, the door."),
+    L("Possessive Articles (mein/dein/sein/ihr)","Rewrite 6 sentences from Day 5 using possessive articles instead of der/die/das (mein Vater, meine Schwester...).","Das ist mein Vater. Das ist meine Schwester. Das ist unser Haus.","Das ist mein Dad, und das da meine Schwester.","This is my father. This is my sister. This is our house.")
   ]},
   {lessons:[ // Day 7
-    L("Present Tense — Regular Verbs","Fully conjugate 3 regular verbs: spielen, wohnen, lernen.","ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen.","Ich lern grad Deutsch, deshalb spiel ich abends immer diese Vokabel-App."),
-    L("Frequency Adverbs","Write 6 sentences about how often you do things, using immer, oft, manchmal, selten, nie.","Ich lerne jeden Tag Deutsch. Ich gehe selten ins Kino.","Ich lern eigentlich jeden Tag n bisschen, aber ins Kino geh ich selten.")
+    L("Present Tense — Regular Verbs","Fully conjugate 3 regular verbs: spielen, wohnen, lernen.","ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen.","Ich lern grad Deutsch, deshalb spiel ich abends immer diese Vokabel-App.","I play, you play, he plays, we play, you (pl.) play, they play."),
+    L("Frequency Adverbs","Write 6 sentences about how often you do things, using immer, oft, manchmal, selten, nie.","Ich lerne jeden Tag Deutsch. Ich gehe selten ins Kino.","Ich lern eigentlich jeden Tag n bisschen, aber ins Kino geh ich selten.","I learn German every day. I rarely go to the cinema.")
   ]},
   {lessons:[ // Day 8
-    L("Numbers 20–100 & Age","Write your age and the ages of 5 family members in full German words.","Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt.","Meine Schwester ist einundzwanzig, glaub ich — oder ist sie schon zweiundzwanzig?"),
-    L("Ordinal Numbers & Dates","Write today's date and 3 important dates using ordinal numbers (der Erste, der Zweite...).","Heute ist der fünfzehnte September. Mein Geburtstag ist der dritte Mai.","Heut ist der Fünfzehnte, glaub ich — und mein Geburtstag ist am dritten Mai.")
+    L("Numbers 20–100 & Age","Write your age and the ages of 5 family members in full German words.","Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt.","Meine Schwester ist einundzwanzig, glaub ich — oder ist sie schon zweiundzwanzig?","My sister is twenty-one years old. My father is fifty-nine years old."),
+    L("Ordinal Numbers & Dates","Write today's date and 3 important dates using ordinal numbers (der Erste, der Zweite...).","Heute ist der fünfzehnte September. Mein Geburtstag ist der dritte Mai.","Heut ist der Fünfzehnte, glaub ich — und mein Geburtstag ist am dritten Mai.","Today is the fifteenth of September. My birthday is the third of May.")
   ]},
   {lessons:[ // Day 9
-    L("Telling Time","Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").","Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag.","Es ist halb neun, wir müssen los! — Wie spät ist es? — Kurz nach halb."),
-    L("Asking About Time & Schedules","Write a short dialogue (4 lines) asking someone what time a train, meeting, or movie starts.","Wann beginnt der Film? — Um neunzehn Uhr.","Wann geht der Film los? — Um sieben, glaub ich.")
+    L("Telling Time","Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").","Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag.","Es ist halb neun, wir müssen los! — Wie spät ist es? — Kurz nach halb.","It's half past eight. I eat breakfast. It's quarter past twelve. I have lunch."),
+    L("Asking About Time & Schedules","Write a short dialogue (4 lines) asking someone what time a train, meeting, or movie starts.","Wann beginnt der Film? — Um neunzehn Uhr.","Wann geht der Film los? — Um sieben, glaub ich.","When does the film start? — At seven p.m.")
   ]},
   {lessons:[ // Day 10
-    L("Days, Months, Seasons","List the 7 days and 12 months in German, then write which season you like best and why.","Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.","Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten.")
+    L("Days, Months, Seasons","List the 7 days and 12 months in German, then write which season you like best and why.","Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.","Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten.","My favorite month is July, in summer, because it's warm.")
   ]},
   {lessons:[ // Day 11
-    L("Daily Routine (Separable Verbs)","Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).","Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern.","Ich steh um sieben auf, zieh mich schnell an, und abends häng ich vorm Fernseher."),
-    L("More Separable Verbs","Write 5 more sentences about your week using einkaufen, anrufen, aufräumen, einschlafen.","Ich kaufe samstags ein. Ich rufe meine Mutter an.","Ich kauf immer samstags ein, und ruf danach meine Mama an.")
+    L("Daily Routine (Separable Verbs)","Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).","Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern.","Ich steh um sieben auf, zieh mich schnell an, und abends häng ich vorm Fernseher.","I get up at seven o'clock. I get dressed. In the evening I watch TV."),
+    L("More Separable Verbs","Write 5 more sentences about your week using einkaufen, anrufen, aufräumen, einschlafen.","Ich kaufe samstags ein. Ich rufe meine Mutter an.","Ich kauf immer samstags ein, und ruf danach meine Mama an.","I go shopping on Saturdays. I call my mother.")
   ]},
   {lessons:[ // Day 12
-    L("Food & Drink Vocabulary","Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.","der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.","Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend."),
-    L("Asking for Quantities at the Market","Write a short dialogue buying groceries, asking for specific amounts (ein Kilo, ein Liter, ein Stück).","Ich hätte gern ein Kilo Äpfel und einen Liter Milch.","Ich brauch noch n Kilo Äpfel und n bisschen Milch.")
+    L("Food & Drink Vocabulary","Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.","der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.","Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend.","the rice, the milk, the bread. I like eating pasta with tomato sauce."),
+    L("Asking for Quantities at the Market","Write a short dialogue buying groceries, asking for specific amounts (ein Kilo, ein Liter, ein Stück).","Ich hätte gern ein Kilo Äpfel und einen Liter Milch.","Ich brauch noch n Kilo Äpfel und n bisschen Milch.","I'd like a kilo of apples and a liter of milk.")
   ]},
   {lessons:[ // Day 13
-    L("At the Restaurant","Write a short dialogue (at least 6 lines) ordering food at a restaurant.","Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?","Für mich bitte 'nen Kaffee und n Stück Kuchen. — Kommt sofort! — Super, danke.")
+    L("At the Restaurant","Write a short dialogue (at least 6 lines) ordering food at a restaurant.","Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?","Für mich bitte 'nen Kaffee und n Stück Kuchen. — Kommt sofort! — Super, danke.","Hello! I'd like a coffee and a piece of cake, please. — Sure, anything else?")
   ]},
   {lessons:[ // Day 14
-    L("Akkusativ Case","Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).","Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze.","Ich hol mir noch schnell nen Apfel, ich hab nämlich voll Hunger."),
-    L("Dativ Case Basics","Write 6 sentences using dative pronouns (mir, dir, ihm, ihr, uns) — e.g. \"Das gefällt mir.\"","Das Buch gehört mir. Er hilft ihr. Das gefällt mir sehr.","Das gefällt mir echt gut, ehrlich.")
+    L("Akkusativ Case","Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).","Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze.","Ich hol mir noch schnell nen Apfel, ich hab nämlich voll Hunger.","I see the man. I buy an apple. I have a cat."),
+    L("Dativ Case Basics","Write 6 sentences using dative pronouns (mir, dir, ihm, ihr, uns) — e.g. \"Das gefällt mir.\"","Das Buch gehört mir. Er hilft ihr. Das gefällt mir sehr.","Das gefällt mir echt gut, ehrlich.","The book belongs to me. He helps her. I like that a lot.")
   ]},
   {lessons:[ // Day 15
-    L("Shopping & Clothes","Describe an outfit you're wearing today using at least 6 clothing words and colors.","Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe.","Ich hab heute meine blaue Jacke an und die schwarzen Schuhe von letzter Woche."),
-    L("Colors, Sizes & Prices","Write a short shopping dialogue asking about the size and price of a piece of clothing.","Haben Sie das in Größe M? Was kostet das?","Habt ihr das noch in M? Und was kostet's?")
+    L("Shopping & Clothes","Describe an outfit you're wearing today using at least 6 clothing words and colors.","Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe.","Ich hab heute meine blaue Jacke an und die schwarzen Schuhe von letzter Woche.","I'm wearing a blue jacket, a white T-shirt, and black shoes."),
+    L("Colors, Sizes & Prices","Write a short shopping dialogue asking about the size and price of a piece of clothing.","Haben Sie das in Größe M? Was kostet das?","Habt ihr das noch in M? Und was kostet's?","Do you have that in size M? How much does it cost?")
   ]},
   {lessons:[ // Day 16
-    L("Modal Verbs: können, müssen, wollen","Write 6 sentences (two per verb) about things you can, must, and want to do.","Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen.","Ich muss heut echt noch lernen, aber ich hab eigentlich keinen Bock.")
+    L("Modal Verbs: können, müssen, wollen","Write 6 sentences (two per verb) about things you can, must, and want to do.","Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen.","Ich muss heut echt noch lernen, aber ich hab eigentlich keinen Bock.","I have to study today. I want to speak German. I can cook well.")
   ]},
   {lessons:[ // Day 17
-    L("The Weather","Describe the weather for each day of this week in German.","Heute ist es sonnig und warm. Morgen regnet es und es ist windig.","Heute ist's richtig schön warm, aber morgen soll's angeblich wieder regnen."),
-    L("Talking About Weather Naturally","Write a short weather small-talk dialogue (4–5 lines) as you'd have with a neighbor.","Schönes Wetter heute, nicht wahr? — Ja, endlich mal Sonne!","Endlich mal schönes Wetter, oder? — Ja, wurde auch Zeit!")
+    L("The Weather","Describe the weather for each day of this week in German.","Heute ist es sonnig und warm. Morgen regnet es und es ist windig.","Heute ist's richtig schön warm, aber morgen soll's angeblich wieder regnen.","Today it's sunny and warm. Tomorrow it will rain and it's windy."),
+    L("Talking About Weather Naturally","Write a short weather small-talk dialogue (4–5 lines) as you'd have with a neighbor.","Schönes Wetter heute, nicht wahr? — Ja, endlich mal Sonne!","Endlich mal schönes Wetter, oder? — Ja, wurde auch Zeit!","Nice weather today, isn't it? — Yes, finally some sun!")
   ]},
   {lessons:[ // Day 18
-    L("Directions & Prepositions","Write directions from your home to the nearest supermarket using links, rechts, geradeaus.","Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank.","Einfach geradeaus, dann links, das ist gleich neben der Bank — nicht zu verfehlen."),
-    L("Understanding Directions Given to You","Write directions someone might give you, then repeat them back in your own words to check you understood.","Gehen Sie zuerst rechts, dann die zweite Straße links.","Erst rechts, dann die zweite links — hab ich's richtig verstanden?")
+    L("Directions & Prepositions","Write directions from your home to the nearest supermarket using links, rechts, geradeaus.","Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank.","Einfach geradeaus, dann links, das ist gleich neben der Bank — nicht zu verfehlen.","Go straight ahead, then left. The supermarket is next to the bank."),
+    L("Understanding Directions Given to You","Write directions someone might give you, then repeat them back in your own words to check you understood.","Gehen Sie zuerst rechts, dann die zweite Straße links.","Erst rechts, dann die zweite links — hab ich's richtig verstanden?","First go right, then take the second street on the left.")
   ]},
   {lessons:[ // Day 19
-    L("Places in the City","List 10 places in a city with their articles and one sentence for each about what you do there.","In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.","Wir treffen uns im Park, ja? Da spielen wir immer Fußball.")
+    L("Places in the City","List 10 places in a city with their articles and one sentence for each about what you do there.","In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.","Wir treffen uns im Park, ja? Da spielen wir immer Fußball.","In the library I read books. In the park I play soccer.")
   ]},
   {lessons:[ // Day 20
-    L("Past Tense — Perfekt (basics)","Write 6 sentences about yesterday using the Perfekt tense with haben or sein.","Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen.","Ich hab gestern noch Deutsch gelernt und bin dann ins Kino gegangen."),
-    L("Perfekt: haben vs. sein Verbs","Sort 8 verbs into \"takes haben\" or \"takes sein\" in the Perfekt, then write one sentence with each group.","Ich habe gegessen (haben). Ich bin gefahren (sein).","Ich hab gestern echt viel gegessen, und bin dann früh ins Bett.")
+    L("Past Tense — Perfekt (basics)","Write 6 sentences about yesterday using the Perfekt tense with haben or sein.","Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen.","Ich hab gestern noch Deutsch gelernt und bin dann ins Kino gegangen.","I studied German yesterday. I went to the cinema."),
+    L("Perfekt: haben vs. sein Verbs","Sort 8 verbs into \"takes haben\" or \"takes sein\" in the Perfekt, then write one sentence with each group.","Ich habe gegessen (haben). Ich bin gefahren (sein).","Ich hab gestern echt viel gegessen, und bin dann früh ins Bett.","I ate (with haben). I traveled/drove (with sein).")
   ]},
   {lessons:[ // Day 21
-    L("Hobbies & Free Time","Write a paragraph (5–6 sentences) about your hobbies and how often you do them.","Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern.","Ich zock gern und spiel zweimal die Woche Fußball, sonst chill ich meistens.")
+    L("Hobbies & Free Time","Write a paragraph (5–6 sentences) about your hobbies and how often you do them.","Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern.","Ich zock gern und spiel zweimal die Woche Fußball, sonst chill ich meistens.","I like playing soccer. I do that twice a week. I also like reading.")
   ]},
   {lessons:[ // Day 22
-    L("Making Plans & Invitations","Write a short dialogue inviting a friend to do something this weekend.","Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?","Hast du Samstag Bock auf Kino? — Klar, bin dabei!"),
-    L("On the Phone: Making Plans","Write a short phone-call dialogue (6+ lines) confirming a time and place to meet up.","Hallo, hier ist Anna. Treffen wir uns um drei? — Ja, gerne, am Bahnhof?","Hey, hier Anna! Treffen wir uns um drei? — Klar, am Bahnhof, wie immer?")
+    L("Making Plans & Invitations","Write a short dialogue inviting a friend to do something this weekend.","Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?","Hast du Samstag Bock auf Kino? — Klar, bin dabei!","Do you have time on Saturday? — Yes, why? — Shall we go to the cinema?"),
+    L("On the Phone: Making Plans","Write a short phone-call dialogue (6+ lines) confirming a time and place to meet up.","Hallo, hier ist Anna. Treffen wir uns um drei? — Ja, gerne, am Bahnhof?","Hey, hier Anna! Treffen wir uns um drei? — Klar, am Bahnhof, wie immer?","Hello, this is Anna. Shall we meet at three? — Yes, sure, at the station?")
   ]},
   {lessons:[ // Day 23
-    L("The Body & Health","Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").","der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank.","Mir tut voll der Kopf weh, ich glaub ich werd krank."),
-    L("Talking About Feelings & Emotions","Write 6 sentences describing how you feel in different situations (froh, traurig, nervös, aufgeregt).","Ich bin heute sehr froh. Ich war gestern ein bisschen nervös.","Ich bin heut mega gut drauf, ehrlich.")
+    L("The Body & Health","Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").","der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank.","Mir tut voll der Kopf weh, ich glaub ich werd krank.","the head, the arm, the leg. My head hurts. I'm a little sick."),
+    L("Talking About Feelings & Emotions","Write 6 sentences describing how you feel in different situations (froh, traurig, nervös, aufgeregt).","Ich bin heute sehr froh. Ich war gestern ein bisschen nervös.","Ich bin heut mega gut drauf, ehrlich.","I'm very happy today. I was a little nervous yesterday.")
   ]},
   {lessons:[ // Day 24
-    L("At the Doctor's","Write a short dialogue at the doctor's office describing your symptoms.","Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?","Ich hab seit gestern Fieber und mir tut voll der Hals weh.")
+    L("At the Doctor's","Write a short dialogue at the doctor's office describing your symptoms.","Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?","Ich hab seit gestern Fieber und mir tut voll der Hals weh.","I have a fever and a sore throat. — Since when have you had that?")
   ]},
   {lessons:[ // Day 25
-    L("Comparisons (Adjectives)","Write 6 comparative sentences comparing things around you.","Berlin ist größer als München. Mein Bruder ist am größten in der Familie.","Berlin ist schon viel größer als München, find ich."),
-    L("Superlatives","Write 5 superlative sentences about people or places you know (am größten, am besten, am schönsten).","Mein Bruder ist am größten in der Familie. Berlin ist am schönsten im Sommer.","Mein Bruder ist eindeutig der Größte von uns allen.")
+    L("Comparisons (Adjectives)","Write 6 comparative sentences comparing things around you.","Berlin ist größer als München. Mein Bruder ist am größten in der Familie.","Berlin ist schon viel größer als München, find ich.","Berlin is bigger than Munich. My brother is the tallest in the family."),
+    L("Superlatives","Write 5 superlative sentences about people or places you know (am größten, am besten, am schönsten).","Mein Bruder ist am größten in der Familie. Berlin ist am schönsten im Sommer.","Mein Bruder ist eindeutig der Größte von uns allen.","My brother is the tallest in the family. Berlin is most beautiful in summer.")
   ]},
   {lessons:[ // Day 26
-    L("Housing & Furniture","Describe your home or room, listing at least 8 furniture items with their articles.","In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch.","Meine Bude ist klein, aber ich hab n Bett, n Schrank und n Schreibtisch — reicht mir.")
+    L("Housing & Furniture","Describe your home or room, listing at least 8 furniture items with their articles.","In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch.","Meine Bude ist klein, aber ich hab n Bett, n Schrank und n Schreibtisch — reicht mir.","In my room there is a bed, a wardrobe, and a desk.")
   ]},
   {lessons:[ // Day 27
-    L("Public Transport & Travel","Write a dialogue buying a train ticket and asking about departure times.","Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5.","Wann geht der nächste Zug nach Berlin? — Um zwei, Gleis fünf, beeil dich!"),
-    L("Travel Vocabulary & Booking","Write a short dialogue booking a hotel room or asking about a travel connection.","Ich möchte ein Einzelzimmer für zwei Nächte buchen.","Ich brauch n Einzelzimmer für zwei Nächte, geht das?")
+    L("Public Transport & Travel","Write a dialogue buying a train ticket and asking about departure times.","Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5.","Wann geht der nächste Zug nach Berlin? — Um zwei, Gleis fünf, beeil dich!","When does the next train to Berlin leave? — At 2 p.m., platform 5."),
+    L("Travel Vocabulary & Booking","Write a short dialogue booking a hotel room or asking about a travel connection.","Ich möchte ein Einzelzimmer für zwei Nächte buchen.","Ich brauch n Einzelzimmer für zwei Nächte, geht das?","I'd like to book a single room for two nights.")
   ]},
   {lessons:[ // Day 28
-    L("Negation: nicht / kein","Write 8 sentences using nicht and kein correctly.","Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig.","Ich hab kein Auto, deshalb nehm ich meistens den Bus. — Echt nicht? Krass."),
-    L("Connecting Ideas: weil & dass","Write 5 sentences giving reasons with weil and 5 opinions with dass (verb goes to the end).","Ich lerne Deutsch, weil ich nach Berlin ziehen möchte. Ich glaube, dass Deutsch schwer ist.","Ich lern Deutsch, weil ich unbedingt nach Berlin will.")
+    L("Negation: nicht / kein","Write 8 sentences using nicht and kein correctly.","Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig.","Ich hab kein Auto, deshalb nehm ich meistens den Bus. — Echt nicht? Krass.","I don't have a car. I don't like drinking coffee. That's not right."),
+    L("Connecting Ideas: weil & dass","Write 5 sentences giving reasons with weil and 5 opinions with dass (verb goes to the end).","Ich lerne Deutsch, weil ich nach Berlin ziehen möchte. Ich glaube, dass Deutsch schwer ist.","Ich lern Deutsch, weil ich unbedingt nach Berlin will.","I'm learning German because I want to move to Berlin. I think that German is hard.")
   ]},
   {lessons:[ // Day 29
-    L("Question Words Review","Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.","Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe.","Wo wohnst du eigentlich? — In Berlin. — Ah cool, wieso lernst du dann Deutsch, kannst du's nicht schon?"),
-    L("Giving Commands: the Imperative","Write 5 imperative sentences (informal and formal) you might use at home or work.","Mach das Fenster zu! Setzen Sie sich bitte.","Mach mal das Fenster zu, mir ist kalt.")
+    L("Question Words Review","Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.","Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe.","Wo wohnst du eigentlich? — In Berlin. — Ah cool, wieso lernst du dann Deutsch, kannst du's nicht schon?","Where do you live? — I live in Berlin. Why are you learning German? — Because I'm moving to Germany."),
+    L("Giving Commands: the Imperative","Write 5 imperative sentences (informal and formal) you might use at home or work.","Mach das Fenster zu! Setzen Sie sich bitte.","Mach mal das Fenster zu, mir ist kalt.","Close the window! Please sit down (formal).")
   ]},
   {lessons:[ // Day 30
-    L("Full A1 Self-Review","Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.","Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt.","Ich bin ... und komm aus ... Ich studier gerade und lern jetzt seit 30 Tagen Deutsch. Gestern hab ich echt viel gelernt, war anstrengend!"),
-    L("Write a Short Formal Message","Write a short formal email or postcard (6–8 sentences) introducing yourself and making a simple request — a real Goethe/telc A1 writing-task format.","Sehr geehrte Damen und Herren, mein Name ist ... Ich möchte gern einen Termin vereinbaren. Mit freundlichen Grüßen, ...","Hi, ich bin's — wollte nur kurz fragen, ob wir nen Termin ausmachen können. Danke schon mal!")
+    L("Full A1 Self-Review","Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.","Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt.","Ich bin ... und komm aus ... Ich studier gerade und lern jetzt seit 30 Tagen Deutsch. Gestern hab ich echt viel gelernt, war anstrengend!","My name is ... and I come from ... I'm a student and have been learning German for 30 days. Yesterday I studied a lot."),
+    L("Write a Short Formal Message","Write a short formal email or postcard (6–8 sentences) introducing yourself and making a simple request — a real Goethe/telc A1 writing-task format.","Sehr geehrte Damen und Herren, mein Name ist ... Ich möchte gern einen Termin vereinbaren. Mit freundlichen Grüßen, ...","Hi, ich bin's — wollte nur kurz fragen, ob wir nen Termin ausmachen können. Danke schon mal!","Dear Sir or Madam, my name is ... I would like to arrange an appointment. Kind regards, ...")
   ]}
 ];
 
@@ -1555,16 +1555,17 @@ function renderDailyCard(){
         <h3>${multi?`Lesson ${i+1} of ${dayContent.lessons.length} — `:""}${esc(lesson.topic)}</h3>
       </div>
       <div class="daily-block">
-        <div class="daily-block-label"><span class="dot"></span>Homework</div>
-        <div class="homework-prompt">${esc(lesson.homework)}</div>
-        <textarea class="lesson-answer" data-lesson="${i}" placeholder="Write your answer here...">${esc(lrec.answer)}</textarea>
-      </div>
-      <div class="daily-block">
-        <div class="daily-block-label"><span class="dot"></span>Example: Exam vs. Everyday</div>
+        <div class="daily-block-label"><span class="dot"></span>Learn This First <span class="tap-hint">tap any word to hear it</span></div>
         <div class="example-pair">
           <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${forvoWords(lesson.example)}</div>
           <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${forvoWords(lesson.natural)}</div>
+          ${lesson.en?`<div class="example-en">${esc(lesson.en)}</div>`:""}
         </div>
+      </div>
+      <div class="daily-block">
+        <div class="daily-block-label"><span class="dot"></span>Homework</div>
+        <div class="homework-prompt">${esc(lesson.homework)}</div>
+        <textarea class="lesson-answer" data-lesson="${i}" placeholder="Write your answer here...">${esc(lrec.answer)}</textarea>
       </div>
       <div class="daily-block">
         <div class="daily-block-label"><span class="dot"></span>Your Notes</div>
