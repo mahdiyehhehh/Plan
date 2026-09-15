@@ -474,29 +474,43 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 }
 .german-sub.hidden{display:none;}
 
-/* ---- phrase / slang of the day (pinned above the tabs) ---- */
+/* ==================================================================
+   STEP 3 — "Alles klar?" daily phrase: open editorial block, no more
+   boxed dark card. A small crimson accent (dot + eyebrow) introduces
+   it, the natural phrase leads as a title, exam-correct + meaning
+   follow as quiet supporting lines, then the description.
+   ================================================================== */
 .slang-card{
-  position:relative;overflow:hidden;
-  border:1px solid #2a2a2a;border-radius:14px;
-  background:linear-gradient(150deg,#171717 0%,#111111 60%,#1c1210 100%);
-  padding:18px 20px 20px;margin-bottom:20px;
-  box-shadow:0 10px 26px rgba(17,17,17,.16);
+  position:relative;
+  padding:0 0 var(--g-space-5);
+  margin-bottom:var(--g-space-5);
+  border-bottom:1px solid var(--g-hairline);
 }
-.slang-card::after{
-  content:"";position:absolute;top:-40px;right:-40px;width:150px;height:150px;border-radius:50%;
-  background:radial-gradient(circle,rgba(192,57,43,.35),transparent 70%);pointer-events:none;
+.slang-eyebrow{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font);font-size:var(--g-label);font-weight:700;
+  letter-spacing:var(--g-tracking-label);text-transform:uppercase;
+  color:var(--g-crimson);margin:0 0 var(--g-space-2);
 }
-.slang-card-eyebrow{
-  font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#ff8a75;
-  display:flex;align-items:center;gap:6px;margin-bottom:10px;
+.slang-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--g-crimson);flex:none;}
+.slang-eyebrow .day-of{color:var(--g-ink-faint);font-weight:600;text-transform:none;letter-spacing:0;}
+.slang-phrase{
+  font-family:var(--font);font-size:var(--g-title);font-weight:800;
+  letter-spacing:-.01em;line-height:1.15;color:var(--g-ink);margin:0 0 var(--g-space-2);
 }
-.slang-card-eyebrow .day-of{color:rgba(255,255,255,.4);font-weight:700;}
-.slang-card-pair{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px;margin-bottom:8px;}
-.slang-card-phrase h4{font-family:var(--font);font-size:21px;font-weight:600;margin:0;color:var(--white);}
-.slang-card-exam{font-size:11px;color:rgba(255,255,255,.55);font-weight:600;}
-.slang-card-exam strong{color:rgba(255,255,255,.85);font-weight:600;font-style:normal;}
-.slang-card-meaning{font-size:12.5px;color:rgba(255,255,255,.88);margin:2px 0 0;}
-.slang-card-note{font-size:11.5px;color:rgba(255,255,255,.55);margin:8px 0 0;line-height:1.55;position:relative;z-index:1;}
+.slang-exam{
+  font-family:var(--font);font-size:var(--g-support);font-weight:500;
+  color:var(--g-ink-faint);margin:0 0 6px;
+}
+.slang-exam strong{color:var(--g-crimson-soft);font-weight:650;font-style:normal;}
+.slang-meaning{
+  font-family:var(--font);font-size:var(--g-heading);font-weight:600;
+  color:var(--g-ink-soft);margin:0 0 var(--g-space-3);
+}
+.slang-note{
+  font-family:var(--font);font-size:var(--g-support);font-weight:500;
+  line-height:1.65;color:var(--g-ink-faint);margin:0;max-width:52ch;
+}
 
 /* ---- exam-correct vs. how-Germans-actually-say-it, side by side ---- */
 .example-pair{display:grid;grid-template-columns:1fr;gap:8px;}
@@ -698,7 +712,7 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
   .daily-card{padding:16px 15px;}
   .daily-card-head h2{font-size:19px;}
   .homework-prompt,.example-box,.challenge-box,.postA1-box{font-size:13.5px;}
-  .slang-card-phrase h4{font-size:17px;}
+  .slang-phrase{font-size:22px;}
   .test-card-title h3{font-size:13.5px;}
   .test-options label{padding:8px 6px;font-size:12.5px;}
   .btn-mini{padding:10px 16px;}
