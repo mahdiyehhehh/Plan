@@ -457,6 +457,65 @@ const GERMAN_DAYS = [
   {topic:"Full A1 Self-Review", homework:"Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.", example:"Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt."}
 ];
 
+/* ---- daily real-life speaking challenge, tied to each day's topic ----
+   Always shown alongside the normal homework, before AND after A1 is finished. */
+const DAILY_CHALLENGES = [
+  "Tell your husband your name, where you're from, and one thing about yourself — all in German.",
+  "Count from 1 to 10 out loud to your husband in German.",
+  "Spell your name out loud to your husband using the German alphabet.",
+  "Tell your husband how you feel today in German, then ask him how he feels.",
+  "Tell your husband one sentence about a family member, in German.",
+  "Look around you and say 3 things you see in German, using der/die/das.",
+  "Tell your husband one thing you do every day, in German.",
+  "Tell your husband your age and one family member's age, in German.",
+  "Tell your husband what time it is right now, in German.",
+  "Tell your husband what day it is today and your favorite season, in German.",
+  "Tell your husband about your day so far, in simple German.",
+  "Tell your husband what you ate today, in German.",
+  "Tell your husband about your favorite food, in German.",
+  "Tell your husband one thing you need or want to buy, using \"Ich brauche...\" or \"Ich möchte...\".",
+  "Describe what you're wearing today to your husband, in German.",
+  "Tell your husband one thing you want to do and one thing you must do today, in German.",
+  "Tell your husband what the weather is like today, in German.",
+  "Give your husband simple directions to a room in your home, in German.",
+  "Tell your husband one place you like to go and why, in simple German.",
+  "Tell your husband one thing you did yesterday, in German.",
+  "Tell your husband about your favorite hobby, in German.",
+  "Ask your husband one simple question in German, like inviting him to do something together.",
+  "Tell your husband how your body feels today, in German.",
+  "Tell your husband if anything hurts today — or that you feel great — in German.",
+  "Compare two things around you out loud in German (e.g. \"größer als\").",
+  "Describe your room to your husband in 3 simple German sentences.",
+  "Tell your husband about a trip you'd like to take, in simple German.",
+  "Tell your husband one thing you like and one thing you don't like, in German.",
+  "Ask your husband 3 simple questions in German and let him answer.",
+  "Introduce yourself fully to your husband in German — as if it's the first time you're meeting."
+];
+
+/* ---- extra homework that unlocks once all 30 A1 days are complete.
+   These are ADDED on top of the normal homework + daily challenge above,
+   never a replacement, and stay tied to that day's A1 topic. ---- */
+const POST_A1_VLOG_TASK = "Watch a short German A1 vlog on YouTube and practice understanding it.";
+const POST_A1_SPEAKING_TEMPLATES = [
+  (topic)=>`Talk about today's topic — ${topic} — in German with your husband.`,
+  (topic)=>`Explain today's topic (${topic}) to your husband using simple German.`,
+  (topic)=>`Have a 5-minute German conversation with your husband about ${topic}.`,
+  (topic)=>`Ask your husband 3 questions in German about ${topic}.`,
+  (topic)=>`Try to speak only German for 5 minutes with your husband while you talk about ${topic}.`
+];
+function isA1FullyComplete(){
+  if(!state.german || !state.german.days) return false;
+  let doneCount = 0;
+  for(let d=1; d<=30; d++){
+    if(state.german.days[d] && state.german.days[d].done) doneCount++;
+  }
+  return doneCount >= 30;
+}
+function getPostA1Speaking(day, topic){
+  const tmpl = POST_A1_SPEAKING_TEMPLATES[(day-1) % POST_A1_SPEAKING_TEMPLATES.length];
+  return tmpl(topic);
+}
+
 /* ---- 10 short A1 practice tests, 5 questions each ---- */
 const GERMAN_TESTS = [
   {id:"t1", title:"Greetings & Introductions", topic:"Begrüßung & Vorstellung", questions:[
@@ -566,6 +625,14 @@ function renderDailyCard(){
   const card = document.getElementById("dailyCard");
   const content = GERMAN_DAYS[germanCurrentDay-1];
   const rec = getDayRecord(germanCurrentDay);
+  const challenge = DAILY_CHALLENGES[germanCurrentDay-1];
+  const a1Done = isA1FullyComplete();
+  const postA1Html = a1Done ? `
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>After A1: Practice &amp; Speak <span class="bonus-tag">Unlocked</span></div>
+      <div class="postA1-box"><strong>+</strong> ${esc(POST_A1_VLOG_TASK)}</div>
+      <div class="postA1-box"><strong>+</strong> ${esc(getPostA1Speaking(germanCurrentDay, content.topic))}</div>
+    </div>` : "";
   card.innerHTML = `
     <div class="daily-card-head">
       <h2>Day ${germanCurrentDay}: ${esc(content.topic)}</h2>
@@ -579,6 +646,11 @@ function renderDailyCard(){
       <textarea id="dailyAnswer" placeholder="Write your answer here...">${esc(rec.answer)}</textarea>
     </div>
 
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Real-Life Challenge</div>
+      <div class="challenge-box">${esc(challenge)}</div>
+    </div>
+    ${postA1Html}
     <div class="daily-block">
       <div class="daily-block-label"><span class="dot"></span>Example</div>
       <div class="example-box">${esc(content.example)}</div>
@@ -601,6 +673,7 @@ function renderDailyCard(){
     saveData();
     renderDayPicker();
     renderGermanProgressRing();
+    renderDailyCard();
   };
 }
 
