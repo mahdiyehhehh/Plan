@@ -436,9 +436,28 @@ function ensureGerman(){
 let germanCurrentDay = 1;
 let germanOpenTest = null;
 
+function lessonCountForDay(day){
+  const d = GERMAN_DAYS[day-1];
+  return (d && d.lessons && d.lessons.length) || 1;
+}
 function getDayRecord(day){
-  if(!state.german.days[day]) state.german.days[day] = {answer:"", notes:"", done:false};
-  return state.german.days[day];
+  let rec = state.german.days[day];
+  if(!rec){
+    rec = {lessons:[]};
+    state.german.days[day] = rec;
+  }
+  // migrate legacy single-lesson save shape ({answer,notes,done}) into lessons[0]
+  if(!rec.lessons){
+    rec = {lessons:[{answer:rec.answer||"", notes:rec.notes||"", done:!!rec.done}]};
+    state.german.days[day] = rec;
+  }
+  const count = lessonCountForDay(day);
+  while(rec.lessons.length < count) rec.lessons.push({answer:"", notes:"", done:false});
+  return rec;
+}
+function dayIsDone(day){
+  const rec = getDayRecord(day);
+  return rec.lessons.length>0 && rec.lessons.every(l=>l.done);
 }
 function getTestRecord(id){
   if(!state.german.tests[id]) state.german.tests[id] = {done:false, dateTaken:"", review:"", userAnswers:{}, submitted:false, score:null};
@@ -447,38 +466,122 @@ function getTestRecord(id){
   return r;
 }
 
-/* ---- 30-day A1 curriculum: topic, homework task, worked example ---- */
+/* ---- 30-day A1 curriculum. Each day has 1–2 lessons, so every grammar
+   point and vocab set a full A1 exam needs is covered by Day 30. ---- */
+function L(topic,homework,example,natural){ return {topic,homework,example,natural}; }
 const GERMAN_DAYS = [
-  {topic:"Greetings & Introductions", homework:"Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.", example:"Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch.", natural:"Ich bin Lisa, 22. Komm' aus Italien und spreche Italienisch und n bisschen Deutsch. Und du, wie heißt du?"},
-  {topic:"Numbers 0–20", homework:"Write the numbers 0–20 in German, then write out 5 simple addition sums in words.", example:"eins, zwei, drei ... zehn. Drei plus vier ist sieben.", natural:"Drei und vier macht sieben. — Warte, wie viel war das nochmal?"},
-  {topic:"The Alphabet & Spelling", homework:"Spell your first and last name out loud using the German alphabet, then write it letter by letter.", example:"M-A-R-I-A = Em – A – Er – I – A.", natural:"Buchstabier das nochmal, ich hab's nicht ganz verstanden."},
-  {topic:"Personal Pronouns & \"sein\"", homework:"Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.", example:"ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde.", natural:"Ich bin echt müde heute. Bist du auch so kaputt?"},
-  {topic:"Family Members", homework:"List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).", example:"Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom.", natural:"Das ist meine Mama, und das da ist mein kleiner Bruder."},
-  {topic:"Articles: der / die / das", homework:"Sort 10 household nouns into der / die / das using a dictionary or app.", example:"der Tisch, die Lampe, das Buch, der Stuhl, die Tür.", natural:"Kannst du mir mal das Buch da geben? Genau, das auf'm Tisch."},
-  {topic:"Present Tense — Regular Verbs", homework:"Fully conjugate 3 regular verbs: spielen, wohnen, lernen.", example:"ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen.", natural:"Ich lern grad Deutsch, deshalb spiel ich abends immer diese Vokabel-App."},
-  {topic:"Numbers 20–100 & Age", homework:"Write your age and the ages of 5 family members in full German words.", example:"Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt.", natural:"Meine Schwester ist einundzwanzig, glaub ich — oder ist sie schon zweiundzwanzig?"},
-  {topic:"Telling Time", homework:"Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").", example:"Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag.", natural:"Es ist halb neun, wir müssen los! — Wie spät ist es? — Kurz nach halb."},
-  {topic:"Days, Months, Seasons", homework:"List the 7 days and 12 months in German, then write which season you like best and why.", example:"Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.", natural:"Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten."},
-  {topic:"Daily Routine (Separable Verbs)", homework:"Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).", example:"Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern.", natural:"Ich steh um sieben auf, zieh mich schnell an, und abends häng ich vorm Fernseher."},
-  {topic:"Food & Drink Vocabulary", homework:"Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.", example:"der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.", natural:"Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend."},
-  {topic:"At the Restaurant", homework:"Write a short dialogue (at least 6 lines) ordering food at a restaurant.", example:"Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?", natural:"Für mich bitte 'nen Kaffee und n Stück Kuchen. — Kommt sofort! — Super, danke."},
-  {topic:"Akkusativ Case", homework:"Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).", example:"Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze.", natural:"Ich hol mir noch schnell nen Apfel, ich hab nämlich voll Hunger."},
-  {topic:"Shopping & Clothes", homework:"Describe an outfit you're wearing today using at least 6 clothing words and colors.", example:"Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe.", natural:"Ich hab heute meine blaue Jacke an und die schwarzen Schuhe von letzter Woche."},
-  {topic:"Modal Verbs: können, müssen, wollen", homework:"Write 6 sentences (two per verb) about things you can, must, and want to do.", example:"Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen.", natural:"Ich muss heut echt noch lernen, aber ich hab eigentlich keinen Bock."},
-  {topic:"The Weather", homework:"Describe the weather for each day of this week in German.", example:"Heute ist es sonnig und warm. Morgen regnet es und es ist windig.", natural:"Heute ist's richtig schön warm, aber morgen soll's angeblich wieder regnen."},
-  {topic:"Directions & Prepositions", homework:"Write directions from your home to the nearest supermarket using links, rechts, geradeaus.", example:"Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank.", natural:"Einfach geradeaus, dann links, das ist gleich neben der Bank — nicht zu verfehlen."},
-  {topic:"Places in the City", homework:"List 10 places in a city with their articles and one sentence for each about what you do there.", example:"In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.", natural:"Wir treffen uns im Park, ja? Da spielen wir immer Fußball."},
-  {topic:"Past Tense — Perfekt (basics)", homework:"Write 6 sentences about yesterday using the Perfekt tense with haben or sein.", example:"Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen.", natural:"Ich hab gestern noch Deutsch gelernt und bin dann ins Kino gegangen."},
-  {topic:"Hobbies & Free Time", homework:"Write a paragraph (5–6 sentences) about your hobbies and how often you do them.", example:"Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern.", natural:"Ich zock gern und spiel zweimal die Woche Fußball, sonst chill ich meistens."},
-  {topic:"Making Plans & Invitations", homework:"Write a short dialogue inviting a friend to do something this weekend.", example:"Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?", natural:"Hast du Samstag Bock auf Kino? — Klar, bin dabei!"},
-  {topic:"The Body & Health", homework:"Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").", example:"der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank.", natural:"Mir tut voll der Kopf weh, ich glaub ich werd krank."},
-  {topic:"At the Doctor's", homework:"Write a short dialogue at the doctor's office describing your symptoms.", example:"Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?", natural:"Ich hab seit gestern Fieber und mir tut voll der Hals weh."},
-  {topic:"Comparisons (Adjectives)", homework:"Write 6 comparative sentences comparing things around you.", example:"Berlin ist größer als München. Mein Bruder ist am größten in der Familie.", natural:"Berlin ist schon viel größer als München, find ich."},
-  {topic:"Housing & Furniture", homework:"Describe your home or room, listing at least 8 furniture items with their articles.", example:"In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch.", natural:"Meine Bude ist klein, aber ich hab n Bett, n Schrank und n Schreibtisch — reicht mir."},
-  {topic:"Public Transport & Travel", homework:"Write a dialogue buying a train ticket and asking about departure times.", example:"Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5.", natural:"Wann geht der nächste Zug nach Berlin? — Um zwei, Gleis fünf, beeil dich!"},
-  {topic:"Negation: nicht / kein", homework:"Write 8 sentences using nicht and kein correctly.", example:"Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig.", natural:"Ich hab kein Auto, deshalb nehm ich meistens den Bus. — Echt nicht? Krass."},
-  {topic:"Question Words Review", homework:"Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.", example:"Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe.", natural:"Wo wohnst du eigentlich? — In Berlin. — Ah cool, wieso lernst du dann Deutsch, kannst du's nicht schon?"},
-  {topic:"Full A1 Self-Review", homework:"Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.", example:"Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt.", natural:"Ich bin ... und komm aus ... Ich studier gerade und lern jetzt seit 30 Tagen Deutsch. Gestern hab ich echt viel gelernt, war anstrengend!"}
+  {lessons:[ // Day 1
+    L("Greetings & Introductions","Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.","Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch.","Ich bin Lisa, 22. Komm' aus Italien und spreche Italienisch und n bisschen Deutsch. Und du, wie heißt du?"),
+    L("Formal vs. Informal: du vs. Sie","Write the same self-introduction twice: once informally to a friend (du), once formally to a stranger (Sie).","Guten Tag, mein Name ist Frau Keller. Wie ist Ihr Name?","Hey, ich bin Lisa. Und du, wie heißt du?")
+  ]},
+  {lessons:[ // Day 2
+    L("Numbers 0–20","Write the numbers 0–20 in German, then write out 5 simple addition sums in words.","eins, zwei, drei ... zehn. Drei plus vier ist sieben.","Drei und vier macht sieben. — Warte, wie viel war das nochmal?"),
+    L("Phone Numbers & Basic Math","Write your phone number out digit by digit in German, then write 3 subtraction sums in words.","Meine Nummer ist null-eins-fünf-drei... Zehn minus drei ist sieben.","Meine Nummer ist 0153... — Wart, sag's nochmal langsamer.")
+  ]},
+  {lessons:[ // Day 3
+    L("The Alphabet & Spelling","Spell your first and last name out loud using the German alphabet, then write it letter by letter.","M-A-R-I-A = Em – A – Er – I – A.","Buchstabier das nochmal, ich hab's nicht ganz verstanden."),
+    L("Survival Classroom Phrases","Write 5 phrases you'd use if you don't understand something in a conversation.","Wie bitte? Können Sie das bitte wiederholen? Ich verstehe nicht.","Wie bitte? Kannst du das nochmal sagen? Ich check's grad nicht.")
+  ]},
+  {lessons:[ // Day 4
+    L("Personal Pronouns & \"sein\"","Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.","ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde.","Ich bin echt müde heute. Bist du auch so kaputt?"),
+    L("Basic Adjectives with sein","Write 6 sentences describing people or things using sein + an adjective (groß, klein, glücklich, müde, nett...).","Er ist groß. Sie ist sehr nett. Das Wetter ist schlecht.","Er ist echt groß, oder? Und sie ist total nett.")
+  ]},
+  {lessons:[ // Day 5
+    L("Family Members","List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).","Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom.","Das ist meine Mama, und das da ist mein kleiner Bruder.")
+  ]},
+  {lessons:[ // Day 6
+    L("Articles: der / die / das","Sort 10 household nouns into der / die / das using a dictionary or app.","der Tisch, die Lampe, das Buch, der Stuhl, die Tür.","Kannst du mir mal das Buch da geben? Genau, das auf'm Tisch."),
+    L("Possessive Articles (mein/dein/sein/ihr)","Rewrite 6 sentences from Day 5 using possessive articles instead of der/die/das (mein Vater, meine Schwester...).","Das ist mein Vater. Das ist meine Schwester. Das ist unser Haus.","Das ist mein Dad, und das da meine Schwester.")
+  ]},
+  {lessons:[ // Day 7
+    L("Present Tense — Regular Verbs","Fully conjugate 3 regular verbs: spielen, wohnen, lernen.","ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen.","Ich lern grad Deutsch, deshalb spiel ich abends immer diese Vokabel-App."),
+    L("Frequency Adverbs","Write 6 sentences about how often you do things, using immer, oft, manchmal, selten, nie.","Ich lerne jeden Tag Deutsch. Ich gehe selten ins Kino.","Ich lern eigentlich jeden Tag n bisschen, aber ins Kino geh ich selten.")
+  ]},
+  {lessons:[ // Day 8
+    L("Numbers 20–100 & Age","Write your age and the ages of 5 family members in full German words.","Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt.","Meine Schwester ist einundzwanzig, glaub ich — oder ist sie schon zweiundzwanzig?"),
+    L("Ordinal Numbers & Dates","Write today's date and 3 important dates using ordinal numbers (der Erste, der Zweite...).","Heute ist der fünfzehnte September. Mein Geburtstag ist der dritte Mai.","Heut ist der Fünfzehnte, glaub ich — und mein Geburtstag ist am dritten Mai.")
+  ]},
+  {lessons:[ // Day 9
+    L("Telling Time","Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").","Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag.","Es ist halb neun, wir müssen los! — Wie spät ist es? — Kurz nach halb."),
+    L("Asking About Time & Schedules","Write a short dialogue (4 lines) asking someone what time a train, meeting, or movie starts.","Wann beginnt der Film? — Um neunzehn Uhr.","Wann geht der Film los? — Um sieben, glaub ich.")
+  ]},
+  {lessons:[ // Day 10
+    L("Days, Months, Seasons","List the 7 days and 12 months in German, then write which season you like best and why.","Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.","Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten.")
+  ]},
+  {lessons:[ // Day 11
+    L("Daily Routine (Separable Verbs)","Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).","Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern.","Ich steh um sieben auf, zieh mich schnell an, und abends häng ich vorm Fernseher."),
+    L("More Separable Verbs","Write 5 more sentences about your week using einkaufen, anrufen, aufräumen, einschlafen.","Ich kaufe samstags ein. Ich rufe meine Mutter an.","Ich kauf immer samstags ein, und ruf danach meine Mama an.")
+  ]},
+  {lessons:[ // Day 12
+    L("Food & Drink Vocabulary","Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.","der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.","Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend."),
+    L("Asking for Quantities at the Market","Write a short dialogue buying groceries, asking for specific amounts (ein Kilo, ein Liter, ein Stück).","Ich hätte gern ein Kilo Äpfel und einen Liter Milch.","Ich brauch noch n Kilo Äpfel und n bisschen Milch.")
+  ]},
+  {lessons:[ // Day 13
+    L("At the Restaurant","Write a short dialogue (at least 6 lines) ordering food at a restaurant.","Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?","Für mich bitte 'nen Kaffee und n Stück Kuchen. — Kommt sofort! — Super, danke.")
+  ]},
+  {lessons:[ // Day 14
+    L("Akkusativ Case","Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).","Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze.","Ich hol mir noch schnell nen Apfel, ich hab nämlich voll Hunger."),
+    L("Dativ Case Basics","Write 6 sentences using dative pronouns (mir, dir, ihm, ihr, uns) — e.g. \"Das gefällt mir.\"","Das Buch gehört mir. Er hilft ihr. Das gefällt mir sehr.","Das gefällt mir echt gut, ehrlich.")
+  ]},
+  {lessons:[ // Day 15
+    L("Shopping & Clothes","Describe an outfit you're wearing today using at least 6 clothing words and colors.","Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe.","Ich hab heute meine blaue Jacke an und die schwarzen Schuhe von letzter Woche."),
+    L("Colors, Sizes & Prices","Write a short shopping dialogue asking about the size and price of a piece of clothing.","Haben Sie das in Größe M? Was kostet das?","Habt ihr das noch in M? Und was kostet's?")
+  ]},
+  {lessons:[ // Day 16
+    L("Modal Verbs: können, müssen, wollen","Write 6 sentences (two per verb) about things you can, must, and want to do.","Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen.","Ich muss heut echt noch lernen, aber ich hab eigentlich keinen Bock.")
+  ]},
+  {lessons:[ // Day 17
+    L("The Weather","Describe the weather for each day of this week in German.","Heute ist es sonnig und warm. Morgen regnet es und es ist windig.","Heute ist's richtig schön warm, aber morgen soll's angeblich wieder regnen."),
+    L("Talking About Weather Naturally","Write a short weather small-talk dialogue (4–5 lines) as you'd have with a neighbor.","Schönes Wetter heute, nicht wahr? — Ja, endlich mal Sonne!","Endlich mal schönes Wetter, oder? — Ja, wurde auch Zeit!")
+  ]},
+  {lessons:[ // Day 18
+    L("Directions & Prepositions","Write directions from your home to the nearest supermarket using links, rechts, geradeaus.","Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank.","Einfach geradeaus, dann links, das ist gleich neben der Bank — nicht zu verfehlen."),
+    L("Understanding Directions Given to You","Write directions someone might give you, then repeat them back in your own words to check you understood.","Gehen Sie zuerst rechts, dann die zweite Straße links.","Erst rechts, dann die zweite links — hab ich's richtig verstanden?")
+  ]},
+  {lessons:[ // Day 19
+    L("Places in the City","List 10 places in a city with their articles and one sentence for each about what you do there.","In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.","Wir treffen uns im Park, ja? Da spielen wir immer Fußball.")
+  ]},
+  {lessons:[ // Day 20
+    L("Past Tense — Perfekt (basics)","Write 6 sentences about yesterday using the Perfekt tense with haben or sein.","Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen.","Ich hab gestern noch Deutsch gelernt und bin dann ins Kino gegangen."),
+    L("Perfekt: haben vs. sein Verbs","Sort 8 verbs into \"takes haben\" or \"takes sein\" in the Perfekt, then write one sentence with each group.","Ich habe gegessen (haben). Ich bin gefahren (sein).","Ich hab gestern echt viel gegessen, und bin dann früh ins Bett.")
+  ]},
+  {lessons:[ // Day 21
+    L("Hobbies & Free Time","Write a paragraph (5–6 sentences) about your hobbies and how often you do them.","Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern.","Ich zock gern und spiel zweimal die Woche Fußball, sonst chill ich meistens.")
+  ]},
+  {lessons:[ // Day 22
+    L("Making Plans & Invitations","Write a short dialogue inviting a friend to do something this weekend.","Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?","Hast du Samstag Bock auf Kino? — Klar, bin dabei!"),
+    L("On the Phone: Making Plans","Write a short phone-call dialogue (6+ lines) confirming a time and place to meet up.","Hallo, hier ist Anna. Treffen wir uns um drei? — Ja, gerne, am Bahnhof?","Hey, hier Anna! Treffen wir uns um drei? — Klar, am Bahnhof, wie immer?")
+  ]},
+  {lessons:[ // Day 23
+    L("The Body & Health","Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").","der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank.","Mir tut voll der Kopf weh, ich glaub ich werd krank."),
+    L("Talking About Feelings & Emotions","Write 6 sentences describing how you feel in different situations (froh, traurig, nervös, aufgeregt).","Ich bin heute sehr froh. Ich war gestern ein bisschen nervös.","Ich bin heut mega gut drauf, ehrlich.")
+  ]},
+  {lessons:[ // Day 24
+    L("At the Doctor's","Write a short dialogue at the doctor's office describing your symptoms.","Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?","Ich hab seit gestern Fieber und mir tut voll der Hals weh.")
+  ]},
+  {lessons:[ // Day 25
+    L("Comparisons (Adjectives)","Write 6 comparative sentences comparing things around you.","Berlin ist größer als München. Mein Bruder ist am größten in der Familie.","Berlin ist schon viel größer als München, find ich."),
+    L("Superlatives","Write 5 superlative sentences about people or places you know (am größten, am besten, am schönsten).","Mein Bruder ist am größten in der Familie. Berlin ist am schönsten im Sommer.","Mein Bruder ist eindeutig der Größte von uns allen.")
+  ]},
+  {lessons:[ // Day 26
+    L("Housing & Furniture","Describe your home or room, listing at least 8 furniture items with their articles.","In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch.","Meine Bude ist klein, aber ich hab n Bett, n Schrank und n Schreibtisch — reicht mir.")
+  ]},
+  {lessons:[ // Day 27
+    L("Public Transport & Travel","Write a dialogue buying a train ticket and asking about departure times.","Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5.","Wann geht der nächste Zug nach Berlin? — Um zwei, Gleis fünf, beeil dich!"),
+    L("Travel Vocabulary & Booking","Write a short dialogue booking a hotel room or asking about a travel connection.","Ich möchte ein Einzelzimmer für zwei Nächte buchen.","Ich brauch n Einzelzimmer für zwei Nächte, geht das?")
+  ]},
+  {lessons:[ // Day 28
+    L("Negation: nicht / kein","Write 8 sentences using nicht and kein correctly.","Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig.","Ich hab kein Auto, deshalb nehm ich meistens den Bus. — Echt nicht? Krass."),
+    L("Connecting Ideas: weil & dass","Write 5 sentences giving reasons with weil and 5 opinions with dass (verb goes to the end).","Ich lerne Deutsch, weil ich nach Berlin ziehen möchte. Ich glaube, dass Deutsch schwer ist.","Ich lern Deutsch, weil ich unbedingt nach Berlin will.")
+  ]},
+  {lessons:[ // Day 29
+    L("Question Words Review","Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.","Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe.","Wo wohnst du eigentlich? — In Berlin. — Ah cool, wieso lernst du dann Deutsch, kannst du's nicht schon?"),
+    L("Giving Commands: the Imperative","Write 5 imperative sentences (informal and formal) you might use at home or work.","Mach das Fenster zu! Setzen Sie sich bitte.","Mach mal das Fenster zu, mir ist kalt.")
+  ]},
+  {lessons:[ // Day 30
+    L("Full A1 Self-Review","Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.","Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt.","Ich bin ... und komm aus ... Ich studier gerade und lern jetzt seit 30 Tagen Deutsch. Gestern hab ich echt viel gelernt, war anstrengend!"),
+    L("Write a Short Formal Message","Write a short formal email or postcard (6–8 sentences) introducing yourself and making a simple request — a real Goethe/telc A1 writing-task format.","Sehr geehrte Damen und Herren, mein Name ist ... Ich möchte gern einen Termin vereinbaren. Mit freundlichen Grüßen, ...","Hi, ich bin's — wollte nur kurz fragen, ob wir nen Termin ausmachen können. Danke schon mal!")
+  ]}
 ];
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
@@ -529,11 +632,10 @@ const POST_A1_SPEAKING_TEMPLATES = [
 ];
 function isA1FullyComplete(){
   if(!state.german || !state.german.days) return false;
-  let doneCount = 0;
   for(let d=1; d<=30; d++){
-    if(state.german.days[d] && state.german.days[d].done) doneCount++;
+    if(!dayIsDone(d)) return false;
   }
-  return doneCount >= 30;
+  return true;
 }
 function getPostA1Speaking(day, topic){
   const tmpl = POST_A1_SPEAKING_TEMPLATES[(day-1) % POST_A1_SPEAKING_TEMPLATES.length];
@@ -651,7 +753,8 @@ const GERMAN_TESTS = [
 ];
 
 function renderGermanProgressRing(){
-  const doneCount = Object.values(state.german.days).filter(d=>d.done).length;
+  let doneCount = 0;
+  for(let d=1; d<=30; d++) if(dayIsDone(d)) doneCount++;
   const label = document.getElementById("germanRingLabel");
   const fg = document.getElementById("germanRingFg");
   if(!label || !fg) return;
@@ -680,9 +783,9 @@ function renderDayPicker(){
   const wrap = document.getElementById("dayPicker");
   let html = "";
   for(let d=1; d<=30; d++){
-    const rec = state.german.days[d];
-    const done = rec && rec.done;
-    html += `<button class="day-pill ${d===germanCurrentDay?"active":""} ${done?"done":""}" data-day="${d}">${d}</button>`;
+    const done = dayIsDone(d);
+    const multi = lessonCountForDay(d) > 1;
+    html += `<button class="day-pill ${d===germanCurrentDay?"active":""} ${done?"done":""} ${multi?"multi":""}" data-day="${d}">${d}</button>`;
   }
   wrap.innerHTML = html;
   wrap.querySelectorAll(".day-pill").forEach(btn=>{
@@ -699,61 +802,81 @@ function renderDayPicker(){
 
 function renderDailyCard(){
   const card = document.getElementById("dailyCard");
-  const content = GERMAN_DAYS[germanCurrentDay-1];
-  const rec = getDayRecord(germanCurrentDay);
-  const challenge = DAILY_CHALLENGES[germanCurrentDay-1];
+  const day = germanCurrentDay;
+  const dayContent = GERMAN_DAYS[day-1];
+  const rec = getDayRecord(day);
+  const challenge = DAILY_CHALLENGES[day-1];
   const a1Done = isA1FullyComplete();
+  const topicsLabel = dayContent.lessons.map(l=>l.topic).join(" & ");
+  const multi = dayContent.lessons.length > 1;
+
   const postA1Html = a1Done ? `
     <div class="daily-block">
       <div class="daily-block-label"><span class="dot"></span>After A1: Practice &amp; Speak <span class="bonus-tag">Unlocked</span></div>
       <div class="postA1-box"><strong>+</strong> ${esc(POST_A1_VLOG_TASK)}</div>
-      <div class="postA1-box"><strong>+</strong> ${esc(getPostA1Speaking(germanCurrentDay, content.topic))}</div>
+      <div class="postA1-box"><strong>+</strong> ${esc(getPostA1Speaking(day, topicsLabel))}</div>
     </div>` : "";
+
+  const lessonsHtml = dayContent.lessons.map((lesson,i)=>{
+    const lrec = rec.lessons[i];
+    return `
+    <div class="lesson-block">
+      <div class="lesson-block-head">
+        <h3>${multi?`Lesson ${i+1} of ${dayContent.lessons.length} — `:""}${esc(lesson.topic)}</h3>
+      </div>
+      <div class="daily-block">
+        <div class="daily-block-label"><span class="dot"></span>Homework</div>
+        <div class="homework-prompt">${esc(lesson.homework)}</div>
+        <textarea class="lesson-answer" data-lesson="${i}" placeholder="Write your answer here...">${esc(lrec.answer)}</textarea>
+      </div>
+      <div class="daily-block">
+        <div class="daily-block-label"><span class="dot"></span>Example: Exam vs. Everyday</div>
+        <div class="example-pair">
+          <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${esc(lesson.example)}</div>
+          <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${esc(lesson.natural)}</div>
+        </div>
+      </div>
+      <div class="daily-block">
+        <div class="daily-block-label"><span class="dot"></span>Your Notes</div>
+        <textarea class="lesson-notes notes-area" data-lesson-notes="${i}" placeholder="New words, grammar points, things to review...">${esc(lrec.notes)}</textarea>
+      </div>
+      <div class="daily-done-row">
+        <label><input type="checkbox" class="lesson-done" data-lesson-done="${i}" ${lrec.done?"checked":""}> Mark this lesson complete</label>
+      </div>
+    </div>`;
+  }).join("");
+
   card.innerHTML = `
     <div class="daily-card-head">
-      <h2>Day ${germanCurrentDay}: ${esc(content.topic)}</h2>
-      <span class="day-topic-tag">A1 · Day ${germanCurrentDay}/30</span>
+      <h2>Day ${day}</h2>
+      <span class="day-topic-tag">A1 · Day ${day}/30</span>
     </div>
-    <div class="daily-card-sub">Small step today, closer to B1 tomorrow.</div>
-
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Homework</div>
-      <div class="homework-prompt">${esc(content.homework)}</div>
-      <textarea id="dailyAnswer" placeholder="Write your answer here...">${esc(rec.answer)}</textarea>
-    </div>
+    <div class="daily-card-sub">${esc(topicsLabel)} — small steps today, closer to B1 tomorrow.</div>
 
     <div class="daily-block">
       <div class="daily-block-label"><span class="dot"></span>Real-Life Challenge</div>
       <div class="challenge-box">${esc(challenge)}</div>
     </div>
+
+    ${lessonsHtml}
     ${postA1Html}
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Example: Exam vs. Everyday</div>
-      <div class="example-pair">
-        <div class="example-box exam-box"><span class="example-tag">Goethe Exam-Correct</span>${esc(content.example)}</div>
-        <div class="example-box natural-box"><span class="example-tag">How Germans Actually Say It</span>${esc(content.natural)}</div>
-      </div>
-    </div>
-
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Your Notes</div>
-      <textarea id="dailyNotes" class="notes-area" placeholder="New words, grammar points, things to review..."></textarea>
-    </div>
-
-    <div class="daily-done-row">
-      <label><input type="checkbox" id="dailyDone" ${rec.done?"checked":""}> Mark Day ${germanCurrentDay} Complete</label>
-    </div>
   `;
-  card.querySelector("#dailyNotes").value = rec.notes;
-  card.querySelector("#dailyAnswer").oninput = (e)=>{ rec.answer = e.target.value; saveData(); };
-  card.querySelector("#dailyNotes").oninput = (e)=>{ rec.notes = e.target.value; saveData(); };
-  card.querySelector("#dailyDone").onchange = (e)=>{
-    rec.done = e.target.checked;
-    saveData();
-    renderDayPicker();
-    renderGermanProgressRing();
-    renderDailyCard();
-  };
+
+  card.querySelectorAll(".lesson-answer").forEach(ta=>{
+    ta.oninput = (e)=>{ rec.lessons[+ta.dataset.lesson].answer = e.target.value; saveData(); };
+  });
+  card.querySelectorAll(".lesson-notes").forEach(ta=>{
+    ta.oninput = (e)=>{ rec.lessons[+ta.dataset.lessonNotes].notes = e.target.value; saveData(); };
+  });
+  card.querySelectorAll(".lesson-done").forEach(cb=>{
+    cb.onchange = (e)=>{
+      rec.lessons[+cb.dataset.lessonDone].done = e.target.checked;
+      saveData();
+      renderDayPicker();
+      renderGermanProgressRing();
+      renderDailyCard();
+    };
+  });
 }
 
 function renderQuestion(test,q,qi,rec){
@@ -918,7 +1041,46 @@ document.getElementById("viewSwitch").addEventListener("click",(e)=>{
   if(btn.dataset.view==="german") renderGermanView();
 });
 
-/* ---------- export as image (beautiful print) ---------- */
+/* ---------- export as image (beautiful print), with a real "save to phone" path ---------- */
+function canvasToBlob(canvas){
+  return new Promise((resolve)=>canvas.toBlob(resolve,"image/png"));
+}
+async function saveImageToDevice(canvas, filename){
+  const blob = await canvasToBlob(canvas);
+  if(!blob) throw new Error("Could not create image data.");
+  const file = new File([blob], filename, {type:"image/png"});
+
+  // On phones (iOS/Android Safari & Chrome), the share sheet's "Save Image"
+  // is the only reliable way to get a PNG into Photos — a plain <a download>
+  // click is silently ignored or just opens the image on iOS Safari.
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({files:[file], title:filename});
+      return "shared";
+    }catch(err){
+      if(err && err.name === "AbortError") return "cancelled";
+      // fall through to the download/new-tab fallback below
+    }
+  }
+
+  // Desktop browsers: a normal blob download works fine.
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 4000);
+
+  // iOS Safari in particular ignores the download attribute for local/blob
+  // files and just navigates — opening the image in a new tab as a backup
+  // means there's always a way to long-press → Save Image even there.
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+  if(isIOS) window.open(url, "_blank");
+  return "downloaded";
+}
+
 document.getElementById("exportImage").onclick = async ()=>{
   const btn = document.getElementById("exportImage");
   if(typeof html2canvas === "undefined"){
@@ -945,15 +1107,15 @@ document.getElementById("exportImage").onclick = async ()=>{
     } else {
       target = document.querySelector("#germanView .report-page");
     }
-    const canvas = await html2canvas(target, {scale:2, backgroundColor:"#ffffff", useCORS:true});
+    // Wait for the system font to be fully ready so html2canvas measures text correctly.
+    if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    const bg = getComputedStyle(document.body).getPropertyValue("background-color").trim() || "#ffffff";
+    const canvas = await html2canvas(target, {scale:2, backgroundColor:bg, useCORS:true, logging:false});
     if(prevTransform!==undefined) target.style.transform = prevTransform;
-    const link = document.createElement("a");
-    link.download = `7-day-plan-${toISO(new Date())}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    await saveImageToDevice(canvas, `7-day-plan-${toISO(new Date())}.png`);
   }catch(err){
     console.error("Image export failed:", err);
-    alert("Sorry, the image export failed. Please try again.");
+    alert("Sorry, the image export failed. Please check your connection and try again.");
   }finally{
     btn.textContent = originalText;
     btn.disabled = false;
@@ -987,6 +1149,28 @@ document.getElementById("importData").onchange = (e)=>{
   };
   reader.readAsText(file);
 };
+
+/* ---------- light / dark mode ---------- */
+const THEME_KEY = "sevenDayPlan.theme";
+function applyTheme(theme){
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem(THEME_KEY, theme);
+  const btn = document.getElementById("themeToggle");
+  if(btn) btn.setAttribute("aria-pressed", theme==="dark" ? "true" : "false");
+}
+function initTheme(){
+  const saved = localStorage.getItem(THEME_KEY);
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(saved || (prefersDark ? "dark" : "light"));
+}
+const themeToggleBtn = document.getElementById("themeToggle");
+if(themeToggleBtn){
+  themeToggleBtn.onclick = ()=>{
+    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    applyTheme(current === "dark" ? "light" : "dark");
+  };
+}
+initTheme();
 
 /* ---------- init ---------- */
 renderWeekView();
