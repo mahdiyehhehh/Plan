@@ -1156,6 +1156,106 @@ const GERMAN_DAYS_B2_PART1 = [
 ];
 GERMAN_DAYS.push(...GERMAN_DAYS_B2_PART1);
 
+/* ---- B2 curriculum, Part 2 (Days 178-204) — the second 27 of the 90
+   B2 days, i.e. the next ~30% of the B2 phase (30% done in Part 1, this
+   brings it to 60%). Covers: Konjunktiv I der Vergangenheit (reported
+   past speech), extended relative clauses (with prepositions, genitive
+   dessen/deren, was/wo), more idiomatic connectors (je...desto, sofern/
+   vorausgesetzt/es sei denn, zumal/angesichts/ungeachtet dessen), more
+   family/relationship scenarios (partnership & future plans, in-law
+   conflict, parenting/education decisions, caring for aging relatives,
+   friendships changing over time), workplace scenarios tied to the
+   accounting Ausbildung (Buchhaltung vocabulary, talking about the
+   Ausbildung itself, a mock job interview, talking with colleagues
+   about tasks/mistakes, exam nerves), and more exam-format practice
+   (Hörverstehen strategy, the B2 speaking task 1 short presentation,
+   and another timed writing checkpoint). Days 205-240 (the last 40%)
+   are the next step. ---- */
+const GERMAN_DAYS_B2_PART2 = [
+  {lessons:[ // Day 178
+    L("Konjunktiv I der Vergangenheit (reguläre Verben)","Write 5 sentences reporting what someone said about the past, using Konjunktiv I der Vergangenheit (er habe gemacht, sie sei gegangen).","Meine Kollegin sagte, sie habe das Projekt letzte Woche abgeschlossen. Er meinte, er sei extra früher gekommen.","Meine Kollegin hat gesagt, sie hat das Projekt letzte Woche fertig gemacht.","My colleague said she had finished the project last week. He said he had come earlier especially.")
+  ]},
+  {lessons:[ // Day 179
+    L("Konjunktiv I der Vergangenheit mit Modalverben","Write 5 sentences reporting past statements that involve a modal verb (er habe gehen können, sie habe bleiben müssen).","Er sagte, er habe gestern nicht kommen können, weil er habe arbeiten müssen. Sie meinte, sie habe früher gehen dürfen.","Er hat gesagt, er konnte gestern nicht kommen, weil er arbeiten musste.","He said he hadn't been able to come yesterday because he had had to work. She said she had been allowed to leave early.")
+  ]},
+  {lessons:[ // Day 180
+    L("B2 Checkpoint: Konjunktiv I der Vergangenheit","Write a paragraph (8+ sentences) reporting what several people told you last week, mixing regular verbs and modal verbs in Konjunktiv I der Vergangenheit.","Meine Schwester erzählte, sie sei letzten Monat umgezogen. Mein Chef meinte, er habe die Zahlen schon prüfen lassen, aber er habe noch Rückfragen gehabt.","Read it back and check: did every reported verb actually shift into the Vergangenheit form, or did some slip back into present Konjunktiv I?","My sister said she had moved last month. My boss said he'd already had the figures checked, but he'd still had questions.")
+  ]},
+  {lessons:[ // Day 181
+    L("Relativsätze mit Präposition (mit dem, für die, auf das)","Write 6 sentences using relative clauses introduced by a preposition + relative pronoun (der Kollege, mit dem ich arbeite; die Frist, auf die wir warten).","Der Kollege, mit dem ich zusammenarbeite, ist sehr zuverlässig. Das Projekt, auf das wir so lange gewartet haben, startet endlich.","Der Kollege, mit dem ich arbeite, ist echt zuverlässig, ehrlich.","The colleague I work with is very reliable. The project we've waited for so long is finally starting.")
+  ]},
+  {lessons:[ // Day 182
+    L("Relativsätze im Genitiv (dessen, deren)","Write 5 sentences using genitive relative pronouns dessen (masc./neut.) and deren (fem./plural) to link two ideas about ownership or belonging.","Das ist der Kunde, dessen Rechnung noch offen ist. Meine Nachbarin, deren Kinder mit meinen spielen, arbeitet auch in der Buchhaltung.","Das ist der Kunde, der noch die Rechnung offen hat, glaub ich.","That's the client whose invoice is still open. My neighbor, whose kids play with mine, also works in accounting.")
+  ]},
+  {lessons:[ // Day 183
+    L("was und wo als Relativpronomen","Write 5 sentences using was (referring to a whole clause, alles, nichts, etwas) or wo (referring to a place or time) as a relative pronoun.","Er kam pünktlich, was mich sehr gefreut hat. Das ist die Stadt, wo ich meine Ausbildung gemacht habe.","Er kam pünktlich, das hat mich echt gefreut, muss ich sagen.","He arrived on time, which pleased me a lot. That's the city where I did my Ausbildung.")
+  ]},
+  {lessons:[ // Day 184
+    L("B2 Checkpoint: Erweiterte Relativsätze","Write a paragraph (8+ sentences) describing your workplace or family, using at least one prepositional relative clause, one dessen/deren, and one was/wo.","Mein Büro, in dem ich seit zwei Jahren arbeite, liegt im Zentrum. Meine Chefin, deren Geduld ich sehr schätze, hat mir viel beigebracht, was mich wirklich motiviert hat.","Read it out loud and check: does each relative pronoun actually match its case, or did you default to der/die/das everywhere?","My office, where I've worked for two years, is in the center. My boss, whose patience I really value, has taught me a lot, which really motivates me.")
+  ]},
+  {lessons:[ // Day 185
+    L("Konnektor: je...desto / je...umso (Proportionalität)","Write 5 sentences using je...desto or je...umso to express that two things increase or decrease together.","Je mehr ich übe, desto sicherer fühle ich mich. Je früher wir anfangen, umso entspannter können wir arbeiten.","Je mehr ich übe, umso besser wird's, ganz einfach.","The more I practice, the more confident I feel. The earlier we start, the more relaxed we can work.")
+  ]},
+  {lessons:[ // Day 186
+    L("Konnektoren: sofern, vorausgesetzt, es sei denn (Bedingung)","Write 6 sentences expressing a condition: 2 with sofern, 2 with vorausgesetzt (dass), 2 with es sei denn.","Ich komme mit, sofern ich rechtzeitig fertig bin. Ich helfe dir gern, vorausgesetzt, du hast morgen Zeit. Wir treffen uns wie geplant, es sei denn, es passiert etwas Unvorhergesehenes.","Ich komm mit, wenn ich rechtzeitig fertig bin, sonst halt nicht.","I'll come along, provided I'm finished in time. I'll gladly help you, assuming you have time tomorrow. We'll meet as planned, unless something unforeseen happens.")
+  ]},
+  {lessons:[ // Day 187
+    L("Konnektoren: zumal, angesichts, ungeachtet dessen","Write 6 sentences: 2 with zumal (giving an extra reason), 2 with angesichts + Genitiv (in view of), 2 with ungeachtet dessen (regardless of that).","Ich war überrascht, zumal er das nie zuvor erwähnt hatte. Angesichts der knappen Frist arbeiten wir heute länger. Es gab viel Kritik; ungeachtet dessen hat sie an ihrer Entscheidung festgehalten.","War überrascht, vor allem weil er das nie erwähnt hat.","I was surprised, especially since he'd never mentioned it before. In view of the tight deadline, we're working longer today. There was a lot of criticism; regardless of that, she stuck to her decision.")
+  ]},
+  {lessons:[ // Day 188
+    L("B2 Checkpoint: Konnektoren-Mix (Tage 156-187)","Write a paragraph (10+ sentences) about a decision at work or home, using at least four different connectors from the ones you've learned so far (obwohl, während, je...desto, sofern, zumal, angesichts, etc.).","Angesichts der aktuellen Lage haben wir uns entschieden umzustellen, zumal die alte Lösung ohnehin veraltet war. Je länger wir gewartet hätten, desto schwieriger wäre die Umstellung geworden.","Circle every connector you used and check: is the verb in the right position for that specific connector?","In view of the current situation, we decided to switch, especially since the old solution was outdated anyway. The longer we'd have waited, the harder the transition would have become.")
+  ]},
+  {lessons:[ // Day 189
+    L("Über die Partnerschaft und gemeinsame Zukunftspläne sprechen","Write a paragraph (8+ sentences) about plans you and your husband share for the future, using Konjunktiv II for wishes and vielleicht/eventuell for open possibilities.","Wir würden gern in ein paar Jahren ein eigenes Haus haben, auch wenn das noch weit weg ist. Eventuell würden wir dafür beide etwas mehr sparen müssen.","Wir wollen halt irgendwann mal n eigenes Haus, mal schauen, wann's klappt.","We'd like to have our own house in a few years, even though that's still far off. We might both need to save a bit more for that.")
+  ]},
+  {lessons:[ // Day 190
+    L("Konflikte mit Schwiegereltern / kulturelle Unterschiede ansprechen","Write a dialogue (10+ lines) diplomatically addressing a disagreement with in-laws that comes from cultural differences, using Konjunktiv II softeners.","Ich würde es schön finden, wenn wir das gemeinsam besprechen könnten, auch wenn wir das in meiner Familie anders machen. — Das verstehe ich, lass uns einen Kompromiss finden.","Bei uns läuft das halt anders, aber lass uns da irgendwie n Mittelweg finden.","I'd find it nice if we could discuss this together, even though we do it differently in my family. — I understand, let's find a compromise.")
+  ]},
+  {lessons:[ // Day 191
+    L("Über Kindererziehung und Bildung entscheiden (fortgeschritten)","Write a paragraph (8+ sentences) weighing a real decision about a child's education or upbringing (school choice, language, discipline), using dessen/deren and at least one advanced connector.","Wir überlegen, welche Schule für unser Kind geeignet wäre, dessen Bedürfnisse sich ja auch noch entwickeln. Angesichts der zweisprachigen Erziehung wäre eine bilinguale Schule sinnvoll.","Überlegen grad, welche Schule am besten passt, ist ja noch nicht so einfach.","We're considering which school would suit our child, whose needs are of course still developing. In view of the bilingual upbringing, a bilingual school would make sense.")
+  ]},
+  {lessons:[ // Day 192
+    L("Ein Gespräch über die Pflege von Angehörigen führen","Write a dialogue (8+ lines) discussing how to support an aging parent or relative, using Funktionsverbgefüge like Verantwortung übernehmen and Rücksicht nehmen.","Wir sollten gemeinsam Verantwortung übernehmen und auf ihre Bedürfnisse Rücksicht nehmen. — Ja, vielleicht sollten wir auch professionelle Hilfe in Betracht ziehen.","Müssen uns halt zusammen drum kümmern, oder? Vielleicht auch mal Hilfe holen.","We should take on responsibility together and be considerate of her needs. — Yes, maybe we should also consider professional help.")
+  ]},
+  {lessons:[ // Day 193
+    L("Über Freundschaften und deren Wandel im Laufe der Zeit sprechen","Write a paragraph (8+ sentences) reflecting on how a friendship has changed over time, using deren/dessen and Konjunktiv I der Vergangenheit for something a friend once said.","Meine beste Freundin, deren Familie ich schon lange kenne, hat sich seit der Geburt ihres Kindes verändert. Sie sagte einmal, sie sei früher viel spontaner gewesen.","Sie hat sich einfach verändert, seit sie ihr Kind hat, das ist halt normal.","My best friend, whose family I've known for a long time, has changed since her child was born. She once said she used to be much more spontaneous.")
+  ]},
+  {lessons:[ // Day 194
+    L("B2 Checkpoint: Familien-/Beziehungsgespräch (mündlich)","With your husband, discuss a real family or relationship topic out loud for 4+ minutes in German, using at least one Konjunktiv-II softener and one advanced connector, then write 3 self-corrections.","Ich habe wieder zu oft 'ich glaube' statt eines Konnektors benutzt. Ich sollte 'angesichts' oder 'zumal' öfter aktiv einbauen.","Hab wieder zu oft nur 'ich glaub' gesagt, statt was Richtiges wie 'angesichts dessen'.","I again used 'I think' too often instead of a connector. I should actively use 'in view of' or 'especially since' more often.")
+  ]},
+  {lessons:[ // Day 195
+    L("B2 Checkpoint: Timed Beziehungs-Aufsatz","Write a complete, timed essay (25 minutes, 12+ sentences) about how relationships change over time, using Konjunktiv II, at least one relative clause, and one advanced connector.","Beziehungen verändern sich zwangsläufig, je länger man sich kennt, zumal sich beide Seiten im Laufe der Zeit weiterentwickeln. Eine Freundschaft, die diese Veränderung übersteht, ist meiner Meinung nach besonders wertvoll.","Time yourself strictly — 25 minutes, then stop, even mid-sentence.","Relationships inevitably change the longer you know each other, especially since both sides develop further over time. A friendship that survives this change is, in my opinion, particularly valuable.")
+  ]},
+  {lessons:[ // Day 196
+    L("Buchhaltungsbegriffe erklären: Soll/Haben, Buchung, Bilanz","Write 6 sentences explaining basic accounting terms in German, as if to a beginner: Soll, Haben, Buchung, Bilanz, Rechnung, Beleg.","Im Soll werden die Ausgaben erfasst, im Haben die Einnahmen. Eine Bilanz zeigt, wie das Unternehmen finanziell dasteht.","Soll ist quasi, wo die Ausgaben landen, Haben, wo die Einnahmen landen, ganz easy.","Expenses are recorded on the debit side, income on the credit side. A balance sheet shows how the company stands financially.")
+  ]},
+  {lessons:[ // Day 197
+    L("Über die eigene Ausbildung sprechen (Berichtsheft, Ausbilder, Prüfung)","Write a paragraph (8+ sentences) describing your accounting Ausbildung so far: what you've learned, your Berichtsheft, your Ausbilder, and the upcoming Prüfung.","In meiner Ausbildung zur Buchhalterin führe ich regelmäßig mein Berichtsheft, in dem ich meine Aufgaben dokumentiere. Mein Ausbilder gibt mir hilfreiches Feedback, das mich auf die Abschlussprüfung vorbereitet.","Führ halt mein Berichtsheft und mein Ausbilder gibt mir gute Tipps für die Prüfung.","In my accounting Ausbildung, I regularly keep my Berichtsheft, in which I document my tasks. My trainer gives me helpful feedback that's preparing me for the final exam.")
+  ]},
+  {lessons:[ // Day 198
+    L("Ein Vorstellungsgespräch für die Ausbildung üben","Write a mock job-interview dialogue (10+ lines) for an accounting Ausbildung position: why this field, your strengths, a question you ask back.","Ich interessiere mich für die Buchhaltung, weil ich gern mit Zahlen und Struktur arbeite. Eine meiner Stärken ist, dass ich sehr sorgfältig arbeite. — Welche Software wird in Ihrem Betrieb hauptsächlich genutzt?","Ich mag halt Zahlen und bin ziemlich ordentlich, deswegen passt das gut.","I'm interested in accounting because I like working with numbers and structure. One of my strengths is that I work very carefully. — Which software is mainly used in your company?")
+  ]},
+  {lessons:[ // Day 199
+    L("Mit Kollegen über Aufgaben und Fehler sprechen (diplomatisch)","Write a dialogue (10+ lines) where you point out a colleague's mistake diplomatically and discuss how to fix it together, using Konjunktiv II and Funktionsverbgefüge.","Mir ist aufgefallen, dass in dieser Buchung ein Fehler unterlaufen ist. Könnten wir gemeinsam Rücksprache halten, wie wir das korrigieren? — Danke, dass du das ansprichst, ich schaue es mir gleich an.","Ist mir aufgefallen, da ist n Fehler drin, sollten wir mal kurz drüber schauen.","I noticed a mistake crept into this entry. Could we consult together on how to correct it? — Thanks for bringing that up, I'll take a look right away.")
+  ]},
+  {lessons:[ // Day 200
+    L("Über Prüfungsvorbereitung und Prüfungsangst sprechen","Write a paragraph (8+ sentences) about how you prepare for exams and manage nervousness, using Konjunktiv I der Vergangenheit to report advice someone once gave you.","Mein Ausbilder sagte einmal, er sei früher auch immer sehr nervös gewesen, bevor er sich einen festen Lernplan angeeignet habe. Seitdem versuche ich, jeden Abend nur eine Stunde gezielt zu wiederholen.","Mein Ausbilder meinte, er war früher auch immer voll nervös, bis er sich n Lernplan gemacht hat.","My trainer once said he used to be very nervous too, before he adopted a fixed study plan. Since then, I try to review just one hour a night, in a targeted way.")
+  ]},
+  {lessons:[ // Day 201
+    L("B2 Checkpoint: Rollenspiel Vorstellungsgespräch (mündlich)","With your husband, act out the Day 198 job-interview dialogue out loud, 5+ minutes, then write 3 things you'd say more confidently next time.","Ich habe zu leise und zu schnell gesprochen. Ich sollte meine Stärken klarer und langsamer formulieren. Mir hat eine gute Abschlussfrage gefehlt.","Hab irgendwie zu leise und zu schnell geredet, muss lauter und ruhiger werden.","I spoke too quietly and too fast. I should state my strengths more clearly and more slowly. I was missing a good closing question.")
+  ]},
+  {lessons:[ // Day 202
+    L("B2-Prüfung: Hörverstehen-Strategie (global, selektiv, detailliert)","Find a short German audio/podcast clip (2-4 min) and practice the real B2 listening strategy: first listen for the gist (global), then for specific facts (selektiv), then for detail — write down what you caught at each stage.","Global: Es geht um Homeoffice und Familie. Selektiv: Genannt werden Vorteile wie Flexibilität und Nachteile wie Isolation. Detail: Eine Person erwähnt konkret drei Tage pro Woche im Homeoffice.","This is a fixed strategy, not vocabulary — the point is training the three passes, not understanding every word the first time.","Global: It's about working from home and family. Selective: Advantages like flexibility and disadvantages like isolation are mentioned. Detail: One person specifically mentions three days a week working from home.")
+  ]},
+  {lessons:[ // Day 203
+    L("B2-Prüfung: Kurzvortrag halten (Sprechen Teil 1)","Prepare and record yourself giving a short, structured 2-minute presentation (Einleitung, 2-3 Punkte, Schluss) on a given topic — the real B2 speaking task 1 format.","Heute möchte ich über die Vorteile und Nachteile von Homeoffice sprechen. Erstens ermöglicht es mehr Flexibilität, zweitens spart man Pendelzeit. Zusammenfassend überwiegen für mich die Vorteile.","Practice this timed too — 1 minute prep, 2 minutes speaking, no notes beyond a few keywords.","Today I'd like to talk about the advantages and disadvantages of working from home. First, it allows more flexibility; second, you save commuting time. In conclusion, for me the advantages outweigh the disadvantages.")
+  ]},
+  {lessons:[ // Day 204
+    L("B2 Checkpoint: Selbsteinschätzung (Tage 178-204)","Rate yourself 1-5 on Hören, Lesen, Schreiben, and Sprechen for this stretch, and write which grammar point (Konjunktiv I Vergangenheit, Relativsätze, or Konnektoren) still needs the most review before Day 205.","Hören: 4/5. Lesen: 4/5. Schreiben: 4/5. Sprechen: 3/5. Ich möchte vor allem die Relativsätze mit Präposition noch festigen.","Sprechen ist immer noch am schwersten, aber die Relativsätze sitzen auch noch nicht ganz.","Listening: 4/5. Reading: 4/5. Writing: 4/5. Speaking: 3/5. I especially want to solidify prepositional relative clauses.")
+  ]}
+];
+GERMAN_DAYS.push(...GERMAN_DAYS_B2_PART2);
+
 /* ---- Full plan: A1 -> A2 -> B1, sized for a 6-7 month timeline at
    ~2.5 hrs/day (roughly matches Goethe's published hour estimates per
    level). A1 (Days 1-30) is fully written out above. A2 and B1 content
@@ -1182,7 +1282,7 @@ function phaseForDay(day){
   return PHASES.find(p=>day>=p.from && day<=p.to) || PHASES[PHASES.length-1];
 }
 const A1_PHASE_END = 30;
-const CONTENT_END_DAY = 177; // raise this as more phases get written (A2 + B1 fully written, B2 Part 1 written: 1-177; B2 Days 178-240 still to come)
+const CONTENT_END_DAY = 204; // raise this as more phases get written (A2 + B1 fully written, B2 Part 1 + Part 2 written: 1-204; B2 Days 205-240 — the last 40% — still to come)
 const TOTAL_CORE_DAYS = 240; // 8-month core plan (Days 1-240) to B2, buffer is extra
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
