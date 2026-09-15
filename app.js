@@ -255,43 +255,63 @@ function renderWeekView(){
 }
 
 /* ---------- fit-to-screen: scale the whole sheet so it always shows
-   in full, with no page scrolling, like a printable planner sheet ---------- */
+   in full, with no page scrolling, like a printable planner sheet.
+   Generalized to handle all three "single sheet" views (week, month,
+   year) — previously this only ever fit the week view; month and year
+   used the exact same fixed-1120px markup but nothing ever scaled them
+   down, so on a phone they rendered at full desktop width and required
+   horizontal scrolling to see the rest of the sheet. ---------- */
+const STAGE_MAP = {
+  week:  {stageId:"plannerStage", canvasId:"plannerCanvas", viewId:"weekView"},
+  month: {stageId:"monthStage",   canvasId:"monthCanvas",   viewId:"monthView"},
+  year:  {stageId:"yearStage",    canvasId:"yearCanvas",    viewId:"yearView"}
+};
 let fitRaf = null;
-function fitPlanner(){
+function fitStage(key){
+  const map = STAGE_MAP[key];
+  if(!map) return;
+  const stage = document.getElementById(map.stageId);
+  const canvas = document.getElementById(map.canvasId);
+  const view = document.getElementById(map.viewId);
+  if(!stage || !canvas || !view) return;
+  if(view.classList.contains("hidden")) return;
+
+  canvas.style.transform = "scale(1)";
+  const stageW = stage.clientWidth;
+  const stageH = stage.clientHeight;
+  const naturalW = canvas.offsetWidth;
+  const naturalH = canvas.offsetHeight;
+  if(!stageW || !stageH || !naturalW || !naturalH) return;
+
+  const scale = Math.min(stageW/naturalW, stageH/naturalH, 1.4);
+  canvas.style.transform = `scale(${scale})`;
+}
+function fitActiveStage(){
   if(fitRaf) cancelAnimationFrame(fitRaf);
   fitRaf = requestAnimationFrame(()=>{
-    const stage = document.getElementById("plannerStage");
-    const canvas = document.getElementById("plannerCanvas");
-    if(!stage || !canvas) return;
-    if(document.getElementById("weekView").classList.contains("hidden")) return;
-
-    canvas.style.transform = "scale(1)";
-    const stageW = stage.clientWidth;
-    const stageH = stage.clientHeight;
-    const naturalW = canvas.offsetWidth;
-    const naturalH = canvas.offsetHeight;
-    if(!stageW || !stageH || !naturalW || !naturalH) return;
-
-    const scale = Math.min(stageW/naturalW, stageH/naturalH, 1.4);
-    canvas.style.transform = `scale(${scale})`;
+    Object.keys(STAGE_MAP).forEach(fitStage);
   });
 }
+/* kept for backwards compatibility with any other callers */
+function fitPlanner(){ fitActiveStage(); }
 
 function debounce(fn,ms){
   let t;
   return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args),ms); };
 }
-const debouncedFit = debounce(fitPlanner,80);
+const debouncedFit = debounce(fitActiveStage,80);
 window.addEventListener("resize", debouncedFit);
 window.addEventListener("orientationchange", debouncedFit);
 if(document.fonts && document.fonts.ready){
-  document.fonts.ready.then(fitPlanner);
+  document.fonts.ready.then(fitActiveStage);
 }
 if(window.ResizeObserver){
   const ro = new ResizeObserver(debouncedFit);
   window.addEventListener("DOMContentLoaded", ()=>{
-    const stage = document.getElementById("plannerStage");
-    if(stage) ro.observe(stage);
+    ["plannerStage","monthStage","yearStage"].forEach(id=>{
+      const stage = document.getElementById(id);
+      if(stage) ro.observe(stage);
+    });
   });
 }
 
@@ -361,6 +381,8 @@ function renderMonthView(){
     statCard(totals.jobHours,"Hours worked"),
     statCard(totals.certVideos,"Certificate videos"),
   ].join("");
+
+  fitActiveStage();
 }
 
 /* ---------- render: year view ---------- */
@@ -398,6 +420,8 @@ function renderYearView(){
     statCard(yearTotals.jobHours,"Hours worked"),
     statCard(yearTotals.certVideos,"Certificate videos"),
   ].join("");
+
+  fitActiveStage();
 }
 
 /* ===================== German A1 → B1 hub ===================== */
@@ -911,9 +935,13 @@ document.getElementById("exportImage").onclick = async ()=>{
       prevTransform = target.style.transform;
       target.style.transform = "none";
     } else if(!document.getElementById("monthView").classList.contains("hidden")){
-      target = document.querySelector("#monthView .report-page");
+      target = document.getElementById("monthCanvas");
+      prevTransform = target.style.transform;
+      target.style.transform = "none";
     } else if(!document.getElementById("yearView").classList.contains("hidden")){
-      target = document.querySelector("#yearView .report-page");
+      target = document.getElementById("yearCanvas");
+      prevTransform = target.style.transform;
+      target.style.transform = "none";
     } else {
       target = document.querySelector("#germanView .report-page");
     }
