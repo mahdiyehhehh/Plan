@@ -34,7 +34,7 @@
     <button data-view="week" class="active">Week</button>
     <button data-view="month">Month</button>
     <button data-view="year">Year</button>
-    <button data-view="german" class="german-nav-btn">A1 → B1</button>
+    <button data-view="german" class="german-nav-btn">A1 → B2</button>
   </nav>
 
   <div class="chrome-actions">
@@ -102,80 +102,84 @@
     </div>
   </section>
 
-  <!-- MONTH VIEW -->
-  <section id="monthView" class="view hidden">
-    <div class="report-page">
-      <div class="sheet-header report-header">
-        <div class="sheet-title">
-          <h1>Monthly Report</h1>
-          <p>Progress <span class="sep">&mdash;</span> at a glance</p>
+  <!-- MONTH VIEW — fit-to-screen sheet, same idea as the week view -->
+  <section id="monthView" class="view stage-view hidden">
+    <div class="planner-stage" id="monthStage">
+      <div class="report-page" id="monthCanvas">
+        <div class="sheet-header report-header">
+          <div class="sheet-title">
+            <h1>Monthly Report</h1>
+            <p>Progress <span class="sep">&mdash;</span> at a glance</p>
+          </div>
+          <div class="week-nav">
+            <button id="prevMonth" class="nav-arrow" aria-label="Previous month">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="week-label"><span id="monthRange">&mdash;</span></div>
+            <button id="nextMonth" class="nav-arrow" aria-label="Next month">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="week-nav">
-          <button id="prevMonth" class="nav-arrow" aria-label="Previous month">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="week-label"><span id="monthRange">&mdash;</span></div>
-          <button id="nextMonth" class="nav-arrow" aria-label="Next month">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+        <div class="sheet-rule"><span></span><em>Totals This Month</em></div>
+        <div class="stat-grid" id="monthStats"></div>
+        <div class="sheet-rule"><span></span><em>Week by Week</em></div>
+        <div class="table-scroll">
+          <table class="summary-table" id="monthTable">
+            <thead>
+              <tr><th>Week of</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
+            </thead>
+            <tbody id="monthTableBody"></tbody>
+          </table>
         </div>
+        <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
       </div>
-      <div class="sheet-rule"><span></span><em>Totals This Month</em></div>
-      <div class="stat-grid" id="monthStats"></div>
-      <div class="sheet-rule"><span></span><em>Week by Week</em></div>
-      <div class="table-scroll">
-        <table class="summary-table" id="monthTable">
-          <thead>
-            <tr><th>Week of</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
-          </thead>
-          <tbody id="monthTableBody"></tbody>
-        </table>
-      </div>
-      <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
     </div>
   </section>
 
-  <!-- YEAR VIEW -->
-  <section id="yearView" class="view hidden">
-    <div class="report-page">
-      <div class="sheet-header report-header">
-        <div class="sheet-title">
-          <h1>Yearly Report</h1>
-          <p>Progress <span class="sep">&mdash;</span> the full picture</p>
+  <!-- YEAR VIEW — fit-to-screen sheet, same idea as the week view -->
+  <section id="yearView" class="view stage-view hidden">
+    <div class="planner-stage" id="yearStage">
+      <div class="report-page" id="yearCanvas">
+        <div class="sheet-header report-header">
+          <div class="sheet-title">
+            <h1>Yearly Report</h1>
+            <p>Progress <span class="sep">&mdash;</span> the full picture</p>
+          </div>
+          <div class="week-nav">
+            <button id="prevYear" class="nav-arrow" aria-label="Previous year">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="week-label"><span id="yearRange">&mdash;</span></div>
+            <button id="nextYear" class="nav-arrow" aria-label="Next year">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="week-nav">
-          <button id="prevYear" class="nav-arrow" aria-label="Previous year">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="week-label"><span id="yearRange">&mdash;</span></div>
-          <button id="nextYear" class="nav-arrow" aria-label="Next year">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+        <div class="sheet-rule"><span></span><em>Totals This Year</em></div>
+        <div class="stat-grid" id="yearStats"></div>
+        <div class="sheet-rule"><span></span><em>Month by Month</em></div>
+        <div class="table-scroll">
+          <table class="summary-table" id="yearTable">
+            <thead>
+              <tr><th>Month</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
+            </thead>
+            <tbody id="yearTableBody"></tbody>
+          </table>
         </div>
+        <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
       </div>
-      <div class="sheet-rule"><span></span><em>Totals This Year</em></div>
-      <div class="stat-grid" id="yearStats"></div>
-      <div class="sheet-rule"><span></span><em>Month by Month</em></div>
-      <div class="table-scroll">
-        <table class="summary-table" id="yearTable">
-          <thead>
-            <tr><th>Month</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
-          </thead>
-          <tbody id="yearTableBody"></tbody>
-        </table>
-      </div>
-      <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
     </div>
   </section>
 
-  <!-- GERMAN A1 → B1 VIEW -->
+  <!-- GERMAN A1 → B2 VIEW -->
   <section id="germanView" class="view hidden">
     <div class="report-page german-page">
 
       <div class="sheet-header report-header german-hero">
         <div class="sheet-title">
-          <h1>A1 in 30 Days</h1>
-          <p>German <span class="sep">&mdash;</span> on the road to B1</p>
+          <h1>Goethe B1/B2 Path</h1>
+          <p>A1 <span class="sep">&rarr;</span> B2 <span class="sep">&mdash;</span> exam-ready &amp; street-ready</p>
         </div>
         <div class="german-progress-badge">
           <div class="german-progress-ring-wrap">
@@ -192,7 +196,11 @@
         </div>
       </div>
 
+      <p class="german-goal-note">The goal isn't just a passing score — it's both: <strong>full marks on the Goethe exam</strong> and <strong>real, comfortable, everyday German</strong>. Every day mixes textbook grammar with the way people actually talk.</p>
+
       <div class="sheet-rule"><span></span><em>Never Miss This Page</em></div>
+
+      <div class="slang-card" id="slangCard"><!-- injected by app.js --></div>
 
       <nav class="german-subnav" id="germanSubnav">
         <button data-sub="daily" class="active">Daily Learning</button>
