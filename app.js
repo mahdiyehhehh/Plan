@@ -644,11 +644,20 @@ const GERMAN_DAYS = [
   ]}
 ];
 
-/* ---- 60-day A2 curriculum (Days 31-90), being written in batches.
-   Days 31-40 written so far — covers Präteritum, Perfekt review,
-   Genitiv, adjective endings, reflexive verbs, subordinate/relative
-   clauses, and indirect questions, with office/Ausbildung vocabulary
-   woven in from Day 40 onward since that's the end goal. ---- */
+/* ---- 60-day A2 curriculum (Days 31-90), now fully written.
+   Days 31-50: Präteritum, Perfekt review, Genitiv, adjective endings,
+   reflexive verbs, subordinate/relative clauses, indirect questions,
+   Futur I, Passiv, Konjunktiv II basics, office German (calls/emails/
+   invoices/complaints).
+   Days 51-90: verb+preposition combos & da-/wo-compounds, deeper
+   Wechselpräpositionen and Genitiv prepositions, opinions/preferences/
+   advice/personality, German bureaucracy (Bürgeramt, Finanzamt, bank,
+   Krankenkasse, Mietvertrag), storytelling & picture description,
+   small talk for meeting the in-laws, hypotheticals & indirect speech,
+   more office German (meetings, follow-up emails, phone messages,
+   presentations), job-ad vocabulary and interview strengths, everyday
+   idioms, and a full grammar review ending in a Goethe/telc A2-style
+   writing checkpoint — this is the complete on-ramp into B1. ---- */
 const GERMAN_DAYS_A2 = [
   {lessons:[ // Day 31
     L("Präteritum: sein, haben & Modal Verbs","Rewrite 8 sentences about your childhood or last year using war, hatte, konnte, musste, wollte.","Ich war letztes Jahr in Berlin. Ich hatte keine Zeit. Ich musste viel arbeiten.","Ich war letztes Jahr in Berlin, hatte aber kaum Zeit — musste die ganze Zeit arbeiten."),
@@ -721,9 +730,336 @@ const GERMAN_DAYS_A2 = [
   {lessons:[ // Day 50
     L("A2 Checkpoint: Bewerbungsgespräch","Write out full answers (2-3 sentences each) to 4 common interview questions: Warum diese Ausbildung? Was sind Ihre Stärken? Warum sollten wir Sie nehmen? Haben Sie Fragen?","Ich möchte diese Ausbildung machen, weil ich gerne mit Zahlen arbeite und sehr organisiert bin. Meine größte Stärke ist meine Sorgfalt.","Ich mach die Ausbildung gern, weil ich echt gut mit Zahlen bin und immer organisiert."),
     L("A2 Grammar Review","Pick 5 grammar points from Days 31-49 that felt hardest and write one fresh example sentence for each, from memory.","Review sentence using your weakest point, written without looking at the answer key.","Same, but how you'd actually say it out loud.")
+  ]},
+  {lessons:[ // Day 51
+    L("Verben mit Präpositionen I (warten auf, denken an, sich freuen auf)","Write 6 sentences using warten auf, denken an, and sich freuen auf with the correct Akkusativ case.","Ich warte auf den Bus. Ich denke oft an meine Familie. Ich freue mich auf das Wochenende.","Ich warte schon ewig auf den Bus, echt nervig."),
+    L("Verben mit Präpositionen II (sich interessieren für, sich ärgern über)","Write 4 sentences about things you're interested in or annoyed by, using sich interessieren für and sich ärgern über.","Ich interessiere mich für Buchhaltung. Ich ärgere mich über den Stau.","Ich ärgere mich grad total über den Stau, ich komm zu spät.")
+  ]},
+  {lessons:[ // Day 52
+    L("Verben mit Präpositionen (Dativ): helfen bei, sprechen mit, sich bedanken bei","Write 5 sentences using helfen bei, sprechen mit, and sich bedanken bei with Dativ.","Ich helfe meiner Kollegin bei der Arbeit. Ich spreche mit meinem Chef. Ich bedanke mich bei dir.","Kannst du mir kurz bei was helfen? Ich krieg das grad nicht hin."),
+    L("Pronominaladverbien: da-Wörter (darauf, damit, dafür)","Rewrite 5 sentences from Days 51-52, replacing preposition + thing with a da-word (only works for things, not people).","Ich warte auf den Bus. → Ich warte darauf. Ich freue mich auf das Wochenende. → Ich freue mich darauf.","Ich freu mich schon total darauf, ehrlich.")
+  ]},
+  {lessons:[ // Day 53
+    L("Fragewörter mit Präpositionen: wo-Wörter (worauf, womit, wofür)","Write 5 questions using wo-words (worauf, womit, wofür, worüber, woran) and answer each with a da-word.","Worauf wartest du? — Ich warte darauf, dass der Bus kommt. Woran denkst du? — Ich denke daran, dass ich bald frei habe.","Woran denkst du grad? — Ach, an nichts Besonderes.")
+  ]},
+  {lessons:[ // Day 54
+    L("Wechselpräpositionen im Büro (über, unter, vor, zwischen)","Write 8 sentences using über, unter, vor, and zwischen, showing both location (Dativ) and movement (Akkusativ).","Der Ordner liegt unter dem Schreibtisch. Ich lege den Ordner unter den Schreibtisch.","Der Ordner liegt irgendwo unter dem Tisch, glaub ich.")
+  ]},
+  {lessons:[ // Day 55
+    L("Präpositionen mit Genitiv (wegen, trotz, während, außerhalb)","Write 6 sentences using wegen, trotz, während, and außerhalb — note that wegen and trotz are very often used with Dativ in everyday spoken German too.","Wegen des Staus komme ich zu spät. Trotz des Regens gehen wir spazieren. Während der Pause esse ich meistens etwas.","Ich komm wegen dem Stau n bisschen später, sorry.")
+  ]},
+  {lessons:[ // Day 56
+    L("Meinung äußern (Ich finde, dass... / Meiner Meinung nach...)","Write 5 opinions about topics you care about using Ich finde, dass..., Meiner Meinung nach, and Ich denke, dass...","Ich finde, dass Deutsch eine logische Sprache ist. Meiner Meinung nach ist Übung der beste Weg, eine Sprache zu lernen.","Ich find ehrlich, Übung bringt einfach am meisten."),
+    L("Zustimmen & Widersprechen (Das stimmt / Ich sehe das anders)","Write a short dialogue (6 lines) where two people discuss a topic — one agrees, one disagrees.","Das stimmt, da hast du recht. — Hm, ich sehe das ein bisschen anders.","Stimmt schon, aber ich seh das n bisschen anders, ehrlich.")
+  ]},
+  {lessons:[ // Day 57
+    L("Vorlieben ausdrücken (gern, lieber, am liebsten)","Write 6 sentences ranking your preferences using gern, lieber, and am liebsten.","Ich trinke gern Tee, aber ich trinke lieber Kaffee. Am liebsten trinke ich Kaffee mit Milch.","Am liebsten trink ich eigentlich Kaffee, ganz ehrlich.")
+  ]},
+  {lessons:[ // Day 58
+    L("Ratschläge geben (An deiner Stelle würde ich... / Du solltest...)","Write 5 pieces of advice for a friend using An deiner Stelle würde ich..., Du solltest..., and Ich würde vorschlagen...","An deiner Stelle würde ich früher schlafen gehen. Du solltest mehr Wasser trinken.","Du solltest echt früher pennen gehen, ehrlich.")
+  ]},
+  {lessons:[ // Day 59
+    L("Persönlichkeit beschreiben (zuverlässig, ehrgeizig, geduldig, chaotisch)","Write 8 sentences describing yourself and 3 people you know, using personality adjectives.","Ich bin sehr zuverlässig und ehrgeizig. Meine Schwester ist chaotisch, aber sehr geduldig.","Ich bin schon ziemlich zuverlässig, aber manchmal echt chaotisch, haha."),
+    L("Stärken für ein Bewerbungsgespräch","Write 4 sentences describing your professional strengths, the way you'd actually say them in a job interview.","Ich bin sehr organisiert und arbeite gern genau. Ich bin außerdem teamfähig.","Ich bin schon ziemlich organisiert und arbeite echt gern im Team.")
+  ]},
+  {lessons:[ // Day 60
+    L("A2 Checkpoint: Eine Person beschreiben, die ich bewundere","Write a paragraph (8-10 sentences) describing someone you admire — their personality, why you admire them, and one thing you've done together — mixing at least 3 grammar points from Days 51-59.","Meine Schwiegermutter ist eine Frau, die ich sehr bewundere. Sie ist zuverlässig, geduldig und hilft immer, wenn man sie braucht.","Meine Schwiegermutter ist echt beeindruckend, ehrlich — die hilft einfach immer.")
+  ]},
+  {lessons:[ // Day 61
+    L("Beim Bürgeramt: die Anmeldung","Write a short dialogue (6+ lines) at the Bürgeramt registering your address (sich anmelden).","Guten Tag, ich möchte mich anmelden. — Haben Sie Ihren Mietvertrag und Ihren Ausweis dabei?","Ich muss mich noch anmelden, hab aber noch keinen Termin bekommen."),
+    L("Wichtige Dokumente-Vokabular","Write 6 sentences about official documents using der Ausweis, die Meldebescheinigung, der Aufenthaltstitel, die Geburtsurkunde.","Ich brauche meine Meldebescheinigung für die Bank. Mein Aufenthaltstitel läuft nächstes Jahr ab.","Ich brauch noch die Meldebescheinigung, sonst geht bei der Bank nix.")
+  ]},
+  {lessons:[ // Day 62
+    L("Finanzamt & Steuern Grundlagen","Write 6 sentences using die Steuer-ID, die Lohnsteuer, der Steuerberater, and die Steuererklärung.","Meine Steuer-ID steht auf dem Brief vom Finanzamt. Ich mache meine Steuererklärung jedes Jahr im März.","Ich muss dieses Jahr endlich meine Steuererklärung machen, hab's ewig aufgeschoben.")
+  ]},
+  {lessons:[ // Day 63
+    L("Bankvokabular (das Konto, die Überweisung, der Kontostand)","Write a short dialogue (6+ lines) at the bank, opening an account or making a transfer.","Ich möchte gern ein Konto eröffnen. — Kein Problem, haben Sie Ihren Ausweis dabei?","Kannst du mir kurz Geld überweisen? Ich schick dir gleich meine IBAN.")
+  ]},
+  {lessons:[ // Day 64
+    L("Krankenversicherung & Arzttermine","Write 5 sentences about health insurance and booking a doctor's appointment, using die Krankenkasse, gesetzlich versichert, der Termin.","Ich bin gesetzlich versichert. Ich brauche einen Termin beim Hausarzt.","Ich muss mir mal endlich nen Termin beim Arzt holen.")
+  ]},
+  {lessons:[ // Day 65
+    L("Mietvertrag & Wohnen","Write 6 sentences about renting using der Mietvertrag, die Kaution, die Nebenkosten, kündigen.","Wir haben einen Mietvertrag für zwei Jahre unterschrieben. Die Kaution beträgt drei Monatsmieten.","Die Nebenkosten sind echt gestiegen dieses Jahr, krass.")
+  ]},
+  {lessons:[ // Day 66
+    L("A2 Checkpoint: Ein Formular verstehen & ausfüllen","Find (or imagine) a German form — Anmeldeformular, Kontoeröffnung — and write out how you'd fill in each field in full sentences, plus one question you'd ask if something is unclear.","Name: ... Vorname: ... Ich bin mir nicht sicher, was 'Familienstand' bedeutet — heißt das, ob ich verheiratet bin?","Was bedeutet 'Familienstand' nochmal? Ach so, ob ich verheiratet bin, okay.")
+  ]},
+  {lessons:[ // Day 67
+    L("Eine Geschichte erzählen (zuerst, dann, später, schließlich)","Write a story about your day (10+ sentences) using sequencing words and a mix of Perfekt and Präteritum.","Zuerst bin ich aufgestanden. Dann habe ich gefrühstückt. Später bin ich ins Büro gefahren. Schließlich war ich total müde.","Zuerst war ich noch total müde, aber dann ging's eigentlich ganz gut.")
+  ]},
+  {lessons:[ // Day 68
+    L("Ein Bild beschreiben (Goethe-Prüfungsformat)","Pick a real photo and describe it in 8+ sentences: Auf dem Bild sehe ich..., Im Hintergrund..., Ich glaube, dass...","Auf dem Bild sehe ich eine Familie im Park. Im Hintergrund sieht man Bäume. Ich glaube, dass es Sommer ist, weil alle kurze Ärmel tragen.","Auf dem Bild sieht man ne Familie im Park, sieht nach Sommer aus.")
+  ]},
+  {lessons:[ // Day 69
+    L("Small Talk & deutsche Umgangsformen","Write a small-talk dialogue (8+ lines) as you'd have meeting your husband's family for the first time — greetings, compliments, safe topics like Wetter and Anreise.","Schön, Sie endlich kennenzulernen! — Ich freue mich auch sehr. Die Fahrt war übrigens ganz entspannt.","Schön, euch endlich kennenzulernen! — Freu mich auch total, die Fahrt war easy."),
+    L("Komplimente machen & annehmen","Write 4 compliments you might give your husband's family, and 2 polite ways to respond to a compliment given to you.","Das Essen schmeckt wirklich fantastisch! — Das freut mich sehr, danke.","Das schmeckt richtig lecker, ehrlich! — Ah, das freut mich total, danke dir.")
+  ]},
+  {lessons:[ // Day 70
+    L("Vergleiche im Gespräch (genauso... wie, nicht so... wie)","Write 6 sentences comparing things using genauso... wie and nicht so... wie.","Meine Schwester ist genauso groß wie ich. Der Job ist nicht so stressig wie mein letzter.","Der neue Job ist echt nicht so stressig wie der alte, Gott sei Dank.")
+  ]},
+  {lessons:[ // Day 71
+    L("Pläne vs. Vorhersagen (vorhaben, planen, werden)","Write 6 sentences: 3 about concrete plans (vorhaben, planen) and 3 predictions/guesses (werden + wohl).","Ich habe vor, nächstes Jahr die Ausbildung zu beginnen. Es wird wohl bald regnen.","Ich hab eigentlich vor, nächstes Jahr mit der Ausbildung anzufangen.")
+  ]},
+  {lessons:[ // Day 72
+    L("Hoffnungen & Wünsche (Ich hoffe, dass... / Ich wünsche mir...)","Write 5 sentences about your hopes for the Ausbildung and your life in Germany.","Ich hoffe, dass ich bald einen Ausbildungsplatz finde. Ich wünsche mir, dass ich mich hier bald zu Hause fühle.","Ich hoff einfach, dass ich bald nen Platz für die Ausbildung find.")
+  ]},
+  {lessons:[ // Day 73
+    L("Wenn-Sätze: real vs. hypothetisch","Write 4 realistic wenn-sentences (Präsens) and 4 hypothetical ones (Konjunktiv II).","Wenn ich Zeit habe, lerne ich Deutsch. Wenn ich mehr Zeit hätte, würde ich jeden Tag üben.","Wenn ich mehr Zeit hätte, würd ich echt jeden Tag üben, ehrlich.")
+  ]},
+  {lessons:[ // Day 74
+    L("Indirekte Rede: Grundlagen (Er sagte, dass...)","Rewrite 5 things someone told you as indirect speech using dass, in normal spoken style (not the formal Konjunktiv I you see in news reports).","Mein Chef sagte, dass die Besprechung verschoben wurde.","Mein Chef meinte, die Besprechung wär verschoben — im Gespräch lässt man 'dass' oft ganz weg.")
+  ]},
+  {lessons:[ // Day 75
+    L("A2 Checkpoint: Wenn ich... (hypothetisches Schreiben)","Write a paragraph (8-10 sentences) about what you would do if you got the Ausbildung, using Konjunktiv II throughout.","Wenn ich die Ausbildung bekäme, würde ich mich sehr freuen. Ich würde hart arbeiten und viel lernen.","Wenn ich die Ausbildung krieg, würd ich mich einfach nur riesig freuen, ehrlich.")
+  ]},
+  {lessons:[ // Day 76
+    L("Büro & Team-Vokabular (die Besprechung, die Frist, die Aufgabe)","Write 8 sentences about a typical workday using die Besprechung, die Frist, die Aufgabe, der Kollege, die Abteilung.","Die Besprechung ist um zehn Uhr. Die Frist für den Bericht ist Freitag.","Die Frist ist Freitag, ich muss mich echt beeilen.")
+  ]},
+  {lessons:[ // Day 77
+    L("E-Mails: Antworten & Nachfragen","Write a reply email (6-8 sentences) following up on an earlier message, using Bezug nehmend auf..., Wie besprochen..., and Ich wollte nur kurz nachfragen...","Bezug nehmend auf unser Gespräch schicke ich Ihnen die Unterlagen. Wie besprochen, ist der Termin am Montag.","Wollte nur kurz nachfragen, ob das mit Montag noch passt?")
+  ]},
+  {lessons:[ // Day 78
+    L("Telefonate II: Nachrichten weitergeben","Write a phone dialogue (8+ lines) where you take a message for a coworker and offer to pass it along.","Er ist gerade nicht am Platz. Kann ich etwas ausrichten? — Ja, bitte sagen Sie ihm, dass ich zurückrufe.","Er ist grad nicht da, soll ich was ausrichten?")
+  ]},
+  {lessons:[ // Day 79
+    L("Eine kurze Präsentation halten","Write a 1-minute self-presentation (10+ sentences) as you'd give on your first day of Ausbildung, using presentation phrases like Ich möchte mich kurz vorstellen... and Zusammenfassend...","Ich möchte mich kurz vorstellen: Mein Name ist... Ich komme aus... und ich freue mich sehr, hier zu sein.","Ich stell mich kurz vor: Ich bin... und komm aus..., freu mich riesig, hier zu sein.")
+  ]},
+  {lessons:[ // Day 80
+    L("A2 Checkpoint: Mock-Vorstellung","Say your Day 79 presentation out loud from memory (to your husband, or recorded), then write down 3 things you'd improve.","Ich hab beim Sprechen zu oft 'äh' gesagt. Ich sollte langsamer sprechen. Ich hab ein Wort vergessen.","Ich hab voll oft 'äh' gesagt, muss ich noch üben.")
+  ]},
+  {lessons:[ // Day 81
+    L("Frühere Gewohnheiten (früher + Präteritum)","Write 6 sentences about things you used to do, using früher + Präteritum.","Früher wohnte ich bei meinen Eltern. Früher hatte ich keine Zeit zum Deutschlernen.","Früher hatt ich echt nie Zeit zum Deutschlernen, ehrlich.")
+  ]},
+  {lessons:[ // Day 82
+    L("Probleme & Lösungen im Büro","Write a dialogue (8+ lines) describing a problem at work and suggesting a solution.","Es gibt ein Problem mit der Rechnung. — Wie können wir das lösen? — Ich rufe den Kunden an und kläre es.","Da gibt's grad n Problem mit der Rechnung — kriegen wir aber hin.")
+  ]},
+  {lessons:[ // Day 83
+    L("Um Erlaubnis bitten (Darf ich...?)","Write 5 short exchanges asking for and giving/refusing permission, using Darf ich...? and typical responses.","Darf ich früher gehen? — Ja, natürlich, kein Problem. / Nein, das geht heute leider nicht.","Darf ich heut n bisschen früher los? — Klar, passt schon.")
+  ]},
+  {lessons:[ // Day 84
+    L("Sicherheit & Unsicherheit ausdrücken (bestimmt, wahrscheinlich, vielleicht)","Write 6 sentences expressing different levels of certainty about your Ausbildung plans.","Ich bekomme bestimmt eine Antwort diese Woche. Ich bin mir nicht sicher, ob das klappt.","Ich bin mir grad echt nicht sicher, ob das klappt, ehrlich.")
+  ]},
+  {lessons:[ // Day 85
+    L("Stellenanzeigen verstehen","Find a real German Ausbildung job ad (or imagine one) and write 6 sentences explaining what it requires, using Voraussetzungen, Anforderungen, Bewerbungsfrist.","Die Voraussetzung ist ein Realschulabschluss. Die Bewerbungsfrist endet am 30. November.","Die Bewerbungsfrist ist noch bis Ende November, das schaff ich locker.")
+  ]},
+  {lessons:[ // Day 86
+    L("Stärken & Schwächen (Meine Stärke ist... / Ich arbeite daran, dass...)","Write 6 sentences about your strengths and weaknesses the way you'd present them in an interview.","Meine Stärke ist meine Genauigkeit. Ich arbeite daran, dass ich mich nicht so schnell stresse.","Meine Stärke ist auf jeden Fall, dass ich sehr genau arbeite.")
+  ]},
+  {lessons:[ // Day 87
+    L("A2 Checkpoint: Auf eine Stellenanzeige reagieren","Write a paragraph (8+ sentences) reacting to a job ad — what fits you, what you're unsure about, and one question you'd ask in an interview.","Die Anzeige passt gut zu mir, weil ich gern mit Zahlen arbeite. Meine Frage wäre: Wie läuft die Einarbeitung ab?","Die Anzeige passt eigentlich echt gut zu mir, find ich.")
+  ]},
+  {lessons:[ // Day 88
+    L("Alltägliche Redewendungen","Write 6 sentences using common idioms: Ich drück dir die Daumen, Kein Problem, Das ist mir egal, Ich habe die Nase voll, Das klappt schon, Alles klar.","Ich drück dir die Daumen für dein Gespräch! Das klappt schon, keine Sorge.","Ich drück dir die Daumen, das klappt schon!")
+  ]},
+  {lessons:[ // Day 89
+    L("A2 Grammatik-Wiederholung I (Fälle & Zeiten)","Pick 4 grammar points from Days 31-88 involving cases or tenses that still feel shaky, and write one fresh sentence for each, from memory — no looking at the answer key.","Review sentence using your weakest point, written without looking at the answer key.","Same, but how you'd actually say it out loud to your husband."),
+    L("A2 Grammatik-Wiederholung II (Präpositionen & Nebensätze)","Pick 4 more grammar points — prepositions, subordinate/relative clauses, adjective endings — and write one fresh sentence for each, from memory.","Review sentence using your weakest point, written without looking at the answer key.","Same, but how you'd actually say it out loud.")
+  ]},
+  {lessons:[ // Day 90
+    L("A2 Abschluss-Checkpoint: Informelle & halbformelle E-Mail","Write two emails (6-8 sentences each) in real Goethe/telc A2 exam format: one informal to a friend about your Ausbildung search, one semi-formal to a company asking about an Ausbildung position.","Liebe Anna, ich wollte dir erzählen, dass ich mich gerade auf einen Ausbildungsplatz bewerbe. / Sehr geehrte Damen und Herren, ich interessiere mich für Ihre Ausbildungsstelle.","Hey Anna, musst wissen, ich bewerb mich grad auf ne Ausbildungsstelle!"),
+    L("A2 Abschluss: Über dich selbst sprechen (B1-Vorbereitung)","Speak out loud for 2 minutes (to your husband, or recorded) introducing yourself fully — who you are, your German journey so far, your goals — then write down 3 sentences you struggled with and fix them.","Ich heiße..., ich lerne seit 90 Tagen Deutsch, und mein Ziel ist eine Ausbildung in Buchhaltung.","Ich lern jetzt seit 90 Tagen Deutsch, mein großes Ziel ist die Ausbildung in Buchhaltung.")
   ]}
 ];
 GERMAN_DAYS.push(...GERMAN_DAYS_A2);
+
+/* ---- 60-day B1 curriculum (Days 91-150) — "Grammar + Application-Ready".
+   Days 91-100: the grammar B1 actually needs (Plusquamperfekt, nachdem/
+   bevor/sobald, Passiv mit Modalverben, Funktionsverbgefüge, Nominalisierung,
+   Partizipien als Adjektive, Konjunktiv I recognition).
+   Days 101-105: structured argument, opinions, statistics, the complete
+   formal letter.
+   Days 106-135: the real unlock — Lebenslauf, Anschreiben, full mock
+   interviews (including diplomatic weaknesses, salary, your own questions),
+   Behördendeutsch, networking/Praktikum outreach, workplace feedback and
+   difficult conversations, phone interviews, follow-ups, handling an
+   Absage and accepting a Zusage.
+   Days 136-150: real Goethe/telc B1 exam formats (formal letter, opinion
+   piece, planning something together, a 2-minute mini-talk), full review,
+   and a final checkpoint where the CV + cover letter are actually ready
+   to send. ---- */
+const GERMAN_DAYS_B1 = [
+  {lessons:[ // Day 91
+    L("Plusquamperfekt (Vorvergangenheit)","Write 5 sentences about something that had already happened before another past action, using hatte/war + Partizip II.","Ich hatte schon gegessen, bevor er ankam. Sie war schon weg, als ich anrief.","Ich hatte schon gegessen, bevor er kam, sonst hätt ich gewartet.")
+  ]},
+  {lessons:[ // Day 92
+    L("Nebensätze mit nachdem, bevor, sobald","Write 6 sentences using nachdem (+ Plusquamperfekt), bevor, and sobald.","Nachdem ich gegessen hatte, ging ich ins Bett. Sobald ich Zeit habe, rufe ich dich an.","Sobald ich Zeit hab, meld ich mich, versprochen.")
+  ]},
+  {lessons:[ // Day 93
+    L("Passiv mit Modalverben (muss gemacht werden)","Write 6 sentences about office tasks that must, can, or should be done, using Modalverb + Partizip II + werden.","Die Rechnung muss heute noch bezahlt werden. Der Bericht kann morgen fertiggestellt werden.","Die Rechnung muss heut noch bezahlt werden, sonst gibt's Ärger.")
+  ]},
+  {lessons:[ // Day 94
+    L("Funktionsverbgefüge (zur Verfügung stellen, in Kraft treten)","Write 5 sentences using common Funktionsverbgefüge: zur Verfügung stellen, in Anspruch nehmen, in Kraft treten, Rücksicht nehmen.","Die neue Regel tritt am 1. Januar in Kraft. Ich nehme das Angebot gern in Anspruch.","Die neue Regel gilt ab Januar, glaub ich.")
+  ]},
+  {lessons:[ // Day 95
+    L("B1 Checkpoint: Grammatik-Mix","Write a paragraph (8+ sentences) about a workday, using at least one Plusquamperfekt, one nachdem/bevor/sobald-clause, one Passiv-mit-Modalverb sentence, and one Funktionsverbgefüge.","Nachdem ich angekommen war, musste die Post noch bearbeitet werden. Sobald ich fertig war, trat die Mittagspause in Kraft.","Nachdem ich da war, musste ich erstmal die Post checken, dann war eh schon Mittag.")
+  ]},
+  {lessons:[ // Day 96
+    L("Nominalisierung (Verben zu Nomen)","Turn 6 verb phrases into nominalized noun phrases the way formal German does (die Bearbeitung, die Überprüfung).","Wir bearbeiten den Antrag. → Die Bearbeitung des Antrags dauert drei Tage.","Wir kümmern uns um den Antrag, dauert drei Tage.")
+  ]},
+  {lessons:[ // Day 97
+    L("Partizipien als Adjektive (das lachende Kind, die geschriebene E-Mail)","Write 6 sentences using Partizip I (-end) or Partizip II as an adjective before a noun.","Das lachende Kind spielt im Park. Die geschriebene E-Mail ist schon verschickt.","Die E-Mail, die ich geschrieben hab, ist schon raus.")
+  ]},
+  {lessons:[ // Day 98
+    L("Erweiterte Partizipialattribute (zum Erkennen, nicht zum Sprechen)","Rewrite 4 relative clauses as extended participle phrases before the noun — this is a reading/formal-writing skill, almost nobody builds these on the fly in speech.","Der Bericht, der gestern geschrieben wurde. → Der gestern geschriebene Bericht.","Der Bericht von gestern ist fertig — so sagt man das eigentlich beim Reden.")
+  ]},
+  {lessons:[ // Day 99
+    L("Konjunktiv I: indirekte Rede erkennen (Nachrichten)","Read or imagine 4 news-style sentences using Konjunktiv I and rewrite them as normal spoken dass-clauses — you need to recognize this from the news, not produce it yourself.","Der Sprecher sagte, die Lage sei stabil. → Der Sprecher sagte, dass die Lage stabil ist.","Der meinte einfach, die Lage ist stabil — im Alltag sagt das keiner mit 'sei'.")
+  ]},
+  {lessons:[ // Day 100
+    L("B1 Checkpoint: Formelle vs. informelle Sprache","Take 5 sentences you'd say casually and rewrite them formally — nominalization, Passiv, or Konjunktiv II for politeness — the way you'd write to your Ausbildung company.","Ich hab noch Fragen. → Ich hätte noch einige Fragen an Sie.","Ich hab noch n paar Fragen, kannst du mir kurz helfen?")
+  ]},
+  {lessons:[ // Day 101
+    L("Vor- und Nachteile diskutieren","Write a pro/con paragraph (8+ sentences) about doing an Ausbildung vs. studying at university, using einerseits...andererseits, Ein Vorteil ist..., Ein Nachteil ist...","Einerseits verdient man bei einer Ausbildung schon Geld. Andererseits dauert ein Studium manchmal kürzer bis zum Abschluss.","Einerseits verdienst du direkt Geld, andererseits dauert's manchmal länger bis zum Aufstieg.")
+  ]},
+  {lessons:[ // Day 102
+    L("Strukturiert argumentieren (Erstens, zweitens, außerdem, zusammenfassend)","Write a short structured opinion (8+ sentences) on a topic of your choice using erstens, zweitens, außerdem, and zusammenfassend.","Erstens ist mir wichtig, dass ich Deutsch gut lerne. Zweitens will ich Kontakte in Norddeutschland aufbauen. Zusammenfassend glaube ich, dass sich die Mühe lohnt.","Also erstens will ich echt gut Deutsch können, und zweitens will ich Leute hier im Norden kennenlernen.")
+  ]},
+  {lessons:[ // Day 103
+    L("Statistiken & Grafiken beschreiben","Describe an imagined chart about Ausbildung numbers in Germany (8+ sentences), using steigen, sinken, sich verdoppeln, ungefähr, ca.","Die Zahl der Ausbildungsplätze ist in den letzten Jahren leicht gestiegen. Ungefähr die Hälfte der Auszubildenden bleibt nach der Ausbildung im Betrieb.","Die Zahlen sind wohl leicht gestiegen, hab ich neulich gelesen.")
+  ]},
+  {lessons:[ // Day 104
+    L("Der formelle Brief: vollständiger Aufbau","Write a complete formal letter to a company (Absender, Datum, Betreff, Anrede, Einleitung, Hauptteil, Schluss, Grußformel) asking about an open Ausbildung position.","Sehr geehrte Damen und Herren, hiermit möchte ich mich nach freien Ausbildungsplätzen für 2027 erkundigen. Mit freundlichen Grüßen","Ich schreib denen mal ne ordentliche formelle Mail wegen der Ausbildungsplätze.")
+  ]},
+  {lessons:[ // Day 105
+    L("B1 Checkpoint: Leserbrief oder Beschwerdebrief","Write a Leserbrief (letter to the editor) or Beschwerdebrief (complaint letter) of 10+ sentences — a real B1 exam writing task type.","Sehr geehrte Redaktion, ich habe Ihren Artikel über die Ausbildungssituation in Deutschland mit großem Interesse gelesen...","Fand den Artikel echt interessant, aber ich seh das an einer Stelle n bisschen anders.")
+  ]},
+  {lessons:[ // Day 106
+    L("Der Lebenslauf: Aufbau & persönliche Daten","Write the header and Persönliche Daten section of your own tabellarischer Lebenslauf (name, address, contact, date/place of birth if you choose to include it).","Persönliche Daten — Name: ... Anschrift: ... E-Mail: ... Telefon: ...","This section is bullet-style, not full sentences — no 'natural' version needed here, just get the format right.")
+  ]},
+  {lessons:[ // Day 107
+    L("Der Lebenslauf: Bildungsweg","Write your Bildungsweg (education) section in real CV bullet style — no full sentences, just dates, institution, place.","2018–2021: Schule XY, Ort — Abschluss: ...","Bullet format again — dates first, then the institution, tightest version possible.")
+  ]},
+  {lessons:[ // Day 108
+    L("Der Lebenslauf: Berufserfahrung & Praktika","Write your Berufserfahrung/Praktika section in CV bullet style, including any job, internship, or volunteer work — even short or informal ones count.","2022–2023: [Position], [Firma], [Ort] — Aufgaben: ...","Same bullet format — think in fragments, not sentences, exactly like a real CV.")
+  ]},
+  {lessons:[ // Day 109
+    L("Der Lebenslauf: Kenntnisse & Fähigkeiten","Write your Kenntnisse section — language levels (Englisch: C1, Deutsch: B1), EDV/software skills, and soft skills.","Sprachen: Englisch (C1), Deutsch (B1) — EDV-Kenntnisse: MS Office, Excel — Soft Skills: teamfähig, zuverlässig, organisiert","Same bullet style — keep it scannable, this is what an HR person skims first.")
+  ]},
+  {lessons:[ // Day 110
+    L("B1 Checkpoint: Vollständiger Lebenslauf","Assemble your full one-page Lebenslauf draft from Days 106-109 into one clean document, in the correct order (persönliche Daten, Bildungsweg, Berufserfahrung, Kenntnisse).","A complete, real, one-page tabellarischer Lebenslauf in the standard German order.","Read it out loud once, start to finish, and see if it flows and looks professional.")
+  ]},
+  {lessons:[ // Day 111
+    L("Das Anschreiben: Einleitung","Write a strong opening paragraph for a cover letter to an accounting Ausbildung company — where you found the ad and why you're writing.","Mit großem Interesse habe ich Ihre Stellenanzeige für eine Ausbildung zur Kauffrau für Büromanagement gelesen.","Ich hab eure Anzeige gesehen und wollte mich echt gern bei euch bewerben.")
+  ]},
+  {lessons:[ // Day 112
+    L("Das Anschreiben: Warum diese Ausbildung?","Write the paragraph explaining your motivation for this specific Ausbildung.","Schon lange interessiere ich mich für Zahlen und strukturiertes Arbeiten, deshalb ist eine Ausbildung in der Buchhaltung genau das Richtige für mich.","Ich mach das einfach super gern, mit Zahlen arbeiten und alles ordentlich halten.")
+  ]},
+  {lessons:[ // Day 113
+    L("Das Anschreiben: Warum dieses Unternehmen?","Research one real detail about a company (product, values, location) and write a paragraph explaining why that company specifically appeals to you.","Besonders spricht mich an, dass Ihr Unternehmen seit vielen Jahren in Norddeutschland verwurzelt ist und großen Wert auf die Ausbildung junger Fachkräfte legt.","Mir gefällt einfach, dass die Firma schon so lange hier im Norden ist.")
+  ]},
+  {lessons:[ // Day 114
+    L("Das Anschreiben: Schluss & Grußformel","Write the closing paragraph requesting an interview, plus the correct formal sign-off.","Über die Einladung zu einem persönlichen Gespräch würde ich mich sehr freuen. Mit freundlichen Grüßen","Würd mich riesig freuen, wenn ihr mich zu nem Gespräch einladet!")
+  ]},
+  {lessons:[ // Day 115
+    L("B1 Checkpoint: Vollständiges Anschreiben","Assemble your full cover letter from Days 111-114 into one polished, complete document.","A complete Anschreiben, opening to closing, ready to send with your Lebenslauf.","Read it out loud start to finish — does it sound like you, just the formal version?")
+  ]},
+  {lessons:[ // Day 116
+    L("Vorstellungsgespräch: typische Fragen","Write full answers to 5 more common interview questions: Erzählen Sie von sich. Warum haben Sie sich bei uns beworben? Wo sehen Sie sich in 5 Jahren?","Ich bin 24 Jahre alt, komme ursprünglich aus... und lebe jetzt mit meinem Mann in Norddeutschland. In fünf Jahren sehe ich mich als ausgebildete Fachkraft in Ihrem Unternehmen.","Ich bin 24, komm eigentlich aus..., und leb jetzt mit meinem Mann hier im Norden.")
+  ]},
+  {lessons:[ // Day 117
+    L("Über Schwächen sprechen (diplomatisch)","Write 2 diplomatic weakness answers using the Ich arbeite daran, dass... framing — a real weakness, softened professionally.","Manchmal bin ich zu perfektionistisch. Ich arbeite aber daran, Aufgaben auch mal rechtzeitig abzugeben, statt sie zu oft zu überarbeiten.","Ich bin manchmal echt zu perfektionistisch, aber daran arbeit ich schon.")
+  ]},
+  {lessons:[ // Day 118
+    L("Fragen an den Arbeitgeber stellen","Write 5 good questions to ask the interviewer — about training, team structure, or the Ausbildung's daily routine.","Wie sieht die Einarbeitung in den ersten Wochen aus? Gibt es die Möglichkeit, nach der Ausbildung übernommen zu werden?","Wie läuft eigentlich die Einarbeitung so ab bei euch?")
+  ]},
+  {lessons:[ // Day 119
+    L("Über Gehalt & Ausbildungsvergütung sprechen","Write how you'd politely ask about, or respond to a question about, Ausbildungsvergütung (apprentice pay).","Dürfte ich fragen, wie hoch die Ausbildungsvergütung in Ihrem Unternehmen ist?","Wie viel verdient man eigentlich so während der Ausbildung bei euch?")
+  ]},
+  {lessons:[ // Day 120
+    L("B1 Checkpoint: Vollständiges Vorstellungsgespräch","Do a full mock interview with your husband playing the interviewer, using Days 116-119, then write 3 self-corrections about what you'd improve.","Ich hab bei der Gehaltsfrage kurz gezögert. Ich sollte meine 5-Jahres-Antwort noch etwas kürzen. Ich hab eine gute Frage vergessen zu stellen.","Bei der Gehaltsfrage hab ich echt kurz gestockt, muss ich nochmal üben.")
+  ]},
+  {lessons:[ // Day 121
+    L("Behördendeutsch: offizielle Briefe verstehen","Write out 5 common official-letter phrases and what they actually mean in plain German: hiermit teilen wir Ihnen mit, bitte reichen Sie... ein, die Frist beträgt, unaufgefordert, fristgerecht.","'Bitte reichen Sie die Unterlagen fristgerecht ein' bedeutet: Schicken Sie die Unterlagen rechtzeitig, vor der Frist.","So ne Behördensprache klingt immer kompliziert, meint aber meistens was ganz Einfaches.")
+  ]},
+  {lessons:[ // Day 122
+    L("Auf einen Behördenbrief antworten","Write a formal reply to an official letter requesting an additional document, in the correct register.","Sehr geehrte Damen und Herren, anbei sende ich Ihnen das angeforderte Dokument. Für Rückfragen stehe ich gerne zur Verfügung.","Ich schick denen einfach das Dokument, das die wollten, mit ner ordentlichen kurzen Mail.")
+  ]},
+  {lessons:[ // Day 123
+    L("Networking & Karrieremessen","Write a short self-introduction (5 sentences) as you'd give at a Karrieremesse/Ausbildungsmesse booth.","Guten Tag, mein Name ist... Ich interessiere mich sehr für eine Ausbildung im kaufmännischen Bereich bei Ihnen. Dürfte ich Ihnen ein paar Fragen stellen?","Hi, ich bin..., ich interessier mich total für ne Ausbildung bei euch — darf ich kurz was fragen?")
+  ]},
+  {lessons:[ // Day 124
+    L("Praktikum anfragen (informelles Bewerbungsgespräch)","Write a short email asking a company for a Praktikum or Probearbeiten day, to get a foot in the door before applying formally.","Sehr geehrte Damen und Herren, ich würde gerne vorab einen Tag bei Ihnen hospitieren, um Ihr Unternehmen besser kennenzulernen.","Wär's vielleicht möglich, vorher mal nen Tag bei euch reinzuschnuppern?")
+  ]},
+  {lessons:[ // Day 125
+    L("B1 Checkpoint: E-Mail an eine Ausbildungsmesse-Kontaktperson","Write a follow-up email to someone you met at a career fair, referencing your conversation and asking for next steps.","Sehr geehrte Frau Krüger, es hat mich sehr gefreut, Sie auf der Ausbildungsmesse kennenzulernen. Gerne würde ich mich nun offiziell bei Ihnen bewerben.","Hat mich echt gefreut, Sie da kennenzulernen — ich würd mich jetzt gern offiziell bewerben.")
+  ]},
+  {lessons:[ // Day 126
+    L("Feedback geben","Write 4 pieces of constructive feedback using polite structures: Mir ist aufgefallen, dass... / Vielleicht könntest du...","Mir ist aufgefallen, dass der Bericht noch ein paar Fehler hat. Vielleicht könntest du ihn nochmal durchlesen.","Ist dir aufgefallen, dass da n paar Fehler drin sind? Guck nochmal drüber, ja?")
+  ]},
+  {lessons:[ // Day 127
+    L("Feedback annehmen","Write 3 gracious responses to receiving feedback, using structures like Danke für den Hinweis, das werde ich beachten.","Danke für den Hinweis, das werde ich beim nächsten Mal beachten. Gut, dass Sie das ansprechen.","Ah stimmt, danke, guck ich mir nochmal an.")
+  ]},
+  {lessons:[ // Day 128
+    L("Nachfragen stellen, wenn etwas unklar ist","Write 5 polite clarifying questions for a work context, using Könnten Sie das bitte genauer erklären? and similar.","Könnten Sie mir das bitte noch einmal genauer erklären? Habe ich das richtig verstanden, dass...?","Kannst du das nochmal genauer erklären? Hab ich das grad richtig verstanden?")
+  ]},
+  {lessons:[ // Day 129
+    L("Sich für einen Fehler entschuldigen","Write 4 sentences professionally apologizing for a mistake and explaining the fix.","Es tut mir leid, dass mir dieser Fehler unterlaufen ist. Ich habe es bereits korrigiert und werde in Zukunft genauer aufpassen.","Sorry, das war mein Fehler — hab's aber schon korrigiert.")
+  ]},
+  {lessons:[ // Day 130
+    L("B1 Checkpoint: Ein schwieriges Gespräch führen","Write a full dialogue (10+ lines) handling a workplace misunderstanding start to finish: clarify, apologize/explain, resolve.","Es gab wohl ein Missverständnis bei der Rechnung. — Oh, das tut mir leid, lassen Sie mich das kurz klären.","Da gab's wohl n Missverständnis — sorry, ich kläre das gleich.")
+  ]},
+  {lessons:[ // Day 131
+    L("Ein Telefoninterview führen","Write out a telephone pre-screening interview dialogue (8+ lines) — a very common first step for Ausbildung applications.","Guten Tag, hier spricht... von der Firma... Haben Sie gerade kurz Zeit für ein paar Fragen?","Hi, hier ist... von der Firma, passt's grad kurz für n paar Fragen?")
+  ]},
+  {lessons:[ // Day 132
+    L("Nach dem Vorstellungsgespräch nachfragen","Write a polite follow-up email sent about a week after an interview, checking on the status of your application.","Sehr geehrte Frau Bauer, ich wollte mich höflich nach dem aktuellen Stand meiner Bewerbung erkundigen.","Wollt nur kurz fragen, ob's schon Neuigkeiten zu meiner Bewerbung gibt.")
+  ]},
+  {lessons:[ // Day 133
+    L("Mit einer Absage umgehen","Write a gracious reply to a rejection email, thanking them and asking for feedback, while staying fully professional.","Vielen Dank für Ihre Rückmeldung. Auch wenn ich enttäuscht bin, würde ich mich über ein kurzes Feedback sehr freuen.","Schade, aber danke fürs Feedback — vielleicht klappt's ja beim nächsten Mal.")
+  ]},
+  {lessons:[ // Day 134
+    L("Eine Zusage annehmen","Write a reply accepting an Ausbildung offer and confirming your start date.","Vielen Dank für die Zusage! Ich freue mich sehr und bestätige hiermit gerne den Ausbildungsbeginn am 1. September.","Riesigen Dank für die Zusage, ich freu mich total und bin am 1. September dabei!")
+  ]},
+  {lessons:[ // Day 135
+    L("B1 Checkpoint: Der ganze Bewerbungsprozess","Write a paragraph (8+ sentences) summarizing your ideal application timeline in German, from finding the ad to accepting an offer.","Zuerst suche ich passende Stellenanzeigen. Dann schreibe ich mein Anschreiben und passe meinen Lebenslauf an. Nach dem Bewerbungsgespräch hoffe ich auf eine Zusage.","Zuerst such ich mir gute Anzeigen raus, dann pass ich Anschreiben und Lebenslauf an, und dann hoff ich einfach aufs Beste.")
+  ]},
+  {lessons:[ // Day 136
+    L("B1-Prüfung: Formeller Brief (Übung)","Write a complete, timed practice formal letter to a real B1 exam prompt style (e.g. requesting information, making a complaint, or applying somewhere).","A full, exam-format formal letter — Betreff, Anrede, structured body, Grußformel.","Time yourself — 25 minutes is the real exam limit for this task.")
+  ]},
+  {lessons:[ // Day 137
+    L("B1-Prüfung: Meinung schreiben (Forumsbeitrag)","Write a forum-post-style opinion piece (10+ sentences) on a given topic — a real B1 writing task type — stating your opinion and giving 2 reasons.","Ich finde, dass... Ein Grund dafür ist... Ein weiterer Grund ist... Zusammenfassend denke ich, dass...","This one you'd write closer to how you actually think, just a bit more organized.")
+  ]},
+  {lessons:[ // Day 138
+    L("B1-Prüfung: Gemeinsam etwas planen (mündlich)","With your husband, plan something together out loud entirely in German — a trip, a party, a weekend — making suggestions and reacting to his. This is the real B1 speaking task 2 format.","Wollen wir vielleicht am Samstag etwas unternehmen? — Gute Idee, was schlägst du vor?","Hast du Bock, am Samstag was zu machen? — Klar, was schwebt dir vor?")
+  ]},
+  {lessons:[ // Day 139
+    L("B1-Prüfung: Über ein Thema sprechen (Kurzvortrag)","Give a structured 2-minute mini-talk (Einleitung, Hauptteil, comparing the situation in your home country, Schluss) — the real B1 speaking task 1 format.","Ich möchte heute über das Thema Arbeiten im Ausland sprechen. In meinem Heimatland ist es üblich, dass... In Deutschland dagegen...","This one's meant to sound prepared and structured, not like casual chat — practice it that way.")
+  ]},
+  {lessons:[ // Day 140
+    L("B1 Checkpoint: Mini-Prüfungssimulation (Schreiben)","Do one timed formal letter and one timed opinion piece back to back, then self-grade against a checklist: Anrede correct? Structure clear? Grußformel right?","Two complete, timed writing pieces, checked against real B1 exam criteria.","Read both out loud afterward — does the formal one actually sound formal?")
+  ]},
+  {lessons:[ // Day 141
+    L("B1-Prüfung: Hör- & Lesestrategien","Practice with a real B1-level German podcast or article and write down 5 new words you picked up, each with your own example sentence.","5 new words, each with an example sentence you wrote yourself — not copied from the source.","Pick words you'd actually use, not just ones that sounded interesting.")
+  ]},
+  {lessons:[ // Day 142
+    L("B1 Grammatik-Wiederholung I","Pick 4 grammar points from Days 91-140 that still feel shaky and write one fresh sentence for each, from memory.","Review sentence using your weakest point, written without looking at the answer key.","Same, but how you'd actually say it out loud to your husband.")
+  ]},
+  {lessons:[ // Day 143
+    L("B1 Grammatik-Wiederholung II","Pick 4 more grammar points from Days 91-140 and write one fresh sentence for each, from memory.","Review sentence using your weakest point, written without looking at the answer key.","Same, but how you'd actually say it out loud.")
+  ]},
+  {lessons:[ // Day 144
+    L("B1 Wortschatz-Wiederholung: Bewerbung & Büro","Review the 10 Bewerbung/Büro words you feel least confident about from Days 106-135, and write one sentence for each.","10 fresh sentences using your weakest application/office vocabulary.","Say each one out loud once you've written it.")
+  ]},
+  {lessons:[ // Day 145
+    L("B1 Checkpoint: Finales Vorstellungsgespräch","Do your final full mock interview with your husband, start to finish — greeting, questions, your questions, goodbye — entirely in German.","A complete, unscripted mock interview, greeting to goodbye.","This is the real dress rehearsal — treat it like the actual thing.")
+  ]},
+  {lessons:[ // Day 146
+    L("Lebenslauf & Anschreiben: letzter Feinschliff","Revise your CV and cover letter drafts from Days 110 and 115 with fresh eyes and fix at least 5 things — wording, formatting, or accuracy.","A polished, near-final Lebenslauf and Anschreiben, ready to send.","Read both out loud one more time, start to finish.")
+  ]},
+  {lessons:[ // Day 147
+    L("B1-Prüfung: Sprechen — letzte Übung","Redo the Day 138 (planning together) and Day 139 (mini-talk) tasks, timed, and self-assess what's improved since Day 91.","Two timed speaking tasks, compared honestly against your first attempts.","Notice what's easier now than it was on Day 138 or 139.")
+  ]},
+  {lessons:[ // Day 148
+    L("B1-Prüfung: Schreiben — letzte Übung","Redo the Day 136 (formal letter) and Day 137 (opinion piece) tasks, timed, and self-assess.","Two timed writing tasks, compared honestly against your first attempts.","Same — notice what's actually easier now.")
+  ]},
+  {lessons:[ // Day 149
+    L("B1 Checkpoint: Selbsteinschätzung","Rate yourself 1-5 on Hören, Lesen, Schreiben, and Sprechen, and write which areas still need review before you apply and before your B2 phase begins.","Hören: 4/5. Lesen: 4/5. Schreiben: 3/5. Sprechen: 4/5. Ich möchte vor allem noch am Schreiben arbeiten.","Sprechen fühlt sich am besten an, ehrlich — Schreiben brauch ich noch n bisschen."),
+  ]},
+  {lessons:[ // Day 150
+    L("B1 Abschluss: Bereit für die Bewerbung","Finalize your CV and cover letter from Days 146, and — for real — prepare to send your first Ausbildung application. Write 3 sentences about how it feels to do this in German.","Ich bin jetzt seit 150 Tagen dabei. Meine Bewerbung ist fertig, und ich bin bereit, sie abzuschicken. Es fühlt sich gut an, das auf Deutsch geschafft zu haben.","Ich bin jetzt seit 150 Tagen dabei, und ehrlich — die Bewerbung ist fertig, ich schick die jetzt ab.")
+  ]}
+];
+GERMAN_DAYS.push(...GERMAN_DAYS_B1);
 
 /* ---- Full plan: A1 -> A2 -> B1, sized for a 6-7 month timeline at
    ~2.5 hrs/day (roughly matches Goethe's published hour estimates per
@@ -751,7 +1087,7 @@ function phaseForDay(day){
   return PHASES.find(p=>day>=p.from && day<=p.to) || PHASES[PHASES.length-1];
 }
 const A1_PHASE_END = 30;
-const CONTENT_END_DAY = 50; // raise this as more phases get written
+const CONTENT_END_DAY = 150; // raise this as more phases get written (A2 + B1 are fully written, 1-150)
 const TOTAL_CORE_DAYS = 240; // 8-month core plan (Days 1-240) to B2, buffer is extra
 
 /* ---- daily real-life speaking challenge, tied to each day's topic ----
@@ -806,7 +1142,107 @@ const DAILY_CHALLENGES = [
   "Pretend to call your husband about a work matter and leave a short formal voicemail in German.",
   "Tell your husband a made-up invoice number and due date out loud, in German.",
   "Politely complain to your husband about something small, using Konjunktiv II (e.g. \"Das wäre schön, wenn...\").",
-  "Practice answering \"Warum möchten Sie diese Ausbildung machen?\" out loud to your husband, in German."
+  "Practice answering \"Warum möchten Sie diese Ausbildung machen?\" out loud to your husband, in German.",
+  "Tell your husband one thing you're waiting for and one thing you're looking forward to, using warten auf and sich freuen auf.",
+  "Ask your husband for help with something in German, using helfen bei.",
+  "Ask your husband a question using a wo-word (e.g. \"Woran denkst du?\") and answer using a da-word.",
+  "Tell your husband where something in your home is, using über, unter, vor, or zwischen correctly.",
+  "Tell your husband something you're doing despite something else, using trotz.",
+  "Give your husband your honest opinion about something small, using \"Ich finde, dass...\".",
+  "Tell your husband your favorite thing to eat or drink, ranked with gern, lieber, am liebsten.",
+  "Give your husband one piece of advice in German, using \"An deiner Stelle würde ich...\".",
+  "Describe your own personality to your husband using at least 3 adjectives.",
+  "Describe someone you admire to your husband, in German, in at least 5 sentences.",
+  "Tell your husband what you still need to do at the Bürgeramt, in German.",
+  "Tell your husband one thing about taxes or the Finanzamt you learned today.",
+  "Ask your husband to explain a banking word you're unsure about — in German.",
+  "Tell your husband whether you have a doctor's appointment coming up, in German.",
+  "Tell your husband one thing about your rental contract or Nebenkosten, in German.",
+  "Fill out a real or pretend German form out loud with your husband, asking him about anything unclear.",
+  "Tell your husband a short story about your day using zuerst, dann, später, schließlich.",
+  "Describe a photo from your phone to your husband in German, in detail.",
+  "Practice your \"meeting the family\" small talk out loud with your husband.",
+  "Compare yourself to your husband using genauso... wie or nicht so... wie.",
+  "Tell your husband one real plan and one prediction, in German.",
+  "Tell your husband one hope you have for your life in Germany.",
+  "Tell your husband what you'd do if you had an extra free day, using Konjunktiv II.",
+  "Tell your husband something someone told you today, using indirect speech with dass.",
+  "Tell your husband what you'd do if you got accepted into the Ausbildung, using Konjunktiv II.",
+  "Tell your husband about a made-up deadline or meeting at work, using die Frist and die Besprechung.",
+  "Practice reading a follow-up email out loud to your husband.",
+  "Pretend to take a phone message for your husband and repeat it back to him in German.",
+  "Give your husband your 1-minute self-presentation out loud, in German.",
+  "Give your self-presentation again, and ask your husband what was hardest to understand.",
+  "Tell your husband something you used to do differently, using früher.",
+  "Describe a small problem and its solution to your husband, in German.",
+  "Ask your husband for permission to do something, in German — Darf ich...?",
+  "Tell your husband something you're sure of and something you're unsure of, in German.",
+  "Read a real German job ad out loud to your husband and explain what it means.",
+  "Tell your husband one strength and one thing you're working on, in German.",
+  "Tell your husband why a specific job or Ausbildung would fit you, in German.",
+  "Use one German idiom correctly in conversation with your husband today.",
+  "Pick your weakest grammar point from the last two months and explain it to your husband, in German.",
+  "Introduce yourself fully to your husband's family — out loud, in German — as if today were the real day.",
+  "Tell your husband something you had already done before something else happened today, using Plusquamperfekt.",
+  "Tell your husband what you'll do as soon as you have time, using sobald.",
+  "Tell your husband one thing that needs to get done today, using a Passiv + Modalverb sentence.",
+  "Tell your husband when a rule or plan takes effect, using \"in Kraft treten\".",
+  "Tell your husband a short story about your day mixing today's four grammar points.",
+  "Nominalize one casual sentence out loud for your husband, the formal way.",
+  "Describe something to your husband using a participle as an adjective (e.g. \"die geschriebene E-Mail\").",
+  "Point out an extended participle phrase in a German text or sign to your husband, if you spot one.",
+  "Retell your husband a piece of news, turning Konjunktiv I into a normal dass-sentence.",
+  "Rewrite one casual sentence formally for your husband, the way you'd write to a company.",
+  "Tell your husband one advantage and one disadvantage of doing an Ausbildung, in German.",
+  "Give your husband a structured 3-point opinion on something, using erstens/zweitens/drittens.",
+  "Describe a made-up statistic to your husband, using steigen/sinken/sich verdoppeln.",
+  "Read your practice formal letter out loud to your husband.",
+  "Read your Leserbrief or Beschwerdebrief out loud to your husband and ask for feedback.",
+  "Read the personal-details header of your Lebenslauf out loud to your husband.",
+  "Tell your husband your Bildungsweg (school history) in German.",
+  "Tell your husband about your work experience so far, in German.",
+  "Tell your husband your language levels and one soft skill, in German.",
+  "Read your full draft Lebenslauf out loud to your husband and ask what's unclear.",
+  "Read your Anschreiben opening paragraph out loud to your husband.",
+  "Tell your husband, out loud, why you want this Ausbildung.",
+  "Tell your husband why a specific company appeals to you, in German.",
+  "Read your Anschreiben closing paragraph out loud to your husband.",
+  "Read your full Anschreiben out loud to your husband, start to finish.",
+  "Answer one interview question out loud for your husband.",
+  "Tell your husband a weakness of yours, framed diplomatically, in German.",
+  "Ask your husband, in German, one of the interview questions you'd ask an employer.",
+  "Practice asking about Ausbildungsvergütung out loud with your husband.",
+  "Do a full mock interview with your husband as the interviewer, in German.",
+  "Read a made-up official letter phrase out loud to your husband and explain what it means.",
+  "Read your reply to an official letter out loud to your husband.",
+  "Give your husband your \"career fair\" self-introduction out loud.",
+  "Read your Praktikum request email out loud to your husband.",
+  "Read your career-fair follow-up email out loud to your husband.",
+  "Give your husband one piece of constructive feedback, politely, in German.",
+  "Practice receiving feedback gracefully with your husband, in German.",
+  "Ask your husband a clarifying question in German about something he said.",
+  "Apologize to your husband in German for a made-up small mistake.",
+  "Act out your workplace-misunderstanding dialogue with your husband.",
+  "Do a pretend phone interview with your husband, in German.",
+  "Read your interview follow-up email out loud to your husband.",
+  "Read your graceful rejection-reply out loud to your husband.",
+  "Read your offer-acceptance reply out loud to your husband.",
+  "Tell your husband your ideal application timeline, in German.",
+  "Read your practice formal letter out loud to your husband, timed.",
+  "Read your opinion forum post out loud to your husband.",
+  "Plan something together with your husband out loud, entirely in German.",
+  "Give your husband your 2-minute mini-talk, out loud, in German.",
+  "Time yourself writing today's practice pieces and show your husband the results.",
+  "Tell your husband 3 new words you learned today from real German listening or reading.",
+  "Explain your weakest grammar point from this phase to your husband.",
+  "Explain one more weak grammar point to your husband.",
+  "Quiz your husband (or yourself) on 5 Bewerbung/Büro words.",
+  "Do your final full mock interview with your husband, start to finish.",
+  "Read your polished CV and cover letter out loud to your husband one more time.",
+  "Give your husband your timed mini-talk one more time.",
+  "Read your timed formal letter and opinion piece out loud to your husband.",
+  "Tell your husband, in German, which skill — Hören, Lesen, Schreiben, or Sprechen — you feel weakest in.",
+  "Tell your husband, in German, that you're ready to apply — and mean it."
 ];
 
 /* ---- extra homework that unlocks once all 30 A1 days are complete.
