@@ -123,7 +123,7 @@ const CATEGORIES = [
       </div>`
   },
   {
-    id:"money", label:"Amount of Money Saved", icon:ICONS.money,
+    id:"money", label:"Amount of Money Saved", icon:ICONS.money, iconClass:"gold",
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
@@ -194,7 +194,7 @@ function renderWeekView(){
     const extra = cat.labelExtra ? cat.labelExtra(week) : "";
     tr.innerHTML = `<td class="row-label">
         <div class="row-label-inner">
-          <span class="row-icon">${cat.icon}</span>
+          <span class="row-icon${cat.iconClass?" "+cat.iconClass:""}">${cat.icon}</span>
           <span class="row-label-title">${cat.label}</span>
         </div>
         ${extra}
