@@ -34,11 +34,13 @@
     <button data-view="week" class="active">Week</button>
     <button data-view="month">Month</button>
     <button data-view="year">Year</button>
+    <button data-view="german" class="german-nav-btn">A1 → B1</button>
   </nav>
 
   <div class="chrome-actions">
-    <button id="exportData" class="chrome-link">Export</button>
-    <label class="chrome-link file-import">Import<input type="file" id="importData" accept="application/json" hidden></label>
+    <button id="exportImage" class="chrome-link chrome-link-strong" title="Download the current sheet as a beautiful, print-ready PNG image">Export as Image</button>
+    <button id="exportData" class="chrome-link" title="Download a .json file with everything you've entered — keep this somewhere safe">Save backup</button>
+    <label class="chrome-link file-import" title="Load a .json backup file you saved earlier (use this to move your data to another device)">Restore backup<input type="file" id="importData" accept="application/json" hidden></label>
   </div>
 </header>
 
@@ -102,50 +104,123 @@
 
   <!-- MONTH VIEW -->
   <section id="monthView" class="view hidden">
-    <div class="week-nav">
-      <button id="prevMonth" class="nav-arrow" aria-label="Previous month">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="week-label"><span id="monthRange">&mdash;</span></div>
-      <button id="nextMonth" class="nav-arrow" aria-label="Next month">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-    <div class="stat-grid" id="monthStats"></div>
-    <div class="table-scroll">
-      <table class="summary-table" id="monthTable">
-        <thead>
-          <tr><th>Week of</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
-        </thead>
-        <tbody id="monthTableBody"></tbody>
-      </table>
+    <div class="report-page">
+      <div class="sheet-header report-header">
+        <div class="sheet-title">
+          <h1>Monthly Report</h1>
+          <p>Progress <span class="sep">&mdash;</span> at a glance</p>
+        </div>
+        <div class="week-nav">
+          <button id="prevMonth" class="nav-arrow" aria-label="Previous month">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="week-label"><span id="monthRange">&mdash;</span></div>
+          <button id="nextMonth" class="nav-arrow" aria-label="Next month">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="sheet-rule"><span></span><em>Totals This Month</em></div>
+      <div class="stat-grid" id="monthStats"></div>
+      <div class="sheet-rule"><span></span><em>Week by Week</em></div>
+      <div class="table-scroll">
+        <table class="summary-table" id="monthTable">
+          <thead>
+            <tr><th>Week of</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
+          </thead>
+          <tbody id="monthTableBody"></tbody>
+        </table>
+      </div>
+      <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
     </div>
   </section>
 
   <!-- YEAR VIEW -->
   <section id="yearView" class="view hidden">
-    <div class="week-nav">
-      <button id="prevYear" class="nav-arrow" aria-label="Previous year">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="week-label"><span id="yearRange">&mdash;</span></div>
-      <button id="nextYear" class="nav-arrow" aria-label="Next year">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+    <div class="report-page">
+      <div class="sheet-header report-header">
+        <div class="sheet-title">
+          <h1>Yearly Report</h1>
+          <p>Progress <span class="sep">&mdash;</span> the full picture</p>
+        </div>
+        <div class="week-nav">
+          <button id="prevYear" class="nav-arrow" aria-label="Previous year">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="week-label"><span id="yearRange">&mdash;</span></div>
+          <button id="nextYear" class="nav-arrow" aria-label="Next year">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="sheet-rule"><span></span><em>Totals This Year</em></div>
+      <div class="stat-grid" id="yearStats"></div>
+      <div class="sheet-rule"><span></span><em>Month by Month</em></div>
+      <div class="table-scroll">
+        <table class="summary-table" id="yearTable">
+          <thead>
+            <tr><th>Month</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
+          </thead>
+          <tbody id="yearTableBody"></tbody>
+        </table>
+      </div>
+      <div class="sheet-foot"><span></span>Consistency creates results<span></span></div>
     </div>
-    <div class="stat-grid" id="yearStats"></div>
-    <div class="table-scroll">
-      <table class="summary-table" id="yearTable">
-        <thead>
-          <tr><th>Month</th><th>German videos</th><th>Classes attended</th><th>Money saved</th><th>Job hours</th><th>Certificate videos</th></tr>
-        </thead>
-        <tbody id="yearTableBody"></tbody>
-      </table>
+  </section>
+
+  <!-- GERMAN A1 → B1 VIEW -->
+  <section id="germanView" class="view hidden">
+    <div class="report-page german-page">
+
+      <div class="sheet-header report-header german-hero">
+        <div class="sheet-title">
+          <h1>A1 in 30 Days</h1>
+          <p>German <span class="sep">&mdash;</span> on the road to B1</p>
+        </div>
+        <div class="german-progress-badge">
+          <div class="german-progress-ring-wrap">
+            <svg viewBox="0 0 60 60" width="56" height="56" class="progress-ring">
+              <circle cx="30" cy="30" r="26" fill="none" stroke="#e3e3e3" stroke-width="6"/>
+              <circle id="germanRingFg" cx="30" cy="30" r="26" fill="none" stroke="#c0392b" stroke-width="6" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+            </svg>
+            <span id="germanRingLabel" class="progress-ring-label">0/30</span>
+          </div>
+          <div class="german-progress-text">
+            <strong>Days Completed</strong>
+            <span>Keep the streak alive — every day counts.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-rule"><span></span><em>Never Miss This Page</em></div>
+
+      <nav class="german-subnav" id="germanSubnav">
+        <button data-sub="daily" class="active">Daily Learning</button>
+        <button data-sub="tests">A1 Tests</button>
+      </nav>
+
+      <!-- DAILY LEARNING SUB-VIEW -->
+      <div class="german-sub" id="germanDaily">
+
+        <div class="day-picker" id="dayPicker"></div>
+
+        <div class="daily-card" id="dailyCard">
+          <!-- injected by app.js -->
+        </div>
+      </div>
+
+      <!-- A1 TESTS SUB-VIEW -->
+      <div class="german-sub hidden" id="germanTests">
+        <p class="tests-intro">Ten short A1 tests covering everything you need for the Goethe/telc A1 exam. Take one a day, mark it done, check your answers, and write down what to review.</p>
+        <div class="tests-list" id="testsList"></div>
+      </div>
+
     </div>
   </section>
 
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
