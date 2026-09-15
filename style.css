@@ -416,14 +416,30 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 }
 .forvo-btn:hover{background:var(--red-tint);border-color:var(--red);}
 .forvo-btn svg{flex:none;color:var(--red);}
+
+/* ---- clickable words inside example/phrase sentences: each word links
+   straight to its Forvo pronunciation page ---- */
+a.fv-word{
+  color:inherit;text-decoration:none;border-bottom:1px dotted var(--red);
+  cursor:pointer;transition:background .15s,color .15s;border-radius:2px;
+}
+a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,var(--red));border-bottom-style:solid;}
 .daily-vocab-row{
   display:flex;align-items:center;flex-wrap:wrap;gap:9px;
   font-size:11.5px;color:var(--grey-dark);margin:2px 0 15px;
 }
 .daily-vocab-row strong{font-family:var(--font);color:var(--black);font-weight:600;font-size:13px;}
 
-/* ---- day picker strip ---- */
-.day-picker{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px;}
+/* ---- day picker strip, grouped by phase ---- */
+.day-picker{margin-bottom:10px;}
+.phase-group{margin-bottom:12px;}
+.phase-group:last-child{margin-bottom:0;}
+.phase-group-label{
+  font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--grey-dark);
+  margin-bottom:6px;display:flex;align-items:baseline;gap:7px;
+}
+.phase-group-label .phase-months{font-weight:600;text-transform:none;letter-spacing:0;color:var(--grey);}
+.phase-pills{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;}
 .day-pill{
   flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--white);
   display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--grey-dark);
@@ -431,6 +447,8 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 }
 .day-pill:hover{border-color:var(--black);}
 .day-pill.active{background:var(--black);color:var(--white);border-color:var(--black);}
+.day-pill.upcoming{opacity:.4;border-style:dashed;}
+.day-pill.upcoming.active{opacity:1;}
 .day-pill.done::after{
   content:"";position:absolute;bottom:-2px;right:-2px;width:11px;height:11px;border-radius:50%;
   background:var(--red);border:2px solid var(--white);
@@ -482,6 +500,13 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 .daily-done-row label{font-size:12px;font-weight:700;color:var(--black);display:flex;align-items:center;gap:7px;cursor:pointer;}
 .daily-done-row input[type="checkbox"]{width:16px;height:16px;}
 
+/* ---- writing/listening/speaking skill logs ---- */
+.skill-check-row{
+  display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--black);
+  cursor:pointer;margin-bottom:7px;
+}
+.skill-check-row input[type="checkbox"]{width:15px;height:15px;}
+
 /* ---- A1 tests ---- */
 .tests-intro{font-size:12.5px;color:var(--grey-dark);margin:0 0 16px;max-width:74ch;}
 .tests-list{display:flex;flex-direction:column;gap:12px;}
@@ -509,6 +534,39 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 .answer-tag{font-size:10.5px;font-weight:700;margin-top:6px;}
 .answer-tag.correct-tag{color:var(--bonus-text);}
 .answer-tag.wrong-tag{color:var(--red);}
+
+/* ---- mock exam tracker ---- */
+.mock-form{
+  border:1px solid var(--line);border-radius:var(--radius-md);background:var(--offwhite);
+  padding:16px;margin-bottom:16px;display:flex;flex-direction:column;gap:8px;
+}
+.mock-form-row{display:flex;gap:8px;}
+.mock-form-row select,.mock-form-row input{flex:1;}
+.mock-form select,.mock-form input,.mock-form textarea{
+  background:var(--white);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:inherit;
+}
+.mock-form textarea{min-height:50px;resize:vertical;}
+.mock-add-btn{
+  align-self:flex-start;background:var(--black);color:var(--white);border:none;border-radius:999px;
+  padding:8px 18px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;
+}
+.mock-add-btn:hover{background:var(--red);}
+.mock-list{display:flex;flex-direction:column;gap:10px;}
+.mock-empty{font-size:12.5px;color:var(--grey-dark);}
+.mock-entry{border:1px solid var(--line);border-radius:8px;background:var(--white);padding:11px 13px;}
+.mock-entry-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.mock-skill-tag{
+  font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--red);background:var(--red-tint);padding:3px 9px;border-radius:999px;
+}
+.mock-date{font-size:11px;color:var(--grey-dark);font-weight:600;}
+.mock-delete{
+  margin-left:auto;background:none;border:none;color:var(--grey-dark);font-size:16px;line-height:1;
+  cursor:pointer;padding:2px 4px;
+}
+.mock-delete:hover{color:var(--red);}
+.mock-score{font-size:13px;font-weight:700;color:var(--black);margin-bottom:3px;}
+.mock-notes{font-size:12px;color:var(--grey-dark);line-height:1.5;}
 .test-explain{font-size:11.5px;color:var(--grey-dark);margin-top:4px;font-style:italic;}
 .test-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 12px;}
 .btn-mini{
@@ -528,8 +586,9 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
   .german-hero{flex-direction:column;align-items:flex-start;gap:14px;}
   .german-subnav{flex-wrap:wrap;}
   .german-subnav button{flex:1 1 auto;text-align:center;padding:10px 14px;}
-  .day-picker{gap:8px;}
+  .phase-pills{gap:8px;}
   .day-pill{width:38px;height:38px;font-size:13px;}
+  .mock-form-row{flex-direction:column;}
   .daily-card{padding:16px 15px;}
   .daily-card-head h2{font-size:19px;}
   .homework-prompt,.example-box,.challenge-box,.postA1-box{font-size:13.5px;}
