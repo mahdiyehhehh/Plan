@@ -47,3 +47,12 @@ Vercel gives you a live URL right away (something like `7day-tracker.vercel.app`
 ## A note on your data
 
 Because there's no database, your entries live in the browser you use to open the site — they won't automatically show up on a different phone or laptop. If you want to check your tracker from multiple devices with the same data, use **Export backup** on one device and **Import backup** on the other, or say the word and this can be upgraded to sync through a real database (e.g. Vercel Postgres or Supabase) later.
+
+## What's new
+
+- **Export as Image** — download the current sheet (Week, Month, Year, or the German hub) as a crisp, print-ready PNG.
+- **Save backup / Restore backup** — same JSON backup as before, just renamed for clarity. "Save backup" downloads your data; "Restore backup" loads a `.json` file back in.
+- **Month & Year** are now styled as clean report pages, matching the look of the main weekly sheet.
+- **A1 → B1 tab** — a dedicated, hard-to-miss page for your German goal:
+  - **Daily Learning**: a 30-day A1 curriculum. Each day has a homework prompt, a worked example, a space for your answer, and a notes section. A progress ring tracks how many of the 30 days you've completed.
+  - **A1 Tests**: ten short multiple-choice practice tests (5 questions each) covering core A1 topics. Check your answers, see explanations, log what to review, and mark each test complete.
