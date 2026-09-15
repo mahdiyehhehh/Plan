@@ -400,6 +400,346 @@ function renderYearView(){
   ].join("");
 }
 
+/* ===================== German A1 → B1 hub ===================== */
+
+function ensureGerman(){
+  if(!state.german) state.german = {};
+  if(!state.german.days) state.german.days = {};
+  if(!state.german.tests) state.german.tests = {};
+  if(!state.german.currentDay) state.german.currentDay = 1;
+  germanCurrentDay = state.german.currentDay;
+}
+let germanCurrentDay = 1;
+let germanOpenTest = null;
+
+function getDayRecord(day){
+  if(!state.german.days[day]) state.german.days[day] = {answer:"", notes:"", done:false};
+  return state.german.days[day];
+}
+function getTestRecord(id){
+  if(!state.german.tests[id]) state.german.tests[id] = {done:false, dateTaken:"", review:"", userAnswers:{}, submitted:false, score:null};
+  const r = state.german.tests[id];
+  if(!r.userAnswers) r.userAnswers = {};
+  return r;
+}
+
+/* ---- 30-day A1 curriculum: topic, homework task, worked example ---- */
+const GERMAN_DAYS = [
+  {topic:"Greetings & Introductions", homework:"Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.", example:"Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch."},
+  {topic:"Numbers 0–20", homework:"Write the numbers 0–20 in German, then write out 5 simple addition sums in words.", example:"eins, zwei, drei ... zehn. Drei plus vier ist sieben."},
+  {topic:"The Alphabet & Spelling", homework:"Spell your first and last name out loud using the German alphabet, then write it letter by letter.", example:"M-A-R-I-A = Em – A – Er – I – A."},
+  {topic:"Personal Pronouns & \"sein\"", homework:"Conjugate the verb \"sein\" (to be) for all pronouns, then write 3 sentences using it.", example:"ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie sind. Ich bin müde."},
+  {topic:"Family Members", homework:"List your family tree and label each person in German (Mutter, Vater, Bruder, Schwester...).", example:"Das ist meine Mutter. Sie heißt Anna. Das ist mein Bruder. Er heißt Tom."},
+  {topic:"Articles: der / die / das", homework:"Sort 10 household nouns into der / die / das using a dictionary or app.", example:"der Tisch, die Lampe, das Buch, der Stuhl, die Tür."},
+  {topic:"Present Tense — Regular Verbs", homework:"Fully conjugate 3 regular verbs: spielen, wohnen, lernen.", example:"ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen."},
+  {topic:"Numbers 20–100 & Age", homework:"Write your age and the ages of 5 family members in full German words.", example:"Meine Schwester ist einundzwanzig Jahre alt. Mein Vater ist neunundfünfzig Jahre alt."},
+  {topic:"Telling Time", homework:"Write your daily schedule using 5 clock times in German (\"Es ist ... Uhr\").", example:"Es ist halb neun. Ich frühstücke. Es ist Viertel nach zwölf. Ich esse zu Mittag."},
+  {topic:"Days, Months, Seasons", homework:"List the 7 days and 12 months in German, then write which season you like best and why.", example:"Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist."},
+  {topic:"Daily Routine (Separable Verbs)", homework:"Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).", example:"Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern."},
+  {topic:"Food & Drink Vocabulary", homework:"Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.", example:"der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße."},
+  {topic:"At the Restaurant", homework:"Write a short dialogue (at least 6 lines) ordering food at a restaurant.", example:"Guten Tag! Ich möchte bitte einen Kaffee und ein Stück Kuchen. — Gerne, sonst noch etwas?"},
+  {topic:"Akkusativ Case", homework:"Rewrite 8 sentences putting the direct object into the Akkusativ (den / einen / eine / ein).", example:"Ich sehe den Mann. Ich kaufe einen Apfel. Ich habe eine Katze."},
+  {topic:"Shopping & Clothes", homework:"Describe an outfit you're wearing today using at least 6 clothing words and colors.", example:"Ich trage eine blaue Jacke, ein weißes T-Shirt und schwarze Schuhe."},
+  {topic:"Modal Verbs: können, müssen, wollen", homework:"Write 6 sentences (two per verb) about things you can, must, and want to do.", example:"Ich muss heute lernen. Ich will Deutsch sprechen. Ich kann gut kochen."},
+  {topic:"The Weather", homework:"Describe the weather for each day of this week in German.", example:"Heute ist es sonnig und warm. Morgen regnet es und es ist windig."},
+  {topic:"Directions & Prepositions", homework:"Write directions from your home to the nearest supermarket using links, rechts, geradeaus.", example:"Gehen Sie geradeaus, dann links. Der Supermarkt ist neben der Bank."},
+  {topic:"Places in the City", homework:"List 10 places in a city with their articles and one sentence for each about what you do there.", example:"In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball."},
+  {topic:"Past Tense — Perfekt (basics)", homework:"Write 6 sentences about yesterday using the Perfekt tense with haben or sein.", example:"Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen."},
+  {topic:"Hobbies & Free Time", homework:"Write a paragraph (5–6 sentences) about your hobbies and how often you do them.", example:"Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern."},
+  {topic:"Making Plans & Invitations", homework:"Write a short dialogue inviting a friend to do something this weekend.", example:"Hast du am Samstag Zeit? — Ja, warum? — Wollen wir ins Kino gehen?"},
+  {topic:"The Body & Health", homework:"Label 10 body parts, then write 3 sentences about how you feel today (\"Mir tut ... weh\").", example:"der Kopf, der Arm, das Bein. Mir tut der Kopf weh. Ich bin ein bisschen krank."},
+  {topic:"At the Doctor's", homework:"Write a short dialogue at the doctor's office describing your symptoms.", example:"Ich habe Fieber und Halsschmerzen. — Seit wann haben Sie das?"},
+  {topic:"Comparisons (Adjectives)", homework:"Write 6 comparative sentences comparing things around you.", example:"Berlin ist größer als München. Mein Bruder ist am größten in der Familie."},
+  {topic:"Housing & Furniture", homework:"Describe your home or room, listing at least 8 furniture items with their articles.", example:"In meinem Zimmer gibt es ein Bett, einen Schrank und einen Schreibtisch."},
+  {topic:"Public Transport & Travel", homework:"Write a dialogue buying a train ticket and asking about departure times.", example:"Wann fährt der nächste Zug nach Berlin? — Um 14 Uhr, Gleis 5."},
+  {topic:"Negation: nicht / kein", homework:"Write 8 sentences using nicht and kein correctly.", example:"Ich habe kein Auto. Ich trinke nicht gern Kaffee. Das ist nicht richtig."},
+  {topic:"Question Words Review", homework:"Write one question for every question word (wer, was, wann, wo, warum, wie, wie viel) and answer it.", example:"Wo wohnst du? — Ich wohne in Berlin. Warum lernst du Deutsch? — Weil ich nach Deutschland ziehe."},
+  {topic:"Full A1 Self-Review", homework:"Write a 10-sentence self-introduction combining everything: name, family, job/studies, hobbies, daily routine, and one sentence in the past tense.", example:"Ich heiße ... und komme aus ... Ich bin Student und lerne seit 30 Tagen Deutsch. Gestern habe ich viel gelernt."}
+];
+
+/* ---- 10 short A1 practice tests, 5 questions each ---- */
+const GERMAN_TESTS = [
+  {id:"t1", title:"Greetings & Introductions", topic:"Begrüßung & Vorstellung", questions:[
+    {q:"Wie ___ du?", options:["heißt","heißen","heiße"], answer:0, explain:"With \"du\", regular verbs take -st: heißt."},
+    {q:"Welcher Gruß passt am Morgen?", options:["Gute Nacht","Guten Morgen","Guten Appetit"], answer:1, explain:"\"Guten Morgen\" = Good morning."},
+    {q:"Ich ___ aus Deutschland.", options:["komme","kommst","kommt"], answer:0, explain:"\"Ich\" pairs with the -e ending: komme."},
+    {q:"Welches Pronomen ist die höfliche Form von \"du\"?", options:["ihr","Sie","wir"], answer:1, explain:"\"Sie\" (capitalized) is the formal \"you\"."},
+    {q:"\"Auf Wiedersehen\" bedeutet:", options:["Hello","Goodbye","Thank you"], answer:1, explain:"It's a formal way to say goodbye."}
+  ]},
+  {id:"t2", title:"Numbers & Time", topic:"Zahlen & Uhrzeit", questions:[
+    {q:"Was ist \"zwölf\"?", options:["10","11","12"], answer:2, explain:"zwölf = 12."},
+    {q:"\"Wie spät ist es?\" fragt nach...", options:["dem Wetter","der Uhrzeit","dem Alter"], answer:1, explain:"It's asking \"what time is it?\""},
+    {q:"Es ist 3 Uhr: \"Es ist ___ Uhr.\"", options:["drei","dritte","dreißig"], answer:0, explain:"Cardinal numbers are used for the hour: drei."},
+    {q:"Was ist \"einundzwanzig\"?", options:["12","21","31"], answer:1, explain:"einundzwanzig = 21 (literally \"one-and-twenty\")."},
+    {q:"\"Halb neun\" bedeutet:", options:["8:30","9:30","8:15"], answer:0, explain:"\"Halb neun\" = half way to nine = 8:30."}
+  ]},
+  {id:"t3", title:"Articles: der / die / das", topic:"Artikel & Substantive", questions:[
+    {q:"___ Tisch (table)", options:["der","die","das"], answer:0, explain:"der Tisch is masculine."},
+    {q:"___ Lampe (lamp)", options:["der","die","das"], answer:1, explain:"die Lampe is feminine."},
+    {q:"___ Buch (book)", options:["der","die","das"], answer:2, explain:"das Buch is neuter."},
+    {q:"Plural von \"das Kind\":", options:["die Kinder","die Kindes","der Kinder"], answer:0, explain:"die Kinder is the correct plural."},
+    {q:"Ich habe ___ Bruder. (Akkusativ)", options:["ein","eine","einen"], answer:2, explain:"Masculine nouns take \"einen\" in the Akkusativ."}
+  ]},
+  {id:"t4", title:"Present Tense Verbs", topic:"Präsens — Verben", questions:[
+    {q:"ich ___ (spielen)", options:["spiele","spielst","spielt"], answer:0, explain:"ich-form ends in -e: spiele."},
+    {q:"du ___ (wohnen)", options:["wohne","wohnst","wohnt"], answer:1, explain:"du-form ends in -st: wohnst."},
+    {q:"er ___ (arbeiten)", options:["arbeite","arbeitest","arbeitet"], answer:2, explain:"With stems ending in -t, an extra e is added: arbeitet."},
+    {q:"wir ___ (lernen)", options:["lernen","lernt","lerne"], answer:0, explain:"wir-form matches the infinitive: lernen."},
+    {q:"Welches Verb ist unregelmäßig?", options:["spielen","machen","sein"], answer:2, explain:"\"sein\" (to be) is irregular: bin, bist, ist..."}
+  ]},
+  {id:"t5", title:"Family & People", topic:"Familie & Personen", questions:[
+    {q:"\"die Mutter\" bedeutet:", options:["father","mother","sister"], answer:1, explain:"die Mutter = mother."},
+    {q:"\"der Bruder\" bedeutet:", options:["brother","uncle","son"], answer:0, explain:"der Bruder = brother."},
+    {q:"\"meine Eltern\" bedeutet:", options:["my parents","my children","my grandparents"], answer:0, explain:"die Eltern = the parents."},
+    {q:"\"die Schwester\" bedeutet:", options:["sister","aunt","daughter"], answer:0, explain:"die Schwester = sister."},
+    {q:"Plural von \"der Sohn\":", options:["die Söhne","die Sohne","der Söhne"], answer:0, explain:"der Sohn → die Söhne (umlaut in the plural)."}
+  ]},
+  {id:"t6", title:"Food & Drink", topic:"Essen & Trinken", questions:[
+    {q:"\"das Brot\" bedeutet:", options:["bread","butter","milk"], answer:0, explain:"das Brot = bread."},
+    {q:"Ich möchte ___ Kaffee. (Akkusativ)", options:["einen","eine","ein"], answer:0, explain:"der Kaffee → einen Kaffee in the Akkusativ."},
+    {q:"\"der Apfel\" bedeutet:", options:["apple","orange","banana"], answer:0, explain:"der Apfel = apple."},
+    {q:"Wann sagt man \"Guten Appetit\"?", options:["vor dem Essen","nach dem Essen","vor dem Schlafen"], answer:0, explain:"It's said right before eating."},
+    {q:"\"das Wasser\" bedeutet:", options:["water","juice","wine"], answer:0, explain:"das Wasser = water."}
+  ]},
+  {id:"t7", title:"Daily Routine", topic:"Tagesablauf", questions:[
+    {q:"Ich stehe um sieben Uhr ___. (aufstehen)", options:["auf","an","aus"], answer:0, explain:"The separable prefix \"auf\" goes to the end: stehe ... auf."},
+    {q:"\"aufstehen\" bedeutet:", options:["to get up","to go to bed","to eat"], answer:0, explain:"aufstehen = to get up."},
+    {q:"Ich ziehe mich ___. (sich anziehen)", options:["an","auf","ab"], answer:0, explain:"sich anziehen = to get dressed."},
+    {q:"\"Zuerst... dann... danach...\" benutzt man um...", options:["die Reihenfolge zu beschreiben","Fragen zu stellen","sich zu verabschieden"], answer:0, explain:"These words describe the order of actions."},
+    {q:"\"Ich gehe um zehn Uhr ins Bett.\" bedeutet:", options:["I go to bed at 10","I wake up at 10","I eat at 10"], answer:0, explain:"ins Bett gehen = to go to bed."}
+  ]},
+  {id:"t8", title:"Weather & Seasons", topic:"Wetter & Jahreszeiten", questions:[
+    {q:"\"Es ist sonnig\" bedeutet:", options:["It's sunny","It's raining","It's cold"], answer:0, explain:"sonnig = sunny."},
+    {q:"Nach dem Herbst kommt...", options:["der Winter","der Sommer","der Frühling"], answer:0, explain:"Seasons order: Frühling, Sommer, Herbst, Winter."},
+    {q:"\"Es regnet\" bedeutet:", options:["it's raining","it's snowing","it's windy"], answer:0, explain:"regnen = to rain."},
+    {q:"Das Gegenteil von \"warm\" ist:", options:["kalt","heiß","nass"], answer:0, explain:"kalt = cold, the opposite of warm."},
+    {q:"\"der Frühling\" bedeutet:", options:["spring","summer","autumn"], answer:0, explain:"der Frühling = spring."}
+  ]},
+  {id:"t9", title:"Modal Verbs & Plans", topic:"Modalverben", questions:[
+    {q:"Ich ___ heute lernen. (müssen)", options:["muss","musst","müsst"], answer:0, explain:"ich-form of müssen is \"muss\"."},
+    {q:"\"Wollen wir ins Kino gehen?\" bedeutet ungefähr:", options:["Shall we go to the cinema?","Are we going to the cinema?","Can we go to the cinema?"], answer:0, explain:"It's a friendly suggestion/invitation."},
+    {q:"\"können\" bedeutet:", options:["can","must","want"], answer:0, explain:"können = to be able to / can."},
+    {q:"\"Ich kann gut schwimmen.\" bedeutet:", options:["I can swim well","I must swim well","I want to swim well"], answer:0, explain:"können expresses ability."},
+    {q:"\"Hast du am Samstag Zeit?\" fragt nach:", options:["deiner Verfügbarkeit am Samstag","dem Wetter am Samstag","Plänen für Sonntag"], answer:0, explain:"It's asking if you're free/available on Saturday."}
+  ]},
+  {id:"t10", title:"Question Words Review", topic:"Fragewörter — Wiederholung", questions:[
+    {q:"\"Wo wohnst du?\" fragt nach:", options:["wo du wohnst","wer du bist","wann du angekommen bist"], answer:0, explain:"wo = where."},
+    {q:"\"Warum\" bedeutet:", options:["why","where","when"], answer:0, explain:"warum = why."},
+    {q:"\"Wie viel kostet das?\" fragt nach:", options:["dem Preis","der Zeit","der Entfernung"], answer:0, explain:"It's asking about price/cost."},
+    {q:"\"Ich habe kein Auto.\" bedeutet:", options:["I don't have a car","I have a car","I want a car"], answer:0, explain:"kein negates a noun: no car."},
+    {q:"\"Wer ist das?\" fragt:", options:["who is that","what is that","where is that"], answer:0, explain:"wer = who."}
+  ]}
+];
+
+function renderGermanProgressRing(){
+  const doneCount = Object.values(state.german.days).filter(d=>d.done).length;
+  const label = document.getElementById("germanRingLabel");
+  const fg = document.getElementById("germanRingFg");
+  if(!label || !fg) return;
+  label.textContent = `${doneCount}/30`;
+  const circumference = 2*Math.PI*26;
+  fg.style.strokeDasharray = `${circumference}`;
+  fg.style.strokeDashoffset = `${circumference * (1 - doneCount/30)}`;
+}
+
+function renderDayPicker(){
+  const wrap = document.getElementById("dayPicker");
+  let html = "";
+  for(let d=1; d<=30; d++){
+    const rec = state.german.days[d];
+    const done = rec && rec.done;
+    html += `<button class="day-pill ${d===germanCurrentDay?"active":""} ${done?"done":""}" data-day="${d}">${d}</button>`;
+  }
+  wrap.innerHTML = html;
+  wrap.querySelectorAll(".day-pill").forEach(btn=>{
+    btn.onclick = ()=>{
+      germanCurrentDay = parseInt(btn.dataset.day,10);
+      state.german.currentDay = germanCurrentDay;
+      saveData();
+      renderDayPicker();
+      renderDailyCard();
+    };
+  });
+}
+
+function renderDailyCard(){
+  const card = document.getElementById("dailyCard");
+  const content = GERMAN_DAYS[germanCurrentDay-1];
+  const rec = getDayRecord(germanCurrentDay);
+  card.innerHTML = `
+    <div class="daily-card-head">
+      <h2>Day ${germanCurrentDay}: ${esc(content.topic)}</h2>
+      <span class="day-topic-tag">A1 · Day ${germanCurrentDay}/30</span>
+    </div>
+    <div class="daily-card-sub">Small step today, closer to B1 tomorrow.</div>
+
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Homework</div>
+      <div class="homework-prompt">${esc(content.homework)}</div>
+      <textarea id="dailyAnswer" placeholder="Write your answer here...">${esc(rec.answer)}</textarea>
+    </div>
+
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Example</div>
+      <div class="example-box">${esc(content.example)}</div>
+    </div>
+
+    <div class="daily-block">
+      <div class="daily-block-label"><span class="dot"></span>Your Notes</div>
+      <textarea id="dailyNotes" class="notes-area" placeholder="New words, grammar points, things to review..."></textarea>
+    </div>
+
+    <div class="daily-done-row">
+      <label><input type="checkbox" id="dailyDone" ${rec.done?"checked":""}> Mark Day ${germanCurrentDay} Complete</label>
+    </div>
+  `;
+  card.querySelector("#dailyNotes").value = rec.notes;
+  card.querySelector("#dailyAnswer").oninput = (e)=>{ rec.answer = e.target.value; saveData(); };
+  card.querySelector("#dailyNotes").oninput = (e)=>{ rec.notes = e.target.value; saveData(); };
+  card.querySelector("#dailyDone").onchange = (e)=>{
+    rec.done = e.target.checked;
+    saveData();
+    renderDayPicker();
+    renderGermanProgressRing();
+  };
+}
+
+function renderQuestion(test,q,qi,rec){
+  const submitted = rec.submitted;
+  const chosen = rec.userAnswers[qi];
+  let stateClass = "";
+  if(submitted) stateClass = chosen===q.answer ? "correct" : "wrong";
+  const optsHtml = q.options.map((opt,oi)=>`
+      <label>
+        <input type="radio" name="${test.id}-q${qi}" data-test="${test.id}" data-q="${qi}" value="${oi}" ${chosen===oi?"checked":""} ${submitted?"disabled":""}>
+        ${esc(opt)}
+      </label>`).join("");
+  let feedback = "";
+  if(submitted){
+    feedback = chosen===q.answer
+      ? `<div class="answer-tag correct-tag">&check; Correct</div>`
+      : `<div class="answer-tag wrong-tag">&cross; Correct answer: ${esc(q.options[q.answer])}</div>`;
+    if(q.explain) feedback += `<div class="test-explain">${esc(q.explain)}</div>`;
+  }
+  return `<div class="test-question ${stateClass}">
+    <p>${qi+1}. ${esc(q.q)}</p>
+    <div class="test-options">${optsHtml}</div>
+    ${feedback}
+  </div>`;
+}
+
+function renderTestsList(){
+  const wrap = document.getElementById("testsList");
+  let html = "";
+  GERMAN_TESTS.forEach((test,i)=>{
+    const rec = getTestRecord(test.id);
+    const isOpen = germanOpenTest===test.id;
+    html += `<div class="test-card ${rec.done?"done":""} ${isOpen?"open":""}" data-test="${test.id}">
+      <div class="test-card-head">
+        <div class="test-card-title">
+          <span class="test-num">${i+1}</span>
+          <div>
+            <h3>${esc(test.title)}</h3>
+            <span class="test-topic">${esc(test.topic)}</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="test-status">${rec.done ? "Completed" : "Not started"}</span>
+          <svg class="test-chevron" viewBox="0 0 24 24" width="16" height="16"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="test-body">
+        ${test.questions.map((q,qi)=>renderQuestion(test,q,qi,rec)).join("")}
+        <div class="test-actions">
+          <button class="btn-mini" data-action="check" data-test="${test.id}">Check Answers</button>
+          <button class="btn-mini ghost" data-action="reset" data-test="${test.id}">Reset</button>
+          ${rec.submitted ? `<span class="test-score">Score: ${rec.score}/${test.questions.length}</span>` : ""}
+        </div>
+        <label class="test-review-label">What to work on</label>
+        <div class="test-review"><textarea data-test-review="${test.id}" placeholder="Grammar points, vocab, mistakes to revisit...">${esc(rec.review)}</textarea></div>
+        <div class="test-done-row">
+          <label><input type="checkbox" data-test-done="${test.id}" ${rec.done?"checked":""}> Mark test complete${rec.dateTaken?` · taken ${esc(rec.dateTaken)}`:""}</label>
+        </div>
+      </div>
+    </div>`;
+  });
+  wrap.innerHTML = html;
+  bindTestEvents();
+}
+
+function bindTestEvents(){
+  const wrap = document.getElementById("testsList");
+  wrap.querySelectorAll(".test-card-head").forEach(head=>{
+    head.onclick = ()=>{
+      const id = head.closest(".test-card").dataset.test;
+      germanOpenTest = germanOpenTest===id ? null : id;
+      renderTestsList();
+    };
+  });
+  wrap.querySelectorAll('input[type="radio"][data-test]').forEach(radio=>{
+    radio.onchange = ()=>{
+      const rec = getTestRecord(radio.dataset.test);
+      rec.userAnswers[radio.dataset.q] = parseInt(radio.value,10);
+      saveData();
+    };
+  });
+  wrap.querySelectorAll('[data-action="check"]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const test = GERMAN_TESTS.find(t=>t.id===btn.dataset.test);
+      const rec = getTestRecord(test.id);
+      let score = 0;
+      test.questions.forEach((q,qi)=>{ if(rec.userAnswers[qi]===q.answer) score++; });
+      rec.submitted = true;
+      rec.score = score;
+      saveData();
+      renderTestsList();
+    };
+  });
+  wrap.querySelectorAll('[data-action="reset"]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const rec = getTestRecord(btn.dataset.test);
+      rec.userAnswers = {};
+      rec.submitted = false;
+      rec.score = null;
+      saveData();
+      renderTestsList();
+    };
+  });
+  wrap.querySelectorAll('[data-test-review]').forEach(ta=>{
+    ta.oninput = ()=>{
+      const rec = getTestRecord(ta.dataset.testReview);
+      rec.review = ta.value;
+      saveData();
+    };
+  });
+  wrap.querySelectorAll('[data-test-done]').forEach(cb=>{
+    cb.onchange = ()=>{
+      const rec = getTestRecord(cb.dataset.testDone);
+      rec.done = cb.checked;
+      rec.dateTaken = cb.checked ? fmtShort(new Date()) : "";
+      saveData();
+      renderTestsList();
+    };
+  });
+}
+
+function renderGermanView(){
+  ensureGerman();
+  renderGermanProgressRing();
+  renderDayPicker();
+  renderDailyCard();
+  renderTestsList();
+}
+
+document.getElementById("germanSubnav").addEventListener("click",(e)=>{
+  const btn = e.target.closest("button[data-sub]");
+  if(!btn) return;
+  document.querySelectorAll("#germanSubnav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("germanDaily").classList.toggle("hidden", btn.dataset.sub!=="daily");
+  document.getElementById("germanTests").classList.toggle("hidden", btn.dataset.sub!=="tests");
+});
+
 /* ---------- navigation ---------- */
 document.getElementById("prevWeek").onclick = ()=>{ currentMonday = addDays(currentMonday,-7); renderWeekView(); };
 document.getElementById("nextWeek").onclick = ()=>{ currentMonday = addDays(currentMonday,7); renderWeekView(); };
@@ -412,7 +752,7 @@ document.getElementById("prevYear").onclick = ()=>{ currentYearCursor -= 1; rend
 document.getElementById("nextYear").onclick = ()=>{ currentYearCursor += 1; renderYearView(); };
 
 /* ---------- view switching ---------- */
-const views = {week:document.getElementById("weekView"), month:document.getElementById("monthView"), year:document.getElementById("yearView")};
+const views = {week:document.getElementById("weekView"), month:document.getElementById("monthView"), year:document.getElementById("yearView"), german:document.getElementById("germanView")};
 document.getElementById("viewSwitch").addEventListener("click",(e)=>{
   const btn = e.target.closest("button[data-view]");
   if(!btn) return;
@@ -422,9 +762,48 @@ document.getElementById("viewSwitch").addEventListener("click",(e)=>{
   if(btn.dataset.view==="week"){ renderWeekView(); }
   if(btn.dataset.view==="month") renderMonthView();
   if(btn.dataset.view==="year") renderYearView();
+  if(btn.dataset.view==="german") renderGermanView();
 });
 
-/* ---------- export / import ---------- */
+/* ---------- export as image (beautiful print) ---------- */
+document.getElementById("exportImage").onclick = async ()=>{
+  const btn = document.getElementById("exportImage");
+  if(typeof html2canvas === "undefined"){
+    alert("Image export needs an internet connection to load once. Please check your connection and try again.");
+    return;
+  }
+  const originalText = btn.textContent;
+  btn.textContent = "Rendering…";
+  btn.disabled = true;
+  try{
+    let target, prevTransform;
+    if(!document.getElementById("weekView").classList.contains("hidden")){
+      target = document.getElementById("plannerCanvas");
+      prevTransform = target.style.transform;
+      target.style.transform = "none";
+    } else if(!document.getElementById("monthView").classList.contains("hidden")){
+      target = document.querySelector("#monthView .report-page");
+    } else if(!document.getElementById("yearView").classList.contains("hidden")){
+      target = document.querySelector("#yearView .report-page");
+    } else {
+      target = document.querySelector("#germanView .report-page");
+    }
+    const canvas = await html2canvas(target, {scale:2, backgroundColor:"#ffffff", useCORS:true});
+    if(prevTransform!==undefined) target.style.transform = prevTransform;
+    const link = document.createElement("a");
+    link.download = `7-day-plan-${toISO(new Date())}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }catch(err){
+    console.error("Image export failed:", err);
+    alert("Sorry, the image export failed. Please try again.");
+  }finally{
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+};
+
+/* ---------- export / import (JSON backup) ---------- */
 document.getElementById("exportData").onclick = ()=>{
   const blob = new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
   const url = URL.createObjectURL(blob);
