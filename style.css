@@ -614,3 +614,48 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
   .german-sub.hidden{display:block !important;}
   .test-card{break-inside:avoid;}
 }
+
+/* ================= Goal-progress toast ================= */
+.goal-toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%) translateY(16px);
+  width:min(320px,88vw);
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  box-shadow:0 6px 20px rgba(17,17,17,.16);
+  padding:12px 14px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease;
+  z-index:999;
+}
+.goal-toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+.goal-toast-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--black);
+  margin-bottom:6px;
+}
+.goal-toast-bar{
+  height:6px;
+  border-radius:4px;
+  background:var(--line);
+  overflow:hidden;
+  margin-bottom:6px;
+}
+.goal-toast-fill{
+  height:100%;
+  background:var(--bonus-text);
+  border-radius:4px;
+  transition:width .3s ease;
+}
+.goal-toast-sub{
+  font-size:11.5px;
+  color:var(--grey-dark);
+}
