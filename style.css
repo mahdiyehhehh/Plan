@@ -222,8 +222,17 @@ input[type="checkbox"]{width:14px;height:14px;accent-color:var(--red);cursor:poi
 }
 .sheet-foot span{flex:1;height:1px;background:var(--line);}
 
-/* ================= Month / Year report views ================= */
-#monthView,#yearView{overflow-y:auto;padding:20px 30px 40px;}
+/* ================= Month / Year report views =================
+   These share the exact same fit-to-screen "stage" system as the
+   week sheet (see .stage-view / .planner-stage in JS: fitActiveStage),
+   so they always show in full with no scrolling or sliding. */
+.planner-stage .report-page{
+  width:1120px;
+  max-width:none;
+  margin:0;
+  flex:none;
+  transform-origin:center center;
+}
 .week-nav{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:18px;}
 .nav-arrow{
   width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--white);
@@ -271,7 +280,18 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 .report-header .week-label span{font-size:14px;}
 .report-header .nav-arrow{width:28px;height:28px;}
 
-/* ================= German A1 → B1 hub ================= */
+/* ================= German A1 → B2 hub =================
+   Unlike Week/Month/Year (compact stat sheets that get scaled to fit
+   one screen), this page has real writing space — homework boxes,
+   textareas, tests — so it scrolls normally like any mobile page
+   instead of being shrunk down. It used to inherit `overflow:hidden`
+   from <main>, which silently clipped the bottom half of the page;
+   this rule is the fix for that. */
+#germanView{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 30px 40px;}
+
+.german-goal-note{font-size:12.5px;line-height:1.6;color:var(--grey-dark);margin:14px 0 0;max-width:72ch;}
+.german-goal-note strong{color:var(--black);}
+
 .german-nav-btn{color:var(--red) !important;}
 .view-switch button.german-nav-btn.active{background:var(--red);color:var(--white) !important;}
 
@@ -292,6 +312,33 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 }
 .german-subnav button.active{background:var(--black);color:var(--white);border-color:var(--black);}
 .german-sub.hidden{display:none;}
+
+/* ---- phrase / slang of the day (pinned above the tabs) ---- */
+.slang-card{
+  border:1px solid var(--line);border-left:4px solid var(--red);border-radius:var(--radius-md);
+  background:var(--offwhite);padding:14px 16px;margin-bottom:18px;
+}
+.slang-card-eyebrow{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);display:block;margin-bottom:6px;}
+.slang-card-phrase{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
+.slang-card-phrase h4{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0;}
+.slang-card-meaning{font-size:12.5px;color:var(--black);margin:4px 0 0;}
+.slang-card-note{font-size:11.5px;color:var(--grey-dark);margin:5px 0 0;font-style:italic;line-height:1.5;}
+
+/* ---- Forvo pronunciation link (used next to vocab & slang) ---- */
+.forvo-btn{
+  display:inline-flex;align-items:center;gap:5px;flex:none;
+  border:1px solid var(--line);background:var(--white);color:var(--red-dark,var(--red));
+  font-family:inherit;font-size:10.5px;font-weight:700;text-decoration:none;
+  padding:4px 10px 4px 8px;border-radius:999px;white-space:nowrap;
+  transition:background .15s,border-color .15s;
+}
+.forvo-btn:hover{background:var(--red-tint);border-color:var(--red);}
+.forvo-btn svg{flex:none;color:var(--red);}
+.daily-vocab-row{
+  display:flex;align-items:center;flex-wrap:wrap;gap:9px;
+  font-size:11.5px;color:var(--grey-dark);margin:2px 0 15px;
+}
+.daily-vocab-row strong{font-family:'Fraunces',serif;color:var(--black);font-weight:600;font-size:13px;}
 
 /* ---- day picker strip ---- */
 .day-picker{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px;}
@@ -387,7 +434,19 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 
 @media (max-width:640px){
   .report-page{padding:18px 16px 24px;}
+  #germanView{padding:14px 12px 32px;}
   .german-hero{flex-direction:column;align-items:flex-start;gap:14px;}
+  .german-subnav{flex-wrap:wrap;}
+  .german-subnav button{flex:1 1 auto;text-align:center;padding:10px 14px;}
+  .day-picker{gap:8px;}
+  .day-pill{width:38px;height:38px;font-size:13px;}
+  .daily-card{padding:16px 15px;}
+  .daily-card-head h2{font-size:19px;}
+  .homework-prompt,.example-box,.challenge-box,.postA1-box{font-size:13.5px;}
+  .slang-card-phrase h4{font-size:17px;}
+  .test-card-title h3{font-size:13.5px;}
+  .test-options label{padding:8px 6px;font-size:12.5px;}
+  .btn-mini{padding:10px 16px;}
 }
 
 /* ================= Print ================= */
@@ -400,6 +459,7 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
   .planner-canvas{transform:none !important;box-shadow:none;border:none;}
   #monthView,#yearView,#germanView{overflow:visible !important;padding:0 !important;}
   .report-page{box-shadow:none;border:none;max-width:100%;}
+  .planner-stage .report-page{transform:none !important;width:auto !important;}
   .test-body{display:block !important;padding-top:14px;}
   .test-chevron,.german-subnav,.day-picker{display:none !important;}
   .german-sub.hidden{display:block !important;}
