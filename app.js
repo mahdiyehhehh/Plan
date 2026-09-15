@@ -1758,18 +1758,18 @@ function renderDayPicker(){
    media, music, shows — not formal listening drills. ---- */
 function skillTracksHtml(rec){
   return `
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Writing Practice</div>
+    <div class="g-field">
+      <div class="g-field-label"><span class="dot"></span>Writing Practice</div>
       <textarea class="skill-writing notes-area" placeholder="Write a few sentences in German — today's topic, your day, anything...">${esc(rec.writing)}</textarea>
     </div>
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Immersion (the way you did English)</div>
-      <label class="skill-check-row"><input type="checkbox" class="skill-listening-done" ${rec.listeningDone?"checked":""}> Got German into my ears/eyes today — TikTok, music, a show, a podcast</label>
+    <div class="g-field">
+      <div class="g-field-label"><span class="dot"></span>Immersion (the way you did English)</div>
+      <label class="g-check-row"><input type="checkbox" class="skill-listening-done" ${rec.listeningDone?"checked":""}> Got German into my ears/eyes today — TikTok, music, a show, a podcast</label>
       <textarea class="skill-listening-notes notes-area" placeholder="What did you scroll, watch, or listen to? What did you catch — even just the vibe or a few words?">${esc(rec.listeningNotes)}</textarea>
     </div>
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>Speaking Practice</div>
-      <label class="skill-check-row"><input type="checkbox" class="skill-speaking-done" ${rec.speakingDone?"checked":""}> Spoke German out loud today</label>
+    <div class="g-field">
+      <div class="g-field-label"><span class="dot"></span>Speaking Practice</div>
+      <label class="g-check-row"><input type="checkbox" class="skill-speaking-done" ${rec.speakingDone?"checked":""}> Spoke German out loud today</label>
       <textarea class="skill-speaking-notes notes-area" placeholder="What did you talk about? With who?">${esc(rec.speakingNotes)}</textarea>
     </div>`;
 }
@@ -1864,8 +1864,8 @@ function renderDailyCard(){
   const multi = dayContent.lessons.length > 1;
 
   const postA1Html = a1Done ? `
-    <div class="daily-block">
-      <div class="daily-block-label"><span class="dot"></span>After A1: Practice &amp; Speak <span class="bonus-tag">Unlocked</span></div>
+    <div class="g-field">
+      <div class="g-field-label"><span class="dot"></span>After A1: Practice &amp; Speak <span class="bonus-tag">Unlocked</span></div>
       <div class="postA1-box"><strong>+</strong> ${esc(POST_A1_VLOG_TASK)}</div>
       <div class="postA1-box"><strong>+</strong> ${esc(getPostA1Speaking(day, topicsLabel))}</div>
     </div>` : "";
@@ -1873,7 +1873,7 @@ function renderDailyCard(){
   const lessonsHtml = dayContent.lessons.map((lesson,i)=>{
     const lrec = rec.lessons[i];
     return `
-    <div class="g-lesson lesson-block">
+    <div class="g-lesson">
       <div class="g-lesson-head">
         <span class="g-lesson-icon">${G_BOOK_SVG}</span>
         <h3>${multi?`Lesson ${i+1} of ${dayContent.lessons.length} — `:""}${esc(lesson.topic)}</h3>
@@ -1886,16 +1886,16 @@ function renderDailyCard(){
           ${lesson.en?`<div class="g-phrase-en">${esc(lesson.en)}</div>`:""}
         </div>
       </div>
-      <div class="daily-block">
-        <div class="daily-block-label"><span class="dot"></span>Homework</div>
-        <div class="homework-prompt">${esc(lesson.homework)}</div>
+      <div class="g-field">
+        <div class="g-field-label"><span class="dot"></span>Homework</div>
+        <div class="g-homework-prompt">${esc(lesson.homework)}</div>
         <textarea class="lesson-answer" data-lesson="${i}" placeholder="Write your answer here...">${esc(lrec.answer)}</textarea>
       </div>
-      <div class="daily-block">
-        <div class="daily-block-label"><span class="dot"></span>Your Notes</div>
+      <div class="g-field">
+        <div class="g-field-label"><span class="dot"></span>Your Notes</div>
         <textarea class="lesson-notes notes-area" data-lesson-notes="${i}" placeholder="New words, grammar points, things to review...">${esc(lrec.notes)}</textarea>
       </div>
-      <div class="daily-done-row">
+      <div class="g-done-row">
         <label><input type="checkbox" class="lesson-done" data-lesson-done="${i}" ${lrec.done?"checked":""}> Mark this lesson complete</label>
       </div>
     </div>`;
@@ -1997,7 +1997,7 @@ function renderTestsList(){
         </div>
         <label class="test-review-label">What to work on</label>
         <div class="test-review"><textarea data-test-review="${test.id}" placeholder="Grammar points, vocab, mistakes to revisit...">${esc(rec.review)}</textarea></div>
-        <div class="test-done-row">
+        <div class="g-done-row">
           <label><input type="checkbox" data-test-done="${test.id}" ${rec.done?"checked":""}> Mark test complete${rec.dateTaken?` · taken ${esc(rec.dateTaken)}`:""}</label>
         </div>
       </div>
