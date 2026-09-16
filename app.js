@@ -16,7 +16,7 @@ const ICONS = {
 };
 
 const emptyDay = () => ({
-  germanVideos:"", germanNotes:"",
+  germanVideos:"", germanNotes:"", germanDone:false,
   classesDone:false, classesNotes:"",
   money:"", moneyNotes:"",
   jobHours:"", jobNotes:"",
@@ -160,6 +160,10 @@ const CATEGORIES = [
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
+          <input type="checkbox" data-field="germanDone" ${d.germanDone?"checked":""}>
+          <span class="suffix">Practiced</span>
+        </div>
+        <div class="cell-inline">
           <input type="number" min="0" data-field="germanVideos" value="${esc(d.germanVideos)}" placeholder="0">
           <span class="suffix">/${GERMAN_GOAL}</span>
         </div>
@@ -272,6 +276,12 @@ function renderWeekView(){
       if(field==="germanVideos"){
         const t = document.getElementById("germanTotal");
         if(t) t.textContent = `${DAY_KEYS.reduce((s,k)=>s+num(week.days[k].germanVideos),0)}/${GERMAN_GOAL}`;
+      }
+      if(field==="germanDone"){
+        const streak = germanCurrentStreak();
+        const s = document.getElementById("weekGermanStreak");
+        if(s) s.textContent = streak>0 ? `🔥 ${streak}-day streak` : "Start your streak in today's lesson";
+        renderGermanProgressRing();
       }
       if(field==="certVideos"){
         const t = document.getElementById("certTotal");
@@ -530,6 +540,15 @@ function germanCompletionDateSet(){
   const set = new Set();
   if(state.german && state.german.days){
     Object.values(state.german.days).forEach(rec=>{ if(rec && rec.doneDate) set.add(rec.doneDate); });
+  }
+  if(state.weeks){
+    Object.keys(state.weeks).forEach(mondayISO=>{
+      const week = state.weeks[mondayISO];
+      const monday = new Date(mondayISO+"T00:00:00");
+      DAY_KEYS.forEach((dk,i)=>{
+        if(week.days[dk] && week.days[dk].germanDone) set.add(toISO(addDays(monday,i)));
+      });
+    });
   }
   return set;
 }
