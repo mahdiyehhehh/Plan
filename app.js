@@ -32,7 +32,8 @@ const emptyWeek = () => ({
   reflectBetter:"",
   germanLevel:"",
   projectName:"",
-  favorite:false
+  favorite:false,
+  rowOff:{}
 });
 
 /* ---------- storage ---------- */
@@ -80,6 +81,7 @@ function getWeek(mondayISO){
   if(w.germanLevel===undefined) w.germanLevel="";
   if(w.projectName===undefined) w.projectName="";
   if(w.favorite===undefined) w.favorite=false;
+  if(w.rowOff===undefined) w.rowOff={};
   return w;
 }
 
@@ -268,14 +270,18 @@ function renderWeekView(){
 
   CATEGORIES.forEach(cat=>{
     const extra = cat.labelExtra ? cat.labelExtra(week) : "";
-    html += `<div class="row-label">
+    const isOff = !!week.rowOff[cat.id];
+    html += `<div class="row-label ${isOff?"row-off":""}">
         <div class="row-label-inner">
           <span class="row-icon">${cat.icon}</span>
           <span class="row-label-title">${cat.label}</span>
+          <label class="row-off-toggle" title="Turn this row off for the week">
+            <input type="checkbox" data-rowoff="${cat.id}" ${isOff?"checked":""}>
+          </label>
         </div>
         ${extra}
       </div>`;
-    html += DAY_KEYS.map(dk=>`<div class="day-cell" data-day="${dk}" data-day-label="${DAY_LABELS[dk]}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</div>`).join("");
+    html += DAY_KEYS.map(dk=>`<div class="day-cell${isOff?" day-cell-off":""}" data-day="${dk}" data-day-label="${DAY_LABELS[dk]}" data-cat="${cat.id}">${cat.cell(week.days[dk])}</div>`).join("");
   });
 
   grid.innerHTML = html;
@@ -312,6 +318,15 @@ function renderWeekView(){
     el.addEventListener("input", ()=>{
       week[el.dataset.weekfield] = el.value;
       saveData();
+    });
+  });
+
+  // bind per-row "off this week" toggles — greys out that row's 7 day-cells
+  grid.querySelectorAll("[data-rowoff]").forEach(el=>{
+    el.addEventListener("change", ()=>{
+      week.rowOff[el.dataset.rowoff] = el.checked;
+      saveData();
+      renderWeekView();
     });
   });
 
