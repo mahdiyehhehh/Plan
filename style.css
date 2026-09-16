@@ -199,6 +199,7 @@ main{flex:1;min-height:0;display:flex;overflow:hidden;}
 .row-label-title{font-family:var(--font);font-weight:600;font-size:12.5px;color:var(--black);line-height:1.15;}
 .row-label .sub{display:block;font-size:9.5px;color:var(--grey-dark);margin-top:6px;font-weight:500;}
 .row-label .sub strong{color:var(--black);font-weight:700;}
+.row-label .sub.g-streak-sub{color:var(--red);font-weight:700;}
 .row-label .label-field{margin-top:7px;}
 .row-label .label-field label{display:block;font-size:8.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);margin-bottom:2px;font-weight:700;}
 .row-label .label-field input{font-size:10.5px;padding:4px 6px;background:var(--white);}
@@ -468,6 +469,8 @@ table.summary-table{border-collapse:separate;border-spacing:0 8px;width:100%;min
 .g-progress-copy{display:flex;flex-direction:column;gap:3px;min-width:0;}
 .g-progress-copy strong{font-family:var(--font);font-size:var(--g-heading);font-weight:650;color:var(--g-ink);}
 .g-progress-copy span{font-family:var(--font);font-size:12.5px;color:var(--g-ink-faint);line-height:1.4;}
+.g-progress-copy .g-streak-label{color:var(--g-crimson);font-weight:700;}
+.g-progress-copy .g-streak-label:empty{display:none;}
 .g-progress-chevron{margin-left:auto;flex:none;color:var(--g-ink-faint);}
 
 .g-goal-row{display:flex;align-items:flex-start;gap:var(--g-space-2);padding:0 2px;margin-bottom:var(--g-space-5);}
