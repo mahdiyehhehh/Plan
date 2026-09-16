@@ -18,10 +18,10 @@ const ICONS = {
 const emptyDay = () => ({
   germanVideos:"", germanNotes:"", germanDone:false,
   classesDone:false, classesNotes:"",
-  money:"", moneyNotes:"",
-  jobHours:"", jobNotes:"",
-  projectStatus:"", projectUsers:"", projectNotes:"",
-  certVideos:"", certNotes:""
+  money:"", moneyNotes:"", moneyDone:false,
+  jobHours:"", jobNotes:"", jobDone:false,
+  projectStatus:"", projectUsers:"", projectNotes:"", projectDone:false,
+  certVideos:"", certNotes:"", certDone:false
 });
 
 const emptyWeek = () => ({
@@ -186,6 +186,10 @@ const CATEGORIES = [
     cell:(d)=>`
       <div class="cell-field">
         <div class="cell-inline">
+          <input type="checkbox" data-field="moneyDone" ${d.moneyDone?"checked":""}>
+          <span class="suffix">Saved</span>
+        </div>
+        <div class="cell-inline">
           <span class="suffix">$</span>
           <input type="number" min="0" step="0.01" data-field="money" value="${esc(d.money)}" placeholder="0">
         </div>
@@ -197,6 +201,10 @@ const CATEGORIES = [
     labelExtra:()=>`<span class="sub">Hours worked</span>`,
     cell:(d)=>`
       <div class="cell-field">
+        <div class="cell-inline">
+          <input type="checkbox" data-field="jobDone" ${d.jobDone?"checked":""}>
+          <span class="suffix">Worked</span>
+        </div>
         <div class="cell-inline">
           <input type="number" min="0" step="0.5" data-field="jobHours" value="${esc(d.jobHours)}" placeholder="0">
           <span class="suffix">hrs</span>
@@ -213,6 +221,10 @@ const CATEGORIES = [
       </div>`,
     cell:(d)=>`
       <div class="cell-field">
+        <div class="cell-inline">
+          <input type="checkbox" data-field="projectDone" ${d.projectDone?"checked":""}>
+          <span class="suffix">Active</span>
+        </div>
         <input type="text" data-field="projectStatus" value="${esc(d.projectStatus)}" placeholder="Status">
         <input type="text" data-field="projectUsers" value="${esc(d.projectUsers)}" placeholder="Users">
         <textarea data-field="projectNotes" placeholder="Notes">${esc(d.projectNotes)}</textarea>
@@ -226,6 +238,10 @@ const CATEGORIES = [
     },
     cell:(d)=>`
       <div class="cell-field">
+        <div class="cell-inline">
+          <input type="checkbox" data-field="certDone" ${d.certDone?"checked":""}>
+          <span class="suffix">Studied</span>
+        </div>
         <div class="cell-inline">
           <input type="number" min="0" data-field="certVideos" value="${esc(d.certVideos)}" placeholder="0">
           <span class="suffix">videos</span>
