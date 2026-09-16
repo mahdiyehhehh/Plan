@@ -269,6 +269,16 @@ input[type="checkbox"]{width:14px;height:14px;accent-color:var(--red);cursor:poi
   flex:none;
   transform-origin:center center;
 }
+/* Month/Year sheets have far less content than the Week sheet (a small
+   stat grid + one table) so authoring them at the same 1120px width as
+   Week made them scale down much more aggressively, leaving a lot of
+   empty space above/below on a phone. Narrowing just these two (while
+   staying wide enough that the table never needs its own inner scroll)
+   lets fitStage() land on a noticeably larger, more legible scale. */
+#monthStage .report-page,
+#yearStage .report-page{
+  width:900px;
+}
 .week-nav{display:flex;align-items:center;justify-content:center;gap:22px;margin-bottom:18px;}
 .nav-arrow{
   width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--white);
