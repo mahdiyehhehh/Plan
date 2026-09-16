@@ -148,12 +148,14 @@ const CATEGORIES = [
     id:"german", label:"German Learning", icon:ICONS.german,
     labelExtra:(week)=>{
       const total = DAY_KEYS.reduce((s,dk)=>s+num(week.days[dk].germanVideos),0);
+      const streak = germanCurrentStreak();
       return `
         <div class="label-field">
           <label>Level</label>
           <input type="text" data-weekfield="germanLevel" value="${esc(week.germanLevel)}" placeholder="e.g. A1">
         </div>
-        <span class="sub">Watched <strong id="germanTotal">${total}/${GERMAN_GOAL}</strong></span>`;
+        <span class="sub">Watched <strong id="germanTotal">${total}/${GERMAN_GOAL}</strong></span>
+        <span class="sub g-streak-sub" id="weekGermanStreak">${streak>0?`🔥 ${streak}-day streak`:"Start your streak in today's lesson"}</span>`;
     },
     cell:(d)=>`
       <div class="cell-field">
@@ -513,11 +515,35 @@ function getDayRecord(day){
   if(rec.listeningNotes===undefined) rec.listeningNotes = "";
   if(rec.speakingDone===undefined) rec.speakingDone = false;
   if(rec.speakingNotes===undefined) rec.speakingNotes = "";
+  if(rec.doneDate===undefined) rec.doneDate = null;
   return rec;
 }
 function dayIsDone(day){
   const rec = getDayRecord(day);
   return rec.lessons.length>0 && rec.lessons.every(l=>l.done);
+}
+/* ---- German learning streak — driven by the real calendar date each
+   course day was actually completed (rec.doneDate), not by the course's
+   sequential day number. This is what lets the "7 Days Plan" week sheet
+   show a live streak instead of a disconnected, manually-typed video count. ---- */
+function germanCompletionDateSet(){
+  const set = new Set();
+  if(state.german && state.german.days){
+    Object.values(state.german.days).forEach(rec=>{ if(rec && rec.doneDate) set.add(rec.doneDate); });
+  }
+  return set;
+}
+function germanCurrentStreak(){
+  const dates = germanCompletionDateSet();
+  if(dates.size===0) return 0;
+  let cursor = new Date(); cursor.setHours(0,0,0,0);
+  if(!dates.has(toISO(cursor))){
+    cursor = addDays(cursor,-1);
+    if(!dates.has(toISO(cursor))) return 0; // streak broken (nothing today or yesterday)
+  }
+  let streak = 0;
+  while(dates.has(toISO(cursor))){ streak++; cursor = addDays(cursor,-1); }
+  return streak;
 }
 function getTestRecord(id){
   if(!state.german.tests[id]) state.german.tests[id] = {done:false, dateTaken:"", review:"", userAnswers:{}, submitted:false, score:null};
@@ -1706,6 +1732,11 @@ function renderGermanProgressRing(){
     const phase = phaseForDay(germanCurrentDay);
     sub.textContent = `Now in: ${phase.label} (${phase.months})`;
   }
+  const streakEl = document.getElementById("germanStreakLabel");
+  if(streakEl){
+    const streak = germanCurrentStreak();
+    streakEl.textContent = streak>0 ? `🔥 ${streak}-day streak` : "";
+  }
 }
 
 function renderSlangCard(){
@@ -1934,10 +1965,12 @@ function renderDailyCard(){
   card.querySelectorAll(".lesson-done").forEach(cb=>{
     cb.onchange = (e)=>{
       rec.lessons[+cb.dataset.lessonDone].done = e.target.checked;
+      rec.doneDate = dayIsDone(day) ? (rec.doneDate || toISO(new Date())) : null;
       saveData();
       renderDayPicker();
       renderGermanProgressRing();
       renderDailyCard();
+      renderWeekView();
       if(e.target.checked) showGoalProgressToast();
     };
   });
