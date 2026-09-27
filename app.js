@@ -526,7 +526,10 @@ function ensureGerman(){
   if(!state.german) state.german = {};
   if(!state.german.days) state.german.days = {};
   if(!state.german.tests) state.german.tests = {};
+  if(!state.german.listening) state.german.listening = {};
+  if(!state.german.reading) state.german.reading = {};
   if(!state.german.mockExams) state.german.mockExams = [];
+  if(!state.german.mockRuns) state.german.mockRuns = [];
   if(!state.german.currentDay) state.german.currentDay = 1;
   germanCurrentDay = state.german.currentDay;
 }
@@ -598,6 +601,15 @@ function germanCurrentStreak(){
 function getTestRecord(id){
   if(!state.german.tests[id]) state.german.tests[id] = {done:false, dateTaken:"", review:"", userAnswers:{}, submitted:false, score:null};
   const r = state.german.tests[id];
+  if(!r.userAnswers) r.userAnswers = {};
+  return r;
+}
+/* ---- Generic record getter, shared by Listening and Reading practice
+   below — same shape as getTestRecord, just pointed at a different
+   store so the two skills track separately. ---- */
+function getSkillRecord(store, id){
+  if(!state.german[store][id]) state.german[store][id] = {done:false, dateTaken:"", review:"", userAnswers:{}, submitted:false, score:null};
+  const r = state.german[store][id];
   if(!r.userAnswers) r.userAnswers = {};
   return r;
 }
@@ -1692,6 +1704,135 @@ const SLANG_OF_DAY = [
   {natural:"Bis bald, mach's gut!", exam:"Auf Wiedersehen, bis zum nächsten Mal.", meaning:"See you soon, take care!", note:"A warm, casual sign-off combining two phrases from this list — you've now got the whole toolkit."}
 ];
 
+/* ==========================================================================
+   LISTENING PRACTICE — real audio via the browser's built-in German
+   text-to-speech (SpeechSynthesisUtterance, lang "de-DE"), not just text.
+   Two per level (A1/A2/B1/B2) modeled on the real Goethe Hören format:
+   a short spoken text, played (by default) twice, then multiple-choice
+   comprehension questions. No external audio files or network calls
+   needed — it's all generated on-device by the browser. ========================================================================== */
+const LISTENING_EXERCISES = [
+  {id:"l-a1-1", level:"A1", title:"Ein Anruf bei einer Freundin", topic:"Kurzer Dialog · Alltag",
+    script:"Hallo Sofia, hier ist Anna. Wie geht es dir? Ich bin heute zu Hause, ich koche Nudeln mit Tomatensoße. Um sechs Uhr gehe ich einkaufen, ich brauche noch Milch und Brot. Hast du morgen Zeit? Wir könnten ins Kino gehen, der Film beginnt um neunzehn Uhr. Ruf mich bitte zurück!",
+    questions:[
+      {q:"Was kocht Anna heute?", options:["Nudeln mit Tomatensoße","Reis mit Gemüse","Suppe"], answer:0, explain:"Sie sagt: \"ich koche Nudeln mit Tomatensoße.\""},
+      {q:"Um wie viel Uhr geht Anna einkaufen?", options:["Um sieben Uhr","Um sechs Uhr","Um neunzehn Uhr"], answer:1, explain:"\"Um sechs Uhr gehe ich einkaufen.\""},
+      {q:"Was schlägt Anna für morgen vor?", options:["Einkaufen gehen","Kochen","Ins Kino gehen"], answer:2, explain:"\"Wir könnten ins Kino gehen.\""}
+    ]},
+  {id:"l-a1-2", level:"A1", title:"Ansage am Bahnhof", topic:"Durchsage · Reisen",
+    script:"Achtung, eine Durchsage. Der Zug nach München fährt heute von Gleis vier, nicht von Gleis zwei. Die Abfahrt ist um vierzehn Uhr dreißig. Reisende nach Hamburg warten bitte auf Gleis sieben. Vielen Dank.",
+    questions:[
+      {q:"Von welchem Gleis fährt der Zug nach München?", options:["Gleis zwei","Gleis vier","Gleis sieben"], answer:1, explain:"\"Der Zug nach München fährt heute von Gleis vier.\""},
+      {q:"Um wie viel Uhr fährt der Zug?", options:["14:30","14:13","4:30"], answer:0, explain:"\"Die Abfahrt ist um vierzehn Uhr dreißig.\""},
+      {q:"Wohin fahren die Reisende auf Gleis sieben?", options:["München","Hamburg","Berlin"], answer:1, explain:"\"Reisende nach Hamburg warten bitte auf Gleis sieben.\""}
+    ]},
+  {id:"l-a2-1", level:"A2", title:"Termin beim Arzt", topic:"Telefongespräch · Gesundheit",
+    script:"Guten Tag, Praxis Doktor Weber, mein Name ist Frau Klein. Ich habe seit zwei Tagen starke Kopfschmerzen und ein bisschen Fieber. Könnte ich heute noch einen Termin bekommen? Der nächste freie Termin ist erst um sechzehn Uhr dreißig, das wäre der letzte Termin heute. Bringen Sie bitte Ihre Versichertenkarte mit.",
+    questions:[
+      {q:"Welche Beschwerden hat die Anruferin?", options:["Bauchschmerzen","Kopfschmerzen und Fieber","Husten"], answer:1, explain:"\"starke Kopfschmerzen und ein bisschen Fieber.\""},
+      {q:"Wann ist der nächste freie Termin?", options:["Um 16:30 Uhr","Morgen früh","Um 6:30 Uhr"], answer:0, explain:"\"Der nächste freie Termin ist erst um sechzehn Uhr dreißig.\""},
+      {q:"Was soll sie mitbringen?", options:["Ihren Ausweis","Ihre Versichertenkarte","Ein Rezept"], answer:1, explain:"\"Bringen Sie bitte Ihre Versichertenkarte mit.\""}
+    ]},
+  {id:"l-a2-2", level:"A2", title:"Wohnungssuche", topic:"Gespräch · Wohnen",
+    script:"Also, die Wohnung hat zwei Zimmer, eine Küche und ein Bad, insgesamt fünfundsechzig Quadratmeter. Die Miete liegt bei siebenhundertzwanzig Euro warm. Ein Balkon ist leider nicht dabei, aber es gibt einen kleinen Garten, den sich alle Mieter teilen. Die Wohnung liegt im dritten Stock, es gibt keinen Aufzug.",
+    questions:[
+      {q:"Wie viele Zimmer hat die Wohnung?", options:["Ein Zimmer","Zwei Zimmer","Drei Zimmer"], answer:1, explain:"\"die Wohnung hat zwei Zimmer.\""},
+      {q:"Wie hoch ist die Miete?", options:["720 € warm","650 € kalt","820 € warm"], answer:0, explain:"\"Die Miete liegt bei siebenhundertzwanzig Euro warm.\""},
+      {q:"Was gibt es nicht in dieser Wohnung?", options:["Ein Bad","Einen Aufzug","Eine Küche"], answer:1, explain:"\"es gibt keinen Aufzug.\""}
+    ]},
+  {id:"l-b1-1", level:"B1", title:"Radiobeitrag: Homeoffice", topic:"Kurzbericht · Arbeit",
+    script:"Immer mehr Unternehmen in Deutschland bieten ihren Angestellten die Möglichkeit, von zu Hause aus zu arbeiten. Laut einer aktuellen Umfrage arbeiten mittlerweile knapp vierzig Prozent der Angestellten mindestens einen Tag pro Woche im Homeoffice. Viele schätzen die Flexibilität, allerdings beklagen manche auch, dass ihnen der direkte Kontakt zu Kolleginnen und Kollegen fehlt. Experten empfehlen deshalb ein Mischmodell aus Büro- und Heimarbeit.",
+    questions:[
+      {q:"Wie viele Angestellte arbeiten laut der Umfrage mindestens einen Tag im Homeoffice?", options:["Etwa 20 Prozent","Knapp 40 Prozent","Über 80 Prozent"], answer:1, explain:"\"knapp vierzig Prozent der Angestellten\"."},
+      {q:"Was schätzen viele Angestellte am Homeoffice?", options:["Die Flexibilität","Das höhere Gehalt","Die kürzeren Arbeitstage"], answer:0, explain:"\"Viele schätzen die Flexibilität.\""},
+      {q:"Was empfehlen Experten?", options:["Nur noch im Büro zu arbeiten","Nur noch von zu Hause zu arbeiten","Ein Mischmodell aus beidem"], answer:2, explain:"\"Experten empfehlen deshalb ein Mischmodell aus Büro- und Heimarbeit.\""}
+    ]},
+  {id:"l-b1-2", level:"B1", title:"Streitgespräch: Nachbarn", topic:"Dialog · Konflikt",
+    script:"Entschuldigung, aber Ihre Musik ist wirklich sehr laut, und es ist schon nach zweiundzwanzig Uhr. Oh, das tut mir leid, das war mir gar nicht bewusst. Ich feiere heute meinen Geburtstag, aber ich drehe die Musik sofort leiser. Das wäre nett, danke. Und alles Gute zum Geburtstag übrigens! Vielen Dank, das ist sehr freundlich von Ihnen.",
+    questions:[
+      {q:"Worüber beschwert sich die Person?", options:["Über zu viel Licht","Über laute Musik","Über einen unangenehmen Geruch"], answer:1, explain:"\"Ihre Musik ist wirklich sehr laut.\""},
+      {q:"Warum feiert der Nachbar?", options:["Er hat eine neue Wohnung","Er hat Geburtstag","Er hat einen neuen Job"], answer:1, explain:"\"Ich feiere heute meinen Geburtstag.\""},
+      {q:"Wie reagiert der Nachbar auf die Beschwerde?", options:["Er ignoriert sie","Er wird wütend","Er entschuldigt sich und dreht leiser"], answer:2, explain:"Er sagt \"das tut mir leid\" und dreht die Musik leiser."}
+    ]},
+  {id:"l-b2-1", level:"B2", title:"Interview: Berufswechsel", topic:"Interview · Beruf",
+    script:"Frau Bauer, Sie haben mit vierzig Jahren Ihren Beruf komplett gewechselt, von der Bankangestellten zur Physiotherapeutin. Was hat Sie dazu bewogen? Ehrlich gesagt hatte ich das Gefühl, dass mir in meinem alten Job zunehmend die Erfüllung fehlte. Ich habe zwar gut verdient, aber irgendwann reicht das eben nicht mehr aus. Die Umschulung war finanziell und zeitlich eine Herausforderung, aber im Rückblick bereue ich diesen Schritt keine Sekunde.",
+    questions:[
+      {q:"Was war Frau Bauers ursprünglicher Beruf?", options:["Physiotherapeutin","Bankangestellte","Lehrerin"], answer:1, explain:"Sie wechselte \"von der Bankangestellten zur Physiotherapeutin\"."},
+      {q:"Warum hat sie ihren Beruf gewechselt?", options:["Sie hat zu wenig verdient","Ihr fehlte die Erfüllung im alten Job","Sie wurde entlassen"], answer:1, explain:"\"hatte ich das Gefühl, dass mir ... zunehmend die Erfüllung fehlte.\""},
+      {q:"Wie bewertet sie den Schritt im Rückblick?", options:["Sie bereut ihn","Sie ist unsicher","Sie bereut ihn keine Sekunde"], answer:2, explain:"\"bereue ich diesen Schritt keine Sekunde.\""}
+    ]},
+  {id:"l-b2-2", level:"B2", title:"Diskussion: Umweltpolitik", topic:"Podiumsdiskussion · Gesellschaft",
+    script:"Man kann nicht bestreiten, dass strengere Umweltauflagen für kleinere Betriebe eine erhebliche finanzielle Belastung darstellen. Das stimmt zwar grundsätzlich, allerdings sollte man bedenken, dass langfristig gerade diese Betriebe von einer frühzeitigen Umstellung profitieren könnten, sowohl was die Energiekosten als auch was das Image angeht. Es geht also nicht nur um kurzfristige Kosten, sondern um eine Investition in die Zukunftsfähigkeit des Unternehmens.",
+    questions:[
+      {q:"Was ist laut dem ersten Sprecher ein Problem strengerer Umweltauflagen?", options:["Sie sind zu kompliziert zu verstehen","Sie belasten kleinere Betriebe finanziell","Sie gelten nur für große Unternehmen"], answer:1, explain:"\"strengere Umweltauflagen für kleinere Betriebe eine erhebliche finanzielle Belastung darstellen.\""},
+      {q:"Welches Gegenargument bringt der zweite Sprecher?", options:["Die Auflagen seien unnötig","Langfristig könnten Betriebe von der Umstellung profitieren","Der Staat solle alle Kosten übernehmen"], answer:1, explain:"\"langfristig gerade diese Betriebe von einer frühzeitigen Umstellung profitieren könnten.\""},
+      {q:"Wie fasst der zweite Sprecher seinen Standpunkt zusammen?", options:["Als reine Kostenfrage","Als Investition in die Zukunftsfähigkeit","Als politisches Problem"], answer:2, explain:"\"eine Investition in die Zukunftsfähigkeit des Unternehmens.\""}
+    ]}
+];
+
+/* ==========================================================================
+   READING COMPREHENSION — real Goethe-format passages with Richtig/Falsch
+   and multiple-choice questions, two per level. These are original texts
+   written for this app (not reproduced from any copyrighted source). ========================================================================== */
+const READING_PASSAGES = [
+  {id:"r-a1-1", level:"A1", title:"Eine E-Mail von Tom", topic:"E-Mail · Alltag",
+    passage:"Liebe Julia,\n\nwie geht es dir? Mir geht es gut. Ich wohne jetzt in Köln, in einer kleinen Wohnung mit Küche und Bad. Meine Arbeit beginnt um acht Uhr und endet um siebzehn Uhr. Am Wochenende spiele ich gern Fußball mit Freunden. Kommst du im Sommer zu Besuch?\n\nViele Grüße,\nTom",
+    questions:[
+      {q:"Wo wohnt Tom?", options:["In Berlin","In Köln","In München"], answer:1, explain:"\"Ich wohne jetzt in Köln.\""},
+      {q:"Um wie viel Uhr beginnt Toms Arbeit?", options:["Um sieben Uhr","Um acht Uhr","Um siebzehn Uhr"], answer:1, explain:"\"Meine Arbeit beginnt um acht Uhr.\""},
+      {q:"Was macht Tom am Wochenende?", options:["Er arbeitet","Er spielt Fußball","Er kocht"], answer:1, explain:"\"Am Wochenende spiele ich gern Fußball mit Freunden.\""}
+    ]},
+  {id:"r-a1-2", level:"A1", title:"Aushang im Supermarkt", topic:"Anzeige · Alltag",
+    passage:"SUPERMARKT KAISER\nÖffnungszeiten: Montag bis Samstag, 7:00 – 20:00 Uhr\nSonntag geschlossen\n\nDiese Woche im Angebot:\nÄpfel — 1,50 € pro Kilo\nBrot — 2,20 € pro Stück\nMilch — 0,95 € pro Liter\n\nWir suchen ab sofort eine Kassiererin oder einen Kassierer, 20 Stunden pro Woche.",
+    questions:[
+      {q:"Wann hat der Supermarkt sonntags geöffnet?", options:["Von 7 bis 20 Uhr","Er hat gar nicht geöffnet","Nur vormittags"], answer:1, explain:"\"Sonntag geschlossen.\""},
+      {q:"Was kostet ein Kilo Äpfel?", options:["0,95 €","1,50 €","2,20 €"], answer:1, explain:"\"Äpfel — 1,50 € pro Kilo.\""},
+      {q:"Wie viele Stunden pro Woche ist die Stelle als Kassierer/in?", options:["10 Stunden","20 Stunden","40 Stunden"], answer:1, explain:"\"20 Stunden pro Woche.\""}
+    ]},
+  {id:"r-a2-1", level:"A2", title:"Blogeintrag: Mein erster Monat in Deutschland", topic:"Blog · Erfahrung",
+    passage:"Vor vier Wochen bin ich nach Deutschland gezogen, und ehrlich gesagt war der Anfang nicht leicht. Am schwierigsten war es, einen Termin beim Bürgeramt zu bekommen — ich musste fast drei Wochen warten. Positiv überrascht hat mich, wie pünktlich die Züge hier meistens fahren, das war ich aus meinem Heimatland nicht gewohnt. Mittlerweile habe ich schon ein paar nette Kollegen kennengelernt, und wir gehen manchmal gemeinsam nach der Arbeit etwas trinken.",
+    questions:[
+      {q:"Richtig oder falsch: Der Autor / die Autorin ist vor vier Wochen nach Deutschland gezogen.", options:["Richtig","Falsch"], answer:0, explain:"\"Vor vier Wochen bin ich nach Deutschland gezogen.\""},
+      {q:"Was war am Anfang am schwierigsten?", options:["Einen Termin beim Bürgeramt zu bekommen","Eine Wohnung zu finden","Deutsch zu sprechen"], answer:0, explain:"\"Am schwierigsten war es, einen Termin beim Bürgeramt zu bekommen.\""},
+      {q:"Was hat den Autor / die Autorin positiv überrascht?", options:["Das Essen","Die Pünktlichkeit der Züge","Das Wetter"], answer:1, explain:"\"Positiv überrascht hat mich, wie pünktlich die Züge hier meistens fahren.\""}
+    ]},
+  {id:"r-a2-2", level:"A2", title:"Kundenbewertung: Restaurant", topic:"Bewertung · Alltag",
+    passage:"Wir waren letzte Woche zu viert in diesem Restaurant und waren größtenteils zufrieden. Das Essen war frisch und lecker, besonders die Pasta können wir empfehlen. Leider mussten wir trotz Reservierung fast zwanzig Minuten auf einen Tisch warten, und der Service war an diesem Abend etwas gestresst. Für den Preis war die Portion außerdem eher klein. Wir kommen trotzdem gerne wieder, aber vielleicht an einem ruhigeren Abend.",
+    questions:[
+      {q:"Richtig oder falsch: Die Gäste hatten keine Reservierung.", options:["Richtig","Falsch"], answer:1, explain:"Sie hatten eine Reservierung, mussten aber trotzdem warten: \"trotz Reservierung\"."},
+      {q:"Was wird besonders empfohlen?", options:["Die Suppe","Die Pasta","Der Nachtisch"], answer:1, explain:"\"besonders die Pasta können wir empfehlen.\""},
+      {q:"Was war ein Kritikpunkt?", options:["Die Portionsgröße","Der Geschmack","Die Sauberkeit"], answer:0, explain:"\"die Portion außerdem eher klein.\""}
+    ]},
+  {id:"r-b1-1", level:"B1", title:"Zeitungsartikel: Fahrradstadt", topic:"Artikel · Gesellschaft",
+    passage:"Immer mehr Städte in Deutschland bauen ihr Radwegenetz aus, um den Autoverkehr in den Innenstädten zu reduzieren. In Münster etwa, das schon lange als Fahrradstadt gilt, legen viele Einwohner ihre täglichen Wege überwiegend mit dem Rad zurück. Kritiker bemängeln jedoch, dass in vielen anderen Städten die neuen Radwege oft unzusammenhängend verlaufen und daher wenig zur Verkehrssicherheit beitragen. Die Stadtplaner betonen, dass ein durchgängiges Netz erst über mehrere Jahre entstehen kann.",
+    questions:[
+      {q:"Warum bauen viele Städte ihr Radwegenetz aus?", options:["Um den Autoverkehr zu reduzieren","Um mehr Parkplätze zu schaffen","Weil es günstiger als Straßenbau ist"], answer:0, explain:"\"um den Autoverkehr in den Innenstädten zu reduzieren.\""},
+      {q:"Richtig oder falsch: In Münster fahren viele Einwohner überwiegend mit dem Auto.", options:["Richtig","Falsch"], answer:1, explain:"Sie legen ihre Wege \"überwiegend mit dem Rad\" zurück, nicht mit dem Auto."},
+      {q:"Was kritisieren manche an den neuen Radwegen?", options:["Sie sind zu teuer","Sie verlaufen oft unzusammenhängend","Sie sind zu breit"], answer:1, explain:"\"die neuen Radwege oft unzusammenhängend verlaufen.\""}
+    ]},
+  {id:"r-b1-2", level:"B1", title:"Forumsbeitrag: Vier-Tage-Woche", topic:"Forum · Arbeit",
+    passage:"Seit unser Unternehmen vor sechs Monaten auf eine Vier-Tage-Woche umgestellt hat, hat sich für mich einiges verändert. Anfangs war ich skeptisch, ob ich mein Arbeitspensum wirklich in vier statt fünf Tagen schaffen würde. Mittlerweile arbeite ich konzentrierter und plane meine Aufgaben besser, weil ich weiß, dass mir ein Tag weniger zur Verfügung steht. Mein einziger Kritikpunkt ist, dass wichtige Meetings manchmal kurzfristig auf meinen freien Tag verschoben werden.",
+    questions:[
+      {q:"Seit wann gilt die Vier-Tage-Woche in diesem Unternehmen?", options:["Seit einem Monat","Seit sechs Monaten","Seit einem Jahr"], answer:1, explain:"\"vor sechs Monaten auf eine Vier-Tage-Woche umgestellt.\""},
+      {q:"Wie hat sich das Arbeiten des Autors / der Autorin verändert?", options:["Er/sie arbeitet weniger konzentriert","Er/sie arbeitet konzentrierter und plant besser","Er/sie arbeitet gar nicht mehr"], answer:1, explain:"\"arbeite ich konzentrierter und plane meine Aufgaben besser.\""},
+      {q:"Was ist der einzige Kritikpunkt?", options:["Das Gehalt ist niedriger","Meetings werden manchmal auf den freien Tag verschoben","Die Kollegen sind unzufrieden"], answer:1, explain:"\"wichtige Meetings manchmal kurzfristig auf meinen freien Tag verschoben werden.\""}
+    ]},
+  {id:"r-b2-1", level:"B2", title:"Kommentar: Künstliche Intelligenz im Berufsalltag", topic:"Meinungsartikel · Technologie",
+    passage:"Es wäre naiv zu glauben, künstliche Intelligenz werde in den kommenden Jahren nur Routinetätigkeiten verändern. Vielmehr deutet vieles darauf hin, dass auch anspruchsvollere Berufsfelder, etwa im juristischen oder medizinischen Bereich, zunehmend von KI-gestützten Systemen unterstützt werden. Dabei sollte man jedoch nicht vorschnell von einer vollständigen Ersetzung menschlicher Arbeitskraft ausgehen. Realistischer erscheint ein Szenario, in dem sich Tätigkeitsprofile verschieben, wobei zwischenmenschliche und kreative Kompetenzen weiter an Bedeutung gewinnen dürften, statt an Wert zu verlieren.",
+    questions:[
+      {q:"Was ist die zentrale These des Kommentars?", options:["KI wird nur einfache Tätigkeiten verändern","Auch anspruchsvollere Berufsfelder werden von KI beeinflusst","KI wird alle Berufe vollständig ersetzen"], answer:1, explain:"\"auch anspruchsvollere Berufsfelder ... zunehmend von KI-gestützten Systemen unterstützt werden.\""},
+      {q:"Wovor warnt der Autor / die Autorin?", options:["Vor der vorschnellen Annahme einer vollständigen Ersetzung","Vor dem Verzicht auf KI","Vor zu hohen Kosten für KI-Systeme"], answer:0, explain:"\"sollte man jedoch nicht vorschnell von einer vollständigen Ersetzung menschlicher Arbeitskraft ausgehen.\""},
+      {q:"Welche Kompetenzen werden laut Text an Bedeutung gewinnen?", options:["Technische Kompetenzen allein","Zwischenmenschliche und kreative Kompetenzen","Nur juristische Fachkenntnisse"], answer:1, explain:"\"zwischenmenschliche und kreative Kompetenzen weiter an Bedeutung gewinnen dürften.\""}
+    ]},
+  {id:"r-b2-2", level:"B2", title:"Essay: Der Wert des Scheiterns", topic:"Essay · Gesellschaft",
+    passage:"In vielen Kulturen gilt Scheitern nach wie vor als etwas, das es tunlichst zu vermeiden gilt — dabei zeigt sich zunehmend, wie wertvoll der konstruktive Umgang mit Rückschlägen für die persönliche Entwicklung sein kann. Wer nie scheitert, hat womöglich auch nie wirklich etwas gewagt. Entscheidend ist dabei weniger das Scheitern selbst, sondern vielmehr die Frage, ob daraus gelernt wird. Unternehmen, die eine offene Fehlerkultur pflegen, berichten häufig von innovativeren Teams, da Mitarbeitende eher bereit sind, ungewöhnliche Ideen auszuprobieren, wenn sie keine übertriebenen Konsequenzen fürchten müssen.",
+    questions:[
+      {q:"Wie wird Scheitern in vielen Kulturen traditionell betrachtet?", options:["Als wertvolle Erfahrung","Als etwas, das vermieden werden sollte","Als Zeichen von Mut"], answer:1, explain:"\"gilt Scheitern ... als etwas, das es tunlichst zu vermeiden gilt.\""},
+      {q:"Was ist laut Text entscheidend?", options:["Scheitern komplett zu vermeiden","Ob aus dem Scheitern gelernt wird","Nie etwas Neues zu wagen"], answer:1, explain:"\"Entscheidend ist dabei ... vielmehr die Frage, ob daraus gelernt wird.\""},
+      {q:"Was berichten Unternehmen mit offener Fehlerkultur?", options:["Weniger Umsatz","Innovativere Teams","Mehr Kündigungen"], answer:1, explain:"\"berichten häufig von innovativeren Teams.\""}
+    ]}
+];
+
 /* ---- 10 short A1 practice tests, 5 questions each ---- */
 const GERMAN_TESTS = [
   {id:"t1", title:"Greetings & Introductions", topic:"Begrüßung & Vorstellung", questions:[
@@ -2146,6 +2287,306 @@ function bindTestEvents(){
   });
 }
 
+/* ==========================================================================
+   LISTENING: real audio via the browser's SpeechSynthesis API. No files,
+   no network — the browser's own German TTS voice reads the script aloud.
+   Goethe listening sections play each text (usually) twice, so we default
+   to that but let you replay freely while practicing. ========================================================================== */
+let germanVoice = null;
+function pickGermanVoice(){
+  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  germanVoice = voices.find(v=>v.lang==="de-DE") || voices.find(v=>v.lang && v.lang.startsWith("de")) || null;
+  return germanVoice;
+}
+if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = pickGermanVoice;
+
+function speakGerman(text, rate, onEnd){
+  if(!window.speechSynthesis){
+    alert("Your browser doesn't support built-in text-to-speech, so audio playback isn't available here. Chrome, Safari and Edge all support it.");
+    return;
+  }
+  window.speechSynthesis.cancel(); // stop anything already playing
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = "de-DE";
+  if(germanVoice) utter.voice = germanVoice;
+  utter.rate = rate || 0.95;
+  if(onEnd) utter.onend = onEnd;
+  window.speechSynthesis.speak(utter);
+}
+function playListeningScript(id, times, rate){
+  const item = LISTENING_EXERCISES.find(l=>l.id===id);
+  if(!item) return;
+  let remaining = times || 1;
+  const playOnce = ()=>{
+    remaining--;
+    speakGerman(item.script, rate, ()=>{ if(remaining>0) setTimeout(playOnce, 600); });
+  };
+  playOnce();
+}
+
+let germanOpenListening = null, germanOpenReading = null;
+
+/* ---- Generic exercise-list renderer shared by Listening and Reading.
+   kind: "listening" | "reading". Handles open/close, answer selection,
+   scoring, review notes and completion — identical shape to the A1
+   Tests tracker above, just pointed at a different data array/store. ---- */
+function renderSkillList(kind){
+  const isListening = kind==="listening";
+  const items = isListening ? LISTENING_EXERCISES : READING_PASSAGES;
+  const store = isListening ? "listening" : "reading";
+  const wrapId = isListening ? "listeningList" : "readingList";
+  const openVar = isListening ? germanOpenListening : germanOpenReading;
+  const wrap = document.getElementById(wrapId);
+  if(!wrap) return;
+  let html = "";
+  items.forEach((item,i)=>{
+    const rec = getSkillRecord(store, item.id);
+    const isOpen = openVar===item.id;
+    const bodyContent = isListening
+      ? `<div class="listen-player">
+          <button class="btn-mini" data-action="play2" data-item="${item.id}">▶ Play (x2, exam speed)</button>
+          <button class="btn-mini ghost" data-action="play1" data-item="${item.id}">▶ Play once, slower</button>
+        </div>
+        <p class="listen-hint">Audio is generated by your browser's built-in German voice — no files, works offline once the page is loaded.</p>`
+      : `<div class="reading-passage">${esc(item.passage).replace(/\n/g,"<br>")}</div>`;
+    html += `<div class="test-card ${rec.done?"done":""} ${isOpen?"open":""}" data-item="${item.id}">
+      <div class="test-card-head">
+        <div class="test-card-title">
+          <span class="test-num">${i+1}</span>
+          <div>
+            <h3>${esc(item.title)} <span class="level-tag">${esc(item.level)}</span></h3>
+            <span class="test-topic">${esc(item.topic)}</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="test-status">${rec.done ? "Completed" : "Not started"}</span>
+          <svg class="test-chevron" viewBox="0 0 24 24" width="16" height="16"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="test-body">
+        ${bodyContent}
+        ${item.questions.map((q,qi)=>renderQuestion(item,q,qi,rec)).join("")}
+        <div class="test-actions">
+          <button class="btn-mini" data-action="check" data-item="${item.id}">Check Answers</button>
+          <button class="btn-mini ghost" data-action="reset" data-item="${item.id}">Reset</button>
+          ${rec.submitted ? `<span class="test-score">Score: ${rec.score}/${item.questions.length}</span>` : ""}
+        </div>
+        <label class="test-review-label">What to work on</label>
+        <div class="test-review"><textarea data-item-review="${item.id}" placeholder="Words, grammar, mistakes to revisit...">${esc(rec.review)}</textarea></div>
+        <div class="g-done-row">
+          <label><input type="checkbox" data-item-done="${item.id}" ${rec.done?"checked":""}> Mark complete${rec.dateTaken?` · taken ${esc(rec.dateTaken)}`:""}</label>
+        </div>
+      </div>
+    </div>`;
+  });
+  wrap.innerHTML = html;
+  bindSkillListEvents(kind);
+}
+function bindSkillListEvents(kind){
+  const isListening = kind==="listening";
+  const items = isListening ? LISTENING_EXERCISES : READING_PASSAGES;
+  const store = isListening ? "listening" : "reading";
+  const wrapId = isListening ? "listeningList" : "readingList";
+  const wrap = document.getElementById(wrapId);
+  wrap.querySelectorAll(".test-card-head").forEach(head=>{
+    head.onclick = ()=>{
+      const id = head.closest(".test-card").dataset.item;
+      const cur = isListening ? germanOpenListening : germanOpenReading;
+      const next = cur===id ? null : id;
+      if(isListening) germanOpenListening = next; else germanOpenReading = next;
+      renderSkillList(kind);
+    };
+  });
+  wrap.querySelectorAll('input[type="radio"][data-test]').forEach(radio=>{
+    radio.onchange = ()=>{
+      const rec = getSkillRecord(store, radio.dataset.test);
+      rec.userAnswers[radio.dataset.q] = parseInt(radio.value,10);
+      saveData();
+    };
+  });
+  if(isListening){
+    wrap.querySelectorAll('[data-action="play2"]').forEach(btn=>{
+      btn.onclick = ()=> playListeningScript(btn.dataset.item, 2, 1);
+    });
+    wrap.querySelectorAll('[data-action="play1"]').forEach(btn=>{
+      btn.onclick = ()=> playListeningScript(btn.dataset.item, 1, 0.8);
+    });
+  }
+  wrap.querySelectorAll('[data-action="check"]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const item = items.find(t=>t.id===btn.dataset.item);
+      const rec = getSkillRecord(store, item.id);
+      let score = 0;
+      item.questions.forEach((q,qi)=>{ if(rec.userAnswers[qi]===q.answer) score++; });
+      rec.submitted = true;
+      rec.score = score;
+      saveData();
+      renderSkillList(kind);
+    };
+  });
+  wrap.querySelectorAll('[data-action="reset"]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const rec = getSkillRecord(store, btn.dataset.item);
+      rec.userAnswers = {};
+      rec.submitted = false;
+      rec.score = null;
+      saveData();
+      renderSkillList(kind);
+    };
+  });
+  wrap.querySelectorAll('[data-item-review]').forEach(ta=>{
+    ta.oninput = ()=>{
+      const rec = getSkillRecord(store, ta.dataset.itemReview);
+      rec.review = ta.value;
+      saveData();
+    };
+  });
+  wrap.querySelectorAll('[data-item-done]').forEach(cb=>{
+    cb.onchange = ()=>{
+      const rec = getSkillRecord(store, cb.dataset.itemDone);
+      rec.done = cb.checked;
+      rec.dateTaken = cb.checked ? fmtShort(new Date()) : "";
+      saveData();
+      renderSkillList(kind);
+    };
+  });
+}
+function renderListeningList(){ renderSkillList("listening"); }
+function renderReadingList(){ renderSkillList("reading"); }
+
+/* ==========================================================================
+   TIMED MOCK EXAM MODE — picks one reading passage + one listening
+   exercise for the chosen level, runs them back-to-back under a
+   countdown (like the real Goethe timing, scaled to a practice-length
+   session), then a timed writing prompt, then a self-directed speaking
+   prompt (no examiner — that part's on you and your husband/a tutor
+   whenever you're ready). Logs the run into the existing Mock Exam
+   tracker so everything stays in one place. ========================================================================== */
+const MOCK_WRITING_PROMPTS = {
+  A1:"Schreib eine kurze E-Mail (ca. 30–40 Wörter) an einen Freund / eine Freundin. Erzähl, was du am Wochenende gemacht hast.",
+  A2:"Schreib eine E-Mail (ca. 50–70 Wörter) an einen Kollegen / eine Kollegin. Sag ab, dass du morgen nicht zur Arbeit kommen kannst, und erkläre warum.",
+  B1:"Schreib einen Forumsbeitrag (ca. 80–100 Wörter): Was sind die Vor- und Nachteile, in einer Großstadt zu leben, verglichen mit einer Kleinstadt?",
+  B2:"Schreib einen Kommentar (ca. 150–180 Wörter) zu folgender These: \"Homeoffice sollte für alle Angestellten ein Recht sein, kein Privileg.\" Nimm klar Stellung und begründe deine Meinung."
+};
+const MOCK_SPEAKING_PROMPTS = {
+  A1:"Stell dich vor: Name, Alter, Herkunft, Familie, Hobbys. Sprich 1 Minute am Stück, ohne abzusetzen.",
+  A2:"Beschreib deinen letzten Urlaub oder ein besonderes Wochenende. Sprich 1–2 Minuten.",
+  B1:"Präsentiere ein Thema deiner Wahl (z. B. dein Heimatland, ein Hobby) für 2 Minuten und nenne Vor- und Nachteile.",
+  B2:"Diskutiere: Sollte man Studiengebühren einführen? Sprich 2–3 Minuten und begründe deine Position mit Argumenten und Gegenargumenten."
+};
+let mockRun = null; // {level, stage, timerEnd, timerId, readingId, listeningId}
+function startMockExam(level){
+  const reading = READING_PASSAGES.filter(r=>r.level===level);
+  const listening = LISTENING_EXERCISES.filter(l=>l.level===level);
+  const readingItem = reading[Math.floor(Math.random()*reading.length)];
+  const listeningItem = listening[Math.floor(Math.random()*listening.length)];
+  const readingMinutes = {A1:8, A2:10, B1:15, B2:20}[level];
+  const writingMinutes = {A1:10, A2:15, B1:20, B2:30}[level];
+  mockRun = {level, stage:"reading", readingId:readingItem.id, listeningId:listeningItem.id,
+    readingMinutes, writingMinutes, writingText:"", secondsLeft: readingMinutes*60, timerId:null};
+  renderMockRun();
+  startMockTimer();
+}
+function stopMockTimer(){ if(mockRun && mockRun.timerId){ clearInterval(mockRun.timerId); mockRun.timerId=null; } }
+function startMockTimer(){
+  stopMockTimer();
+  mockRun.timerId = setInterval(()=>{
+    mockRun.secondsLeft--;
+    const el = document.getElementById("mockTimerLabel");
+    if(el) el.textContent = fmtMockTime(mockRun.secondsLeft);
+    if(mockRun.secondsLeft<=0){
+      stopMockTimer();
+      advanceMockStage();
+    }
+  }, 1000);
+}
+function fmtMockTime(s){
+  if(s<0) s=0;
+  const m = Math.floor(s/60), sec = s%60;
+  return `${m}:${sec<10?"0":""}${sec}`;
+}
+function advanceMockStage(){
+  if(!mockRun) return;
+  if(mockRun.stage==="reading"){
+    mockRun.stage = "listening";
+    renderMockRun();
+  } else if(mockRun.stage==="listening"){
+    mockRun.stage = "writing";
+    mockRun.secondsLeft = mockRun.writingMinutes*60;
+    renderMockRun();
+    startMockTimer();
+  } else if(mockRun.stage==="writing"){
+    stopMockTimer();
+    mockRun.stage = "speaking";
+    renderMockRun();
+  }
+}
+function finishMockExam(){
+  stopMockTimer();
+  ensureGerman();
+  state.german.mockRuns.push({date:toISO(new Date()), level:mockRun.level, readingId:mockRun.readingId, listeningId:mockRun.listeningId});
+  state.german.mockExams.push({id:Date.now()+"", skill:"Full Mock Exam", date:toISO(new Date()),
+    score:"", notes:`${mockRun.level} timed mock — reading, listening, writing done; speaking self-practiced.`});
+  saveData();
+  mockRun = null;
+  renderMockRun();
+  renderMockExams();
+}
+function renderMockRun(){
+  const wrap = document.getElementById("mockRunArea");
+  if(!wrap) return;
+  if(!mockRun){
+    wrap.innerHTML = `<div class="mock-start-row">
+      ${["A1","A2","B1","B2"].map(lv=>`<button class="btn-mini" data-mock-start="${lv}">Start ${lv} Mock Exam</button>`).join("")}
+    </div>
+    <p class="listen-hint">Each level runs a timed reading section, a listening section (played with the browser's built-in German voice), a timed writing prompt, and ends with a speaking prompt for you to practice out loud — self-directed, no examiner.</p>`;
+    wrap.querySelectorAll("[data-mock-start]").forEach(btn=>{
+      btn.onclick = ()=> startMockExam(btn.dataset.mockStart);
+    });
+    return;
+  }
+  const {level, stage} = mockRun;
+  if(stage==="reading"){
+    const item = READING_PASSAGES.find(r=>r.id===mockRun.readingId);
+    wrap.innerHTML = `<div class="mock-stage">
+      <div class="mock-stage-head"><strong>Reading — ${esc(level)}</strong><span id="mockTimerLabel" class="mock-timer">${fmtMockTime(mockRun.secondsLeft)}</span></div>
+      <h3>${esc(item.title)}</h3>
+      <div class="reading-passage">${esc(item.passage).replace(/\n/g,"<br>")}</div>
+      <p class="listen-hint">Read the passage, then think through the questions below (answer them for real in the Reading tab afterward). Time yourself — when it hits zero we move on, just like the real exam.</p>
+      <button class="btn-mini" data-action="next-stage">I'm done reading — continue</button>
+    </div>`;
+    wrap.querySelector('[data-action="next-stage"]').onclick = ()=>{ stopMockTimer(); advanceMockStage(); };
+  } else if(stage==="listening"){
+    const item = LISTENING_EXERCISES.find(l=>l.id===mockRun.listeningId);
+    wrap.innerHTML = `<div class="mock-stage">
+      <div class="mock-stage-head"><strong>Listening — ${esc(level)}</strong></div>
+      <h3>${esc(item.title)}</h3>
+      <button class="btn-mini" data-action="play">▶ Play (x2, like the real exam)</button>
+      <p class="listen-hint">In the real exam you hear each text twice, then answer. Play it, then go answer for real in the Listening tab afterward.</p>
+      <button class="btn-mini" data-action="next-stage">Continue to Writing</button>
+    </div>`;
+    wrap.querySelector('[data-action="play"]').onclick = ()=> playListeningScript(item.id, 2, 1);
+    wrap.querySelector('[data-action="next-stage"]').onclick = ()=> advanceMockStage();
+  } else if(stage==="writing"){
+    wrap.innerHTML = `<div class="mock-stage">
+      <div class="mock-stage-head"><strong>Writing — ${esc(level)}</strong><span id="mockTimerLabel" class="mock-timer">${fmtMockTime(mockRun.secondsLeft)}</span></div>
+      <p class="g-homework-prompt">${esc(MOCK_WRITING_PROMPTS[level])}</p>
+      <textarea class="notes-area" id="mockWritingArea" placeholder="Write your answer here, in German, before the timer runs out...">${esc(mockRun.writingText)}</textarea>
+      <button class="btn-mini" data-action="next-stage">Finish Writing — continue to Speaking</button>
+    </div>`;
+    wrap.querySelector("#mockWritingArea").oninput = (e)=>{ mockRun.writingText = e.target.value; };
+    wrap.querySelector('[data-action="next-stage"]').onclick = ()=>{ stopMockTimer(); advanceMockStage(); };
+  } else if(stage==="speaking"){
+    wrap.innerHTML = `<div class="mock-stage">
+      <div class="mock-stage-head"><strong>Speaking — ${esc(level)}</strong></div>
+      <p class="g-homework-prompt">${esc(MOCK_SPEAKING_PROMPTS[level])}</p>
+      <p class="listen-hint">Say it out loud, on your own or with your husband — this app can't grade speaking, but the practice itself is what counts.</p>
+      <button class="btn-mini" data-action="finish">Finish Mock Exam &amp; Log It</button>
+    </div>`;
+    wrap.querySelector('[data-action="finish"]').onclick = ()=> finishMockExam();
+  }
+}
+
 /* ---- Mock exam tracker: log practice attempts across the four Goethe
    skills (Reading/Listening/Writing/Speaking) plus full mock exams.
    Manual log for now — real practice-test content comes with the
@@ -2208,6 +2649,9 @@ function renderGermanView(){
   renderDayPicker();
   renderDailyCard();
   renderTestsList();
+  renderListeningList();
+  renderReadingList();
+  renderMockRun();
   renderMockExams();
 }
 
@@ -2218,6 +2662,9 @@ document.getElementById("germanSubnav").addEventListener("click",(e)=>{
   btn.classList.add("active");
   document.getElementById("germanDaily").classList.toggle("hidden", btn.dataset.sub!=="daily");
   document.getElementById("germanTests").classList.toggle("hidden", btn.dataset.sub!=="tests");
+  document.getElementById("germanListening").classList.toggle("hidden", btn.dataset.sub!=="listening");
+  document.getElementById("germanReading").classList.toggle("hidden", btn.dataset.sub!=="reading");
+  document.getElementById("germanExamRun").classList.toggle("hidden", btn.dataset.sub!=="examrun");
   document.getElementById("germanMock").classList.toggle("hidden", btn.dataset.sub!=="mock");
 });
 
