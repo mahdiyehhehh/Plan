@@ -220,9 +220,21 @@
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 3.5h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 12h5M9.5 15.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
           A1 Tests
         </button>
+        <button data-sub="listening">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6L8 10H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M17 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Listening
+        </button>
+        <button data-sub="reading">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 6.5c-1.8-1.2-4.3-1.5-6.5-1v13c2.2-.5 4.7-.2 6.5 1 1.8-1.2 4.3-1.5 6.5-1v-13c-2.2-.5-4.7-.2-6.5 1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 6.5v13" stroke="currentColor" stroke-width="1.7"/></svg>
+          Reading
+        </button>
+        <button data-sub="examrun">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Timed Mock Exam
+        </button>
         <button data-sub="mock">
           <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 9h17M8 3v3M16 3v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          Mock Exams
+          Log
         </button>
       </nav>
 
@@ -242,9 +254,27 @@
         <div class="tests-list" id="testsList"></div>
       </div>
 
-      <!-- MOCK EXAMS SUB-VIEW -->
+      <!-- LISTENING SUB-VIEW -->
+      <div class="german-sub hidden" id="germanListening">
+        <p class="tests-intro">Real audio, generated on the spot by your browser's built-in German voice — no files to download. Two exercises per level (A1–B2), each played twice like the real Goethe Hören section, then multiple-choice questions.</p>
+        <div class="tests-list" id="listeningList"></div>
+      </div>
+
+      <!-- READING SUB-VIEW -->
+      <div class="german-sub hidden" id="germanReading">
+        <p class="tests-intro">Goethe-format reading passages — emails, articles, forum posts, essays — with Richtig/Falsch and multiple-choice comprehension questions, two per level (A1–B2).</p>
+        <div class="tests-list" id="readingList"></div>
+      </div>
+
+      <!-- TIMED MOCK EXAM SUB-VIEW -->
+      <div class="german-sub hidden" id="germanExamRun">
+        <p class="tests-intro">Pick a level and run a timed mock exam: reading (timed), listening (played twice), writing (timed prompt), then a speaking prompt to say out loud on your own — no examiner grading it, just real practice under time pressure.</p>
+        <div id="mockRunArea"><!-- injected by app.js --></div>
+      </div>
+
+      <!-- MOCK EXAMS LOG SUB-VIEW -->
       <div class="german-sub hidden" id="germanMock">
-        <p class="tests-intro">Log every practice attempt across all four Goethe skills — reading, listening, writing, speaking — plus full mock exams once you reach the exam-prep phase.</p>
+        <p class="tests-intro">Log every practice attempt across all four Goethe skills — reading, listening, writing, speaking — plus full mock exams. Timed mock exams from the tab above are logged here automatically.</p>
         <div id="mockExamTracker"><!-- injected by app.js --></div>
       </div>
 
