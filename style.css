@@ -866,6 +866,19 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
 .test-score{font-size:12px;font-weight:700;}
 .test-review-label{font-family:var(--font);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--g-ink-faint,var(--grey-dark));display:block;margin:10px 0 6px;}
 
+/* ---- Listening / Reading / Timed Mock Exam additions ---- */
+.level-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.04em;color:var(--red);background:var(--red-tint);border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle;}
+.listen-player{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.listen-hint{font-size:11px;color:var(--grey-dark);font-style:italic;margin:6px 0 14px;line-height:1.5;}
+.reading-passage{font-size:13.5px;line-height:1.7;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-sm,8px);padding:14px 16px;margin-bottom:14px;white-space:normal;}
+.mock-start-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.mock-stage{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--offwhite);padding:16px;}
+.mock-stage-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.mock-stage-head h3{margin-top:0;}
+.mock-timer{font-family:var(--font);font-size:15px;font-weight:800;color:var(--red);background:var(--red-tint);border-radius:999px;padding:3px 12px;}
+.mock-stage textarea{width:100%;min-height:120px;margin:10px 0;}
+.mock-stage .btn-mini{margin-top:8px;}
+
 
 @media (max-width:640px){
   .report-page{padding:18px 16px 24px;}
