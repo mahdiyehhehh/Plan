@@ -878,6 +878,19 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
 .mock-timer{font-family:var(--font);font-size:15px;font-weight:800;color:var(--red);background:var(--red-tint);border-radius:999px;padding:3px 12px;}
 .mock-stage textarea{width:100%;min-height:120px;margin:10px 0;}
 .mock-stage .btn-mini{margin-top:8px;}
+.official-audio-box{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--white);padding:14px 16px;margin-bottom:16px;}
+.official-audio-title{font-family:var(--font);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+.official-audio-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.listen-transcript{margin-top:8px;}
+.listen-transcript summary{cursor:pointer;font-size:11.5px;font-weight:700;color:var(--red);margin-bottom:8px;}
+.listen-transcript .reading-passage{margin-top:8px;}
+.tatoeba-links{display:flex;flex-direction:column;gap:4px;margin-top:8px;}
+.tatoeba-line{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--grey-dark);text-decoration:none;line-height:1.5;}
+.tatoeba-line:hover{color:var(--red);}
+.tatoeba-line span{border-bottom:1px dotted currentColor;}
+.g-vocab-box{background:var(--offwhite);border:1px solid var(--line);border-radius:var(--radius-sm,8px);padding:12px 14px;}
+.g-vocab-line{font-size:13.5px;line-height:1.8;}
+.g-vocab-line + .g-vocab-line{margin-top:4px;padding-top:4px;border-top:1px dashed var(--line);}
 
 
 @media (max-width:640px){
