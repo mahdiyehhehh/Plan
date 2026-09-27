@@ -144,6 +144,23 @@ function forvoWords(text){
   }).join("");
 }
 
+/* ---- Tatoeba: Forvo only hosts single words, not full spoken sentences —
+   Tatoeba is the sentence-level equivalent: a crowd-sourced sentence bank
+   where native speakers record themselves reading full sentences aloud.
+   We link out to a search for the exact sentence (can't embed their audio
+   directly, same as Forvo), split per-sentence so a whole dialogue gets
+   one 🔊 link per line rather than one link for the whole block. ---- */
+function tatoebaLink(sentence){
+  return `https://tatoeba.org/en/sentences/search?query=${encodeURIComponent(sentence.trim())}&from=deu`;
+}
+function tatoebaSentenceLinks(text){
+  if(!text) return "";
+  const sentences = String(text).split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(Boolean);
+  return `<div class="tatoeba-links">${sentences.map(s=>
+    `<a class="tatoeba-line" href="${tatoebaLink(s)}" target="_blank" rel="noopener noreferrer" title="Search this sentence on Tatoeba (real native speakers)">🔊 <span>${esc(s)}</span></a>`
+  ).join("")}</div>`;
+}
+
 /* ---------- category definitions ---------- */
 const CATEGORIES = [
   {
@@ -616,7 +633,7 @@ function getSkillRecord(store, id){
 
 /* ---- 30-day A1 curriculum. Each day has 1–2 lessons, so every grammar
    point and vocab set a full A1 exam needs is covered by Day 30. ---- */
-function L(topic,homework,example,natural,en){ return {topic,homework,example,natural,en}; }
+function L(topic,homework,example,natural,en,vocab){ return {topic,homework,example,natural,en,vocab}; }
 const GERMAN_DAYS = [
   {lessons:[ // Day 1
     L("Greetings & Introductions","Write 5 sentences introducing yourself: your name, nationality, age, city, and a language you speak.","Ich heiße Lisa. Ich bin 22 Jahre alt. Ich komme aus Italien und ich spreche Italienisch und ein bisschen Deutsch.","Ich bin Lisa, 22. Komm' aus Italien und spreche Italienisch und n bisschen Deutsch. Und du, wie heißt du?","My name is Lisa. I am 22 years old. I come from Italy and I speak Italian and a little German."),
@@ -654,14 +671,16 @@ const GERMAN_DAYS = [
     L("Asking About Time & Schedules","Write a short dialogue (4 lines) asking someone what time a train, meeting, or movie starts.","Wann beginnt der Film? — Um neunzehn Uhr.","Wann geht der Film los? — Um sieben, glaub ich.","When does the film start? — At seven p.m.")
   ]},
   {lessons:[ // Day 10
-    L("Days, Months, Seasons","List the 7 days and 12 months in German, then write which season you like best and why.","Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.","Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten.","My favorite month is July, in summer, because it's warm.")
+    L("Days, Months, Seasons","List the 7 days and 12 months in German, then write which season you like best and why.","Mein Lieblingsmonat ist Juli, im Sommer, weil es warm ist.","Ich mag den Sommer am liebsten, im Juli ist's einfach am schönsten.","My favorite month is July, in summer, because it's warm.",
+      ["Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag","Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember","der Frühling, der Sommer, der Herbst, der Winter"])
   ]},
   {lessons:[ // Day 11
     L("Daily Routine (Separable Verbs)","Write 8 sentences describing your typical day using separable verbs (aufstehen, anziehen, fernsehen...).","Ich stehe um sieben Uhr auf. Ich ziehe mich an. Abends sehe ich fern.","Ich steh um sieben auf, zieh mich schnell an, und abends häng ich vorm Fernseher.","I get up at seven o'clock. I get dressed. In the evening I watch TV."),
     L("More Separable Verbs","Write 5 more sentences about your week using einkaufen, anrufen, aufräumen, einschlafen.","Ich kaufe samstags ein. Ich rufe meine Mutter an.","Ich kauf immer samstags ein, und ruf danach meine Mama an.","I go shopping on Saturdays. I call my mother.")
   ]},
   {lessons:[ // Day 12
-    L("Food & Drink Vocabulary","Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.","der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.","Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend.","the rice, the milk, the bread. I like eating pasta with tomato sauce."),
+    L("Food & Drink Vocabulary","Write a shopping list of 10 foods with their articles, plus one sentence about your favorite meal.","der Reis, die Milch, das Brot. Ich esse gern Nudeln mit Tomatensoße.","Ich hab total Bock auf Nudeln mit Tomatensoße heute Abend.","the rice, the milk, the bread. I like eating pasta with tomato sauce.",
+      ["der Reis, die Milch, das Brot, die Nudeln, das Obst, das Gemüse, der Käse, das Ei, der Fisch, das Fleisch, der Zucker, das Salz"]),
     L("Asking for Quantities at the Market","Write a short dialogue buying groceries, asking for specific amounts (ein Kilo, ein Liter, ein Stück).","Ich hätte gern ein Kilo Äpfel und einen Liter Milch.","Ich brauch noch n Kilo Äpfel und n bisschen Milch.","I'd like a kilo of apples and a liter of milk.")
   ]},
   {lessons:[ // Day 13
@@ -687,11 +706,13 @@ const GERMAN_DAYS = [
     L("Understanding Directions Given to You","Write directions someone might give you, then repeat them back in your own words to check you understood.","Gehen Sie zuerst rechts, dann die zweite Straße links.","Erst rechts, dann die zweite links — hab ich's richtig verstanden?","First go right, then take the second street on the left.")
   ]},
   {lessons:[ // Day 19
-    L("Places in the City","List 10 places in a city with their articles and one sentence for each about what you do there.","In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.","Wir treffen uns im Park, ja? Da spielen wir immer Fußball.","In the library I read books. In the park I play soccer.")
+    L("Places in the City","List 10 places in a city with their articles and one sentence for each about what you do there.","In der Bibliothek lese ich Bücher. Im Park spiele ich Fußball.","Wir treffen uns im Park, ja? Da spielen wir immer Fußball.","In the library I read books. In the park I play soccer.",
+      ["die Bibliothek, der Park, das Kino, die Schule, das Krankenhaus, der Bahnhof, die Post, das Rathaus, die Kirche, der Supermarkt, das Restaurant, die Bank"])
   ]},
   {lessons:[ // Day 20
     L("Past Tense — Perfekt (basics)","Write 6 sentences about yesterday using the Perfekt tense with haben or sein.","Ich habe gestern Deutsch gelernt. Ich bin ins Kino gegangen.","Ich hab gestern noch Deutsch gelernt und bin dann ins Kino gegangen.","I studied German yesterday. I went to the cinema."),
-    L("Perfekt: haben vs. sein Verbs","Sort 8 verbs into \"takes haben\" or \"takes sein\" in the Perfekt, then write one sentence with each group.","Ich habe gegessen (haben). Ich bin gefahren (sein).","Ich hab gestern echt viel gegessen, und bin dann früh ins Bett.","I ate (with haben). I traveled/drove (with sein).")
+    L("Perfekt: haben vs. sein Verbs","Sort 8 verbs into \"takes haben\" or \"takes sein\" in the Perfekt, then write one sentence with each group.","Ich habe gegessen (haben). Ich bin gefahren (sein).","Ich hab gestern echt viel gegessen, und bin dann früh ins Bett.","I ate (with haben). I traveled/drove (with sein).",
+      ["Takes haben: essen, trinken, machen, spielen","Takes sein: fahren, gehen, kommen, laufen"])
   ]},
   {lessons:[ // Day 21
     L("Hobbies & Free Time","Write a paragraph (5–6 sentences) about your hobbies and how often you do them.","Ich spiele gern Fußball. Ich mache das zweimal pro Woche. Ich lese auch gern.","Ich zock gern und spiel zweimal die Woche Fußball, sonst chill ich meistens.","I like playing soccer. I do that twice a week. I also like reading.")
@@ -1938,6 +1959,7 @@ function renderSlangCard(){
     <span class="slang-eyebrow">How Germans Actually Say It <span class="day-of">· Day ${germanCurrentDay}</span></span>
     <h3 class="slang-phrase">${forvoWords(item.natural)}</h3>
     <p class="slang-exam">Exam-correct: <strong>${forvoWords(item.exam)}</strong></p>
+    ${tatoebaSentenceLinks(item.natural + " " + item.exam)}
     <p class="slang-meaning">${esc(item.meaning)}</p>
     <p class="slang-note">${esc(item.note)}</p>
   `;
@@ -2103,11 +2125,16 @@ function renderDailyCard(){
       <div class="g-learn">
         <div class="g-learn-label"><span class="dot"></span>Learn This First <span class="g-tap-hint">tap any word to hear it</span></div>
         <div class="g-phrase-pair">
-          <div class="g-phrase-box g-phrase-exam"><span class="g-phrase-tag">Goethe Exam-Correct</span>${forvoWords(lesson.example)}</div>
-          <div class="g-phrase-box g-phrase-natural"><span class="g-phrase-tag">How Germans Actually Say It</span>${forvoWords(lesson.natural)}</div>
+          <div class="g-phrase-box g-phrase-exam"><span class="g-phrase-tag">Goethe Exam-Correct</span>${forvoWords(lesson.example)}${tatoebaSentenceLinks(lesson.example)}</div>
+          <div class="g-phrase-box g-phrase-natural"><span class="g-phrase-tag">How Germans Actually Say It</span>${forvoWords(lesson.natural)}${tatoebaSentenceLinks(lesson.natural)}</div>
           ${lesson.en?`<div class="g-phrase-en">${esc(lesson.en)}</div>`:""}
         </div>
       </div>
+      ${lesson.vocab && lesson.vocab.length ? `
+      <div class="g-field">
+        <div class="g-field-label"><span class="dot"></span>Vocabulary You'll Need <span class="g-tap-hint">tap any word to hear it</span></div>
+        <div class="g-vocab-box">${lesson.vocab.map(line=>`<div class="g-vocab-line">${forvoWords(line)}</div>`).join("")}</div>
+      </div>` : ""}
       <div class="g-field">
         <div class="g-field-label"><span class="dot"></span>Homework</div>
         <div class="g-homework-prompt">${esc(lesson.homework)}</div>
@@ -2330,6 +2357,26 @@ let germanOpenListening = null, germanOpenReading = null;
    kind: "listening" | "reading". Handles open/close, answer selection,
    scoring, review notes and completion — identical shape to the A1
    Tests tracker above, just pointed at a different data array/store. ---- */
+/* ---- Official Goethe-Institut sample audio — real, human-recorded exam
+   audio (not TTS), one page per level. Free, no login. Forvo only hosts
+   single words, not full spoken dialogues, so for real human voices
+   reading full exam-length texts, these official listening-module
+   samples are the closest real-audio equivalent. ---- */
+const OFFICIAL_AUDIO_LINKS = {
+  A1:"https://www.goethe.de/ins/pt/de/spr/prf/gzsd1/ueb.html",
+  A2:"https://goethe.de/ins/ie/en/spr/prf/gzsd2/ueb.html",
+  B1:"https://www.goethe.de/ins/gb/de/m/sta/lon/prf/b1e/ueb.html",
+  B2:"https://goethe.de/ins/ie/en/spr/prf/gzb2/ue9.html"
+};
+function officialAudioLinksHtml(){
+  return `<div class="official-audio-box">
+    <div class="official-audio-title">Real native-speaker exam audio (official Goethe-Institut, not TTS)</div>
+    <p class="listen-hint" style="margin-top:0;">Forvo only has recordings of single words, not full spoken dialogues — so for real human voices reading full exam-length texts, these are the Goethe-Institut's own official sample recordings, free, no login:</p>
+    <div class="official-audio-links">
+      ${["A1","A2","B1","B2"].map(lv=>`<a href="${OFFICIAL_AUDIO_LINKS[lv]}" target="_blank" rel="noopener noreferrer" class="btn-mini ghost">${lv} sample audio &#8599;</a>`).join("")}
+    </div>
+  </div>`;
+}
 function renderSkillList(kind){
   const isListening = kind==="listening";
   const items = isListening ? LISTENING_EXERCISES : READING_PASSAGES;
@@ -2338,7 +2385,7 @@ function renderSkillList(kind){
   const openVar = isListening ? germanOpenListening : germanOpenReading;
   const wrap = document.getElementById(wrapId);
   if(!wrap) return;
-  let html = "";
+  let html = isListening ? officialAudioLinksHtml() : "";
   items.forEach((item,i)=>{
     const rec = getSkillRecord(store, item.id);
     const isOpen = openVar===item.id;
@@ -2347,7 +2394,13 @@ function renderSkillList(kind){
           <button class="btn-mini" data-action="play2" data-item="${item.id}">▶ Play (x2, exam speed)</button>
           <button class="btn-mini ghost" data-action="play1" data-item="${item.id}">▶ Play once, slower</button>
         </div>
-        <p class="listen-hint">Audio is generated by your browser's built-in German voice — no files, works offline once the page is loaded.</p>`
+        <p class="listen-hint">Audio is generated by your browser's built-in German voice — no files, works offline once the page is loaded.</p>
+        <details class="listen-transcript">
+          <summary>Show transcript &amp; tap-to-hear words (real Forvo pronunciations)</summary>
+          <div class="reading-passage">${forvoWords(item.script)}</div>
+          <p class="listen-hint">Real people saying each line (Tatoeba, sentence-level — Forvo doesn't have full sentences):</p>
+          ${tatoebaSentenceLinks(item.script)}
+        </details>`
       : `<div class="reading-passage">${esc(item.passage).replace(/\n/g,"<br>")}</div>`;
     html += `<div class="test-card ${rec.done?"done":""} ${isOpen?"open":""}" data-item="${item.id}">
       <div class="test-card-head">
@@ -2373,6 +2426,7 @@ function renderSkillList(kind){
         </div>
         <label class="test-review-label">What to work on</label>
         <div class="test-review"><textarea data-item-review="${item.id}" placeholder="Words, grammar, mistakes to revisit...">${esc(rec.review)}</textarea></div>
+
         <div class="g-done-row">
           <label><input type="checkbox" data-item-done="${item.id}" ${rec.done?"checked":""}> Mark complete${rec.dateTaken?` · taken ${esc(rec.dateTaken)}`:""}</label>
         </div>
