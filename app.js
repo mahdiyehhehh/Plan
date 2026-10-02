@@ -547,8 +547,22 @@ function ensureGerman(){
   if(!state.german.reading) state.german.reading = {};
   if(!state.german.mockExams) state.german.mockExams = [];
   if(!state.german.mockRuns) state.german.mockRuns = [];
+  if(!state.german.restDates) state.german.restDates = []; // ISO dates marked as rest days — protects the streak without requiring lessons
   if(!state.german.currentDay) state.german.currentDay = 1;
   germanCurrentDay = state.german.currentDay;
+}
+/* ---- Rest Day: a manual on/off toggle for today (or yesterday, for the
+   "I was too sick to even open this yesterday" case). Marking a date as
+   a rest day means the streak counter below treats it as a kept day,
+   without needing any lesson done. Toggle it on when life happens,
+   toggle it off again any time — fully reversible, no penalty either way. ---- */
+function isRestDay(iso){ return state.german.restDates.includes(iso); }
+function toggleRestDay(iso){
+  ensureGerman();
+  const idx = state.german.restDates.indexOf(iso);
+  if(idx===-1) state.german.restDates.push(iso);
+  else state.german.restDates.splice(idx,1);
+  saveData();
 }
 let germanCurrentDay = 1;
 let germanOpenTest = null;
@@ -600,6 +614,9 @@ function germanCompletionDateSet(){
         if(week.days[dk] && week.days[dk].germanDone) set.add(toISO(addDays(monday,i)));
       });
     });
+  }
+  if(state.german && state.german.restDates){
+    state.german.restDates.forEach(iso=>set.add(iso));
   }
   return set;
 }
@@ -1949,6 +1966,38 @@ function renderGermanProgressRing(){
     const streak = germanCurrentStreak();
     streakEl.textContent = streak>0 ? `🔥 ${streak}-day streak` : "";
   }
+  renderRestRow();
+}
+
+/* ---- Rest Day row: a simple on/off toggle for today and yesterday.
+   Life happens — sickness, university deadlines, whatever. Marking a
+   day as a Rest Day keeps the streak intact without needing any lesson
+   done that day. No limit on how many you use, fully reversible. ---- */
+function renderRestRow(){
+  const wrap = document.getElementById("germanRestRow");
+  if(!wrap) return;
+  ensureGerman();
+  const today = new Date(); today.setHours(0,0,0,0);
+  const yesterday = addDays(today,-1);
+  const todayISO = toISO(today), yestISO = toISO(yesterday);
+  const totalRest = state.german.restDates.length;
+  wrap.innerHTML = `
+    <div class="g-rest-toggle-group">
+      <button class="g-rest-btn ${isRestDay(todayISO)?"active":""}" data-rest="${todayISO}">
+        ${isRestDay(todayISO) ? "🌙 Today is a Rest Day" : "🌙 Take a Rest Day today"}
+      </button>
+      <button class="g-rest-btn ${isRestDay(yestISO)?"active":""}" data-rest="${yestISO}">
+        ${isRestDay(yestISO) ? "🌙 Yesterday marked as Rest" : "🌙 Mark yesterday as Rest too"}
+      </button>
+    </div>
+    ${totalRest>0 ? `<p class="g-rest-note">${totalRest} rest day${totalRest===1?"":"s"} used so far — no limit, no penalty. Your lesson-day number never moves on its own either; it only changes when you tap a different day below.</p>` : `<p class="g-rest-note">Can't do lessons today? Toggle this on — it keeps your streak alive with zero guilt. Toggle off any time.</p>`}
+  `;
+  wrap.querySelectorAll("[data-rest]").forEach(btn=>{
+    btn.onclick = ()=>{
+      toggleRestDay(btn.dataset.rest);
+      renderGermanProgressRing();
+    };
+  });
 }
 
 function renderSlangCard(){
