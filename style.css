@@ -991,33 +991,27 @@ a.fv-word:hover,a.fv-word:focus{background:var(--red-tint);color:var(--red-dark,
 }
 
 /* ================= Daily nudge card ================= */
-.daily-nudge{
-  position:fixed;
-  left:50%;
-  top:calc(14px + env(safe-area-inset-top,0px));
-  transform:translateX(-50%) translateY(-20px);
-  width:min(360px,92vw);
-  background:var(--white);
-  border:1px solid var(--red);
-  border-left:5px solid var(--red);
-  border-radius:var(--radius-md);
-  box-shadow:0 10px 28px rgba(17,17,17,.28);
-  padding:12px 14px 14px;
-  opacity:0;
-  transition:opacity .25s ease,transform .25s ease;
-  z-index:1000;
+.nudge-overlay{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;padding:18px;
+  background:rgba(17,17,17,.4);
+  opacity:0;transition:opacity .3s ease;
 }
-.daily-nudge.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.daily-nudge-head{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  font-size:13px;font-weight:800;color:var(--red);margin-bottom:6px;
+.nudge-overlay.show{opacity:1;}
+.nudge-card{
+  width:min(300px,100%);
+  background:var(--white);border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 14px 36px rgba(17,17,17,.32);
+  padding:18px 18px 16px;
+  transform:translateY(12px) scale(.96);transition:transform .3s ease;
 }
-.daily-nudge-x{
-  border:none;background:none;color:var(--grey-dark);font-size:14px;cursor:pointer;padding:2px 4px;line-height:1;
-}
-.daily-nudge-msg{font-size:13px;font-weight:600;color:var(--black);margin-bottom:6px;line-height:1.35;}
-.daily-nudge-mot{font-size:12px;color:var(--grey-dark);margin-bottom:10px;line-height:1.35;}
-.daily-nudge-btn{
-  border:none;background:var(--red);color:var(--white);font-weight:700;font-size:12.5px;
-  padding:8px 12px;border-radius:999px;cursor:pointer;
+.nudge-overlay.show .nudge-card{transform:translateY(0) scale(1);}
+.nudge-title{font-size:16px;font-weight:800;color:var(--black);line-height:1.3;margin-bottom:6px;}
+.nudge-desc{font-size:12.5px;color:var(--grey-dark);line-height:1.45;margin-bottom:14px;}
+.nudge-bar{height:6px;border-radius:5px;background:var(--line);overflow:hidden;margin-bottom:5px;}
+.nudge-fill{height:100%;border-radius:5px;background:var(--red);}
+.nudge-pct{font-size:11px;color:var(--grey-dark);margin-bottom:14px;}
+.nudge-btn{
+  display:block;width:100%;border:none;border-radius:999px;font-weight:700;font-size:13px;
+  padding:10px 14px;cursor:pointer;font-family:inherit;background:var(--red);color:var(--white);
 }
