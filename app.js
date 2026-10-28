@@ -601,30 +601,29 @@ function dayIsDone(day){
    course day was actually completed (rec.doneDate), not by the course's
    sequential day number. This is what lets the "7 Days Plan" week sheet
    show a live streak instead of a disconnected, manually-typed video count. ---- */
-function germanCompletionDateSet(){
-  // Streak = calendar dates on which a lesson day was completed, i.e. the
-  // days that carry the red dot in the day picker (dayIsDone). Rest days and
-  // the weekly "German done" checkbox no longer count. Read-only: nothing
-  // stored is changed.
-  const set = new Set();
-  if(state.german && state.german.days){
-    Object.keys(state.german.days).forEach(k=>{
-      const rec = state.german.days[k];
-      if(rec && rec.doneDate && dayIsDone(+k)) set.add(rec.doneDate);
-    });
-  }
-  return set;
-}
 function germanCurrentStreak(){
-  const dates = germanCompletionDateSet();
-  if(dates.size===0) return 0;
-  let cursor = new Date(); cursor.setHours(0,0,0,0);
-  if(!dates.has(toISO(cursor))){
-    cursor = addDays(cursor,-1);
-    if(!dates.has(toISO(cursor))) return 0; // streak broken (nothing today or yesterday)
-  }
+  // Streak = run of consecutive lesson days that carry the red dot (dayIsDone),
+  // ending at the most recent dotted day. Days completed before the app saved
+  // dates still count. The run is cut if two neighbouring dotted days both have
+  // a saved date more than 1 calendar day apart, and the streak is 0 if the
+  // latest dotted day was completed before yesterday. Read-only: nothing stored
+  // is changed. Rest days / the weekly "German done" box do not count.
+  if(!state.german || !state.german.days) return 0;
+  const done = new Set();
+  Object.keys(state.german.days).forEach(k=>{ if(dayIsDone(+k)) done.add(+k); });
+  if(done.size===0) return 0;
+  const dateOf = d=>{ const r=state.german.days[d]; return (r && r.doneDate) ? new Date(r.doneDate+"T00:00:00") : null; };
+  let day = Math.max(...done);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const lastDate = dateOf(day);
+  if(lastDate && Math.round((today-lastDate)/86400000) > 1) return 0; // streak broken
   let streak = 0;
-  while(dates.has(toISO(cursor))){ streak++; cursor = addDays(cursor,-1); }
+  while(done.has(day)){
+    streak++;
+    const cur = dateOf(day), prev = dateOf(day-1);
+    if(done.has(day-1) && cur && prev && Math.round((cur-prev)/86400000) > 1) break;
+    day--;
+  }
   return streak;
 }
 function getTestRecord(id){
@@ -2924,3 +2923,80 @@ initTheme();
 
 /* ---------- init ---------- */
 renderWeekView();
+
+/* ---------- daily nudge card ----------
+   Shown every time the site opens, only if no lesson day has been completed
+   today. Purely cosmetic and read-only: it never writes to saved data. ---------- */
+function showDailyNudge(){
+  try{
+    if(!state.german || !state.german.days) { /* new user: still nudge Day 1 */ }
+    const days = (state.german && state.german.days) || {};
+    const todayISO = toISO(new Date());
+    let highestDone = 0, doneToday = false;
+    Object.keys(days).forEach(k=>{
+      if(dayIsDone(+k)){
+        highestDone = Math.max(highestDone, +k);
+        if(days[k] && days[k].doneDate === todayISO) doneToday = true;
+      }
+    });
+    if(doneToday) return; // today's lesson already done — no roast
+    const n = highestDone + 1;
+    const s = germanCurrentStreak();
+    const withStreak = [
+      `Day ${n} is waiting, and your ${s}-day streak is starting to ask where you've been. 👀`,
+      `You opened the planner but not the lesson. Bold strategy. Your ${s}-day streak is sweating.`,
+      `Your ${s}-day streak just called. It says it feels a little neglected.`,
+      `Future you in Germany is quietly sighing at present you. Day ${n}. Go.`
+    ];
+    const noStreak = [
+      `Day ${n} hasn't done itself. I checked.`,
+      `Opening the app counts as 10% of the lesson. The other 90% is Day ${n}.`,
+      `Streak: 0. Potential: unlimited. Start with Day ${n} today.`,
+      `The Ausbildung dream is not going to learn German by itself. Day ${n} is ready.`
+    ];
+    const motivation = [
+      "One small lesson now beats a perfect plan later.",
+      "You've already come this far. Don't let today be the gap.",
+      "10 focused minutes today is worth more than 2 hours \"someday\".",
+      "Every dotted day is proof that you can do this. Add another one."
+    ];
+    const pool = s>0 ? withStreak : noStreak;
+    const pick = a=>a[Math.floor(Math.random()*a.length)];
+
+    const old = document.getElementById("dailyNudge");
+    if(old) old.remove();
+    const card = document.createElement("div");
+    card.id = "dailyNudge";
+    card.className = "daily-nudge";
+    card.setAttribute("role","alert");
+    const head = document.createElement("div");
+    head.className = "daily-nudge-head";
+    const title = document.createElement("span");
+    title.textContent = "⚠️ Today's lesson not done yet";
+    const x = document.createElement("button");
+    x.type = "button"; x.className = "daily-nudge-x"; x.setAttribute("aria-label","Dismiss");
+    x.textContent = "✕";
+    head.appendChild(title); head.appendChild(x);
+    const msg = document.createElement("div");
+    msg.className = "daily-nudge-msg"; msg.textContent = pick(pool);
+    const mot = document.createElement("div");
+    mot.className = "daily-nudge-mot"; mot.textContent = pick(motivation);
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "daily-nudge-btn"; btn.textContent = "Okay, okay, I'm going 😅";
+    card.appendChild(head); card.appendChild(msg); card.appendChild(mot); card.appendChild(btn);
+    document.body.appendChild(card);
+
+    let timer = null;
+    const close = ()=>{
+      if(timer) clearTimeout(timer);
+      card.classList.remove("show");
+      setTimeout(()=>card.remove(), 300);
+    };
+    x.onclick = close; btn.onclick = close;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.add("show")));
+    timer = setTimeout(close, 15000);
+  }catch(e){
+    console.error("Daily nudge skipped", e);
+  }
+}
+setTimeout(showDailyNudge, 700);
