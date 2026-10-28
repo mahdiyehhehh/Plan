@@ -602,21 +602,16 @@ function dayIsDone(day){
    sequential day number. This is what lets the "7 Days Plan" week sheet
    show a live streak instead of a disconnected, manually-typed video count. ---- */
 function germanCompletionDateSet(){
+  // Streak = calendar dates on which a lesson day was completed, i.e. the
+  // days that carry the red dot in the day picker (dayIsDone). Rest days and
+  // the weekly "German done" checkbox no longer count. Read-only: nothing
+  // stored is changed.
   const set = new Set();
   if(state.german && state.german.days){
-    Object.values(state.german.days).forEach(rec=>{ if(rec && rec.doneDate) set.add(rec.doneDate); });
-  }
-  if(state.weeks){
-    Object.keys(state.weeks).forEach(mondayISO=>{
-      const week = state.weeks[mondayISO];
-      const monday = new Date(mondayISO+"T00:00:00");
-      DAY_KEYS.forEach((dk,i)=>{
-        if(week.days[dk] && week.days[dk].germanDone) set.add(toISO(addDays(monday,i)));
-      });
+    Object.keys(state.german.days).forEach(k=>{
+      const rec = state.german.days[k];
+      if(rec && rec.doneDate && dayIsDone(+k)) set.add(rec.doneDate);
     });
-  }
-  if(state.german && state.german.restDates){
-    state.german.restDates.forEach(iso=>set.add(iso));
   }
   return set;
 }
