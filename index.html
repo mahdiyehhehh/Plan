@@ -180,8 +180,8 @@
 
       <div class="g-hero">
         <p class="g-eyebrow">Language Path</p>
-        <h1 class="g-title">Goethe B1 Path</h1>
-        <p class="g-subtitle">A1 <span class="sep">&rarr;</span> A2 <span class="sep">&rarr;</span> B1 <span class="sep">&mdash;</span> 6–7 months, exam-ready &amp; street-ready</p>
+        <h1 class="g-title">Goethe B2 Path</h1>
+        <p class="g-subtitle">A1 <span class="sep">&rarr;</span> A2 <span class="sep">&rarr;</span> B1 <span class="sep">&rarr;</span> B2 <span class="sep">&mdash;</span> 240 days, family-ready &amp; Ausbildung-ready</p>
 
         <div class="g-progress-row">
           <div class="g-progress-ring-wrap">
@@ -189,7 +189,7 @@
               <circle cx="30" cy="30" r="26" fill="none" class="g-ring-track" stroke-width="5"/>
               <circle id="germanRingFg" class="g-ring-fg" cx="30" cy="30" r="26" fill="none" stroke-width="5" stroke-linecap="round" transform="rotate(-90 30 30)"/>
             </svg>
-            <span id="germanRingLabel" class="g-ring-label">0/180</span>
+            <span id="germanRingLabel" class="g-ring-label">0/240</span>
           </div>
           <div class="g-progress-copy">
             <strong>Days Completed</strong>
@@ -205,7 +205,7 @@
           <span class="g-goal-icon">
             <svg viewBox="0 0 24 24" width="13" height="13"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M17 7l3-3m0 0h-2.4M20 4v2.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
-          <p class="g-goal-text"><strong>Goal:</strong> pass the Goethe B1 exam <span class="g-goal-dim">(B2 if the pace holds)</span></p>
+          <p class="g-goal-text"><strong>Goal:</strong> speak comfortably with family &amp; reach CEFR B2 <span class="g-goal-dim">(Goethe B1 checkpoint around month 4)</span></p>
         </div>
 
         <div class="g-rest-row" id="germanRestRow"><!-- injected by app.js --></div>
@@ -220,7 +220,7 @@
         </button>
         <button data-sub="tests">
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 3.5h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 12h5M9.5 15.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          A1 Tests
+          Tests
         </button>
         <button data-sub="listening">
           <svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6L8 10H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M17 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -250,9 +250,9 @@
         </div>
       </div>
 
-      <!-- A1 TESTS SUB-VIEW -->
+      <!-- TESTS SUB-VIEW -->
       <div class="german-sub hidden" id="germanTests">
-        <p class="tests-intro">Ten short A1 tests covering everything you need for the Goethe/telc A1 exam. Take one a day, mark it done, check your answers, and write down what to review.</p>
+        <p class="tests-intro">Short practice tests covering the essentials for the Goethe/telc exams. Take one a day, mark it done, check your answers, and write down what to review.</p>
         <div class="tests-list" id="testsList"></div>
       </div>
 
@@ -287,6 +287,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="app.js"></script>
-<script src="german-content-fixes.js"></script>
+<script src="ext-standard.js"></script>
 </body>
 </html>
