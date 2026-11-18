@@ -50,3 +50,28 @@ Goal: speak comfortably with family and reach CEFR B2 by day 240, in the German 
 3. Open any lesson: the two boxes should be labelled **Standard German (written / formal)** and **Everyday spoken German**. Check a few days for leftovers like "n bisschen", "nen", "Bock", "krass".
 4. In the browser console, run `Object.keys(localStorage)`: you should see `sevenDayPlan.v1` and `sevenDayPlan.v1.backup-before-boost`.
 5. Reload the page and confirm nothing was lost.
+
+## B2 upgrade — Step 2: words and chunks the way a child learns them
+
+No memorising lists, no case tables. Four new files, all loaded after `app.js`: `ext-glossary.js` (word list, data only), `ext-chunks.js` (situation chunks, data only), `ext-words.js` (the engine) and the three `<script>` lines in `index.html`. Saved data is only ever **added to** (`state.german.vocab`); nothing existing is renamed or deleted. Remove the three script tags and the site behaves exactly as before.
+
+- **Tap any German word** in a lesson, test, reading text or listening transcript: meaning, article + plural, an example sentence from your own material, a Forvo link, dict.cc / Wiktionary links, and **Add to my deck**. Words missing from the glossary can still be saved with your own meaning.
+- **Colour-coded nouns everywhere**: der blue, die red, das green.
+- **Words you'll meet** before every test, listening, reading and mock-exam text, and **Words in this lesson** under every lesson without a vocabulary list.
+- **New "Words" tab**:
+  - *Flashcards* with Leitner boxes (1, 2, 4, 7, 14, 30 days), at most 20 new words a day. A card shows the English meaning and a sentence with a gap; the back shows article + plural and all chunk forms (das Kino / ins Kino / im Kino). Never a bare noun.
+  - *Chunk Q&A*: a scene and a question ("Wohin gehst du?"), you say the chunk, then check. About 10 rounds per family per day.
+  - *Fill the gap*: "Ich gehe ___ Kino." The situation is the only clue; a wrong answer is read aloud and comes back soon.
+  - *Say it aloud*: shadow 5 chunks and rate them "automatic" or "still thinking" (those come back more often).
+  - *Chunk library*: Wohin? / Wo? side by side with audio; an optional "Why?" for curious moments.
+  - *My words*: your deck with its boxes.
+- Contractions (ins, im, zum, zur, beim, vom, am, aufs, fürs, ums) are the main forms; long forms only appear in the optional "Why?" notes.
+
+### How to test Step 2
+
+1. Reload. Your streak, completed days and notes must look exactly as before.
+2. In the **A1 → B2** area there is a new **Words** tab next to Reading.
+3. Open any lesson and tap a word: a sheet opens with meaning, article, plural, example sentence and links. Tap **Add to my deck**.
+4. Open **Tests**, **Listening** or **Reading**, open an item: a **Words you'll meet** box sits at the top.
+5. **Words → Flashcards**, **Chunk Q&A**, **Fill the gap**, **Say it aloud**: finish one round of each. Reload and check **My words** still lists your deck.
+6. In the console: `JSON.parse(localStorage.getItem("sevenDayPlan.v1")).german.vocab` shows your cards, and `Object.keys(localStorage)` still lists `sevenDayPlan.v1.backup-before-boost`.
