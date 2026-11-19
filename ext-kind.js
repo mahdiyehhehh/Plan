@@ -8,9 +8,12 @@
    - Clearer layout: the Today screen shows only what matters first (day, study blocks, quest, real-German links). Streak, extras, pace,
      skills, weekly review, milestones and badges sit under one "More" fold. Larger text, bigger buttons, and the next
      undone step is highlighted.
-   - Step 5 look (second <style id="polishCss"> at the bottom): calmer, Apple-style Today screen. Soft cards without heavy
+   - Step 5 look (second <style id="polishCss"> near the bottom): calmer, Apple-style Today screen. Soft cards without heavy
      borders, one accent colour, sentence-case headings, tinted pill buttons, iOS-style "More" row. CSS only: delete the
      polishCss block to get the old look back.
+   - Step 5b (bottom of the file): quieter text. The colourful emojis on the Today screen are removed from the displayed
+     text only (badges and toasts keep theirs), and the "Real German for today" intro now says it is the material for the
+     study blocks, not extra homework.
    SAVED DATA: only adds state.german.fun.blocks = { "YYYY-MM-DD": [block numbers done] } and, per ticked block,
    one entry in state.german.fun.res[date] ("block-N": "block") and +30 in state.german.fun.minutes[date].
    Remove the script tag and the site behaves exactly as before.
@@ -267,4 +270,37 @@
   }
   `;
   document.head.appendChild(polish);
+
+  /* ---- Step 5b: quieter text. Removes the colourful emojis from the text the Today screen shows (badges keep theirs,
+     and so do the short pop-up toasts). It never touches saved data. The streak strip above the tabs gets words instead
+     of icons. The "Real German for today" intro is reworded: it is the material for the study blocks, not extra homework. ---- */
+  const EMOJI = (() => { try{ return new RegExp("[\\p{Emoji_Presentation}\\u25B6\\u23F1]\\uFE0F?|\\p{Extended_Pictographic}\\uFE0F", "gu"); }catch(e){ return null; } })();
+  const stripWords = s => s.replace(/🔥/g, "Streak").replace(/\u2744\uFE0F?/g, "Freezes").replace(/⭐\s*Lv/g, "Level");
+  const bodyWords = s => s.trim() === "🔊" ? "Hear it" : s;
+  function calmNodes(root, pre){
+    if(!EMOJI || !root) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), list = [];
+    let n; while((n = w.nextNode())) list.push(n);
+    list.forEach(t => {
+      const p = t.parentElement; if(!p || p.closest(".fn-badge,.fn-ms-ic")) return;
+      const s = t.nodeValue; if(!s) return;
+      let r = pre(s).replace(EMOJI, "");
+      if(r !== s){ if(!t.previousSibling) r = r.replace(/^\s+/, ""); t.nodeValue = r; }
+    });
+  }
+  const RS_INTRO = "This is the material for your study blocks, not extra homework. In each block, open one link that fits (in the Listening block, a listening link), use it, then tick it.";
+  let calmQueued = false;
+  function calmAll(){
+    calmQueued = false;
+    try{
+      calmNodes(sec, bodyWords);
+      const strip = document.getElementById("funStrip"); if(strip) calmNodes(strip, stripWords);
+      const intro = sec.querySelector("#rsCard > .fn-sub:not(.rs-foot)");
+      if(intro && intro.getAttribute("data-fk") !== "1"){ intro.textContent = RS_INTRO; intro.setAttribute("data-fk", "1"); }
+    }catch(e){ console.warn("ext-kind: calm", e); }
+  }
+  function queueCalm(){ if(calmQueued) return; calmQueued = true; requestAnimationFrame(calmAll); }
+  new MutationObserver(queueCalm).observe(sec, {childList: true, subtree: true});
+  const stripEl = document.getElementById("funStrip"); if(stripEl) new MutationObserver(queueCalm).observe(stripEl, {childList: true});
+  calmAll();
 })();
