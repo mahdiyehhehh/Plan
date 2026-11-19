@@ -18,7 +18,7 @@ ext-words.js          → Step 2: words engine and Words tab
 ext-fun.js            → Step 3a: Today screen, quest, XP, badges, streak freeze
 ext-resources.js      → Step 3b: real-German links with "done today" ticks
 ext-content.js        → Step 3c: 20 new listening + 20 new reading items
-ext-kind.js           → Step 4: study blocks, kinder wording, clearer Today screen
+ext-kind.js           → Step 4 + 5: study blocks, kinder wording, clearer and calmer Today screen
 tools/audit-vocab.js  → read-only check: which words appear in tests before they are taught
 ```
 
@@ -165,6 +165,28 @@ Saved data: adds `state.german.fun.blocks`, and for each ticked block one `block
 5. In **Real German for today**, the "ticked today" number must not count the study blocks.
 6. Reload: the ticked blocks must still be there, and open or closed state of **More** should not break the page.
 7. Remove the `ext-kind.js` script tag locally: the site should look like Step 3b again, and nothing saved should be lost.
+
+## B2 upgrade — Step 5: a calmer, Apple-style Today screen
+
+File: `ext-kind.js` (a second `<style id="polishCss">` block at the bottom). CSS only: no saved data, no logic, no new files.
+
+- **Soft cards:** white cards with a light shadow instead of heavy black borders. The page uses the German section's own colour tokens, so light and dark mode both work.
+- **One accent colour:** crimson for progress, buttons and ticks. Finished study blocks turn soft green.
+- **Quieter type:** sentence-case headings instead of small uppercase labels, a large "Day N" number, fainter supporting text.
+- **Buttons:** the quest button is a wide rounded button; the small buttons are soft tinted pills. Every tap target is at least 44 px, with a tiny press animation (switched off for people who prefer reduced motion).
+- **Next step** is shown with a soft tint instead of a red outline.
+- **More** is one tappable row ("More — Streak, pace, skills, badges") with a chevron.
+- The Week, Month and Year sheets and the other German tabs are not touched.
+
+To go back to the Step 4 look, delete the `polishCss` block at the bottom of `ext-kind.js`.
+
+### How to test Step 5
+
+1. Open the Today tab on your phone, in light mode and then dark mode. Cards should be soft and borderless, with no heavy black outlines.
+2. Tap a study block, start the quest, tick a Real German resource: everything should still work exactly as in Step 4.
+3. Tap the **More** row: it opens and closes, and the chevron turns.
+4. Check that text is readable and nothing is cut off on a narrow screen.
+5. Open the Week, Month and Year views: they must look exactly as before.
 
 ## Still to do
 
