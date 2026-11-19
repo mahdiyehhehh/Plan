@@ -7,11 +7,23 @@ No build step, no backend, no database — it's plain HTML/CSS/JS. Everything yo
 ## Files
 
 ```
-index.html        → page structure
-style.css         → black / white / red design
-app.js            → all the logic (data, saving, week/month/year views)
-ext-standard.js   → Step 1: standard everyday German (loaded after app.js)
+index.html            → page structure and the script list
+style.css             → black / white / red design
+app.js                → all the logic (data, saving, week/month/year views)
+ext-standard.js       → Step 1: standard everyday German
+ext-glossary.js       → Step 2: word list (data only)
+ext-glossary2.js      → Step 3c: more words for the new items + 11 gap words (data only)
+ext-chunks.js         → Step 2: situation chunks (data only)
+ext-words.js          → Step 2: words engine and Words tab
+ext-fun.js            → Step 3a: Today screen, quest, XP, badges, streak freeze
+ext-resources.js      → Step 3b: real-German links with "done today" ticks
+ext-content.js        → Step 3c: 20 new listening + 20 new reading items
+ext-kind.js           → Step 4: study blocks, kinder wording, clearer Today screen
+tools/audit-vocab.js  → read-only check: which words appear in tests before they are taught
 ```
+
+Script order in `index.html` matters. Each extension needs the ones before it:
+`app.js`, `ext-standard.js`, `ext-glossary.js`, `ext-glossary2.js`, `ext-chunks.js`, `ext-words.js`, `ext-fun.js`, `ext-resources.js`, `ext-content.js`, `ext-kind.js`.
 
 New features are added as extra scripts that load after `app.js` and only change what is displayed. They never delete or rename your saved data.
 
@@ -75,3 +87,85 @@ No memorising lists, no case tables. Four new files, all loaded after `app.js`: 
 4. Open **Tests**, **Listening** or **Reading**, open an item: a **Words you'll meet** box sits at the top.
 5. **Words → Flashcards**, **Chunk Q&A**, **Fill the gap**, **Say it aloud**: finish one round of each. Reload and check **My words** still lists your deck.
 6. In the console: `JSON.parse(localStorage.getItem("sevenDayPlan.v1")).german.vocab` shows your cards, and `Object.keys(localStorage)` still lists `sevenDayPlan.v1.backup-before-boost`.
+
+## B2 upgrade — Step 3a: the Today screen and the habit system
+
+File: `ext-fun.js`. It adds a **Today** tab as the first tab of the A1 → B2 area, and the site opens on it.
+
+- **One 10-minute quest a day:** 10 flashcards, 1 short listening, 1 sentence to say or write. Finishing it gives +50 XP and confetti. Rest Days keep the streak alive.
+- **XP and levels**, worked out from your real records, so nothing double-counts. 26 badges (quests, streaks, words, listening, reading, weekly review, levels, lesson days, B1 and B2 mocks).
+- **Streak with an earned freeze:** every 7th active day in a row earns one ❄️ freeze, which quietly covers one missed day. Rest Days add nothing but never break the streak.
+- **Five skill bars:** Wortschatz, Hören, Lesen, Sprechen, Schreiben. Speaking and writing are self-rated.
+- **Weekly mini-review:** 6 multiple-choice questions on words you collected recently (+40 XP).
+- **Milestones:** B1 checkpoint around day 120, B2 mock exams in month 8.
+- **Pace estimate** (on track / behind / ahead) and a **floating quest bar** while you are in another tab mid-quest.
+- **Friendly nudge** replaces the old guilt nudge on the daily popup.
+
+Saved data: only adds `state.german.fun` (quest, badges, minutes, sentences, weekly reviews, resource ticks, plan start date). Remove the script tag and the site behaves exactly as before.
+
+### How to test Step 3a
+
+1. Open **A1 → B2**. The **Today** tab should be first and selected, with the day card, the quest and a strip showing streak, freezes, level and XP.
+2. Tap **Start quest**. It should open your flashcards. Finish some cards, come back, and the step count should update (the floating bar shows progress while you are in another tab).
+3. Do the listening step (open the item, answer, tap Check Answers), then write or say the sentence. The quest should complete with a toast and confetti.
+4. Tap **Take a Rest Day today**, then undo it. The streak number must not drop.
+5. Open the weekly mini-review (needs at least 4 words in your deck) and finish it.
+6. Reload: level, XP, badges and streak must be the same as before the reload.
+
+## B2 upgrade — Step 3b: real German, with a "done today" tick
+
+File: `ext-resources.js`. It adds a **Real German for today** card under the quest.
+
+- 18 links in five slots: listening, reading, speaking, writing, words. Examples: Nicos Weg and Top-Thema (DW), Easy German, tagesschau, NDR, Radio Bremen, Nachrichtenleicht, Goethe-Institut practice pages, Forvo, dict.cc, Wiktionary, Tatoeba.
+- Only the links that fit your **current level** are shown. The rest sit under "Other levels".
+- Every link opens in a **new tab**. Nothing is embedded.
+- The round tick means "I did this today". It saves to `state.german.fun.res[date][id]`, counts for the streak, adds +10 XP and feeds the matching skill bar. Ticks are self-reported.
+- 4 of the 18 links are exact addresses quoted by course pages, and 14 are front pages. Not every address has been opened live yet (see the last section).
+
+### How to test Step 3b
+
+1. On the Today tab, find **Real German for today**. The header shows your level and "0 ticked today".
+2. Tap **Open ↗** on two links. Each should open in a new tab and the site should stay where it was.
+3. Tick one resource: you should see a toast with +10 XP, "1 ticked today", and the matching skill bar should move.
+4. Untick it. The count and the bar go back.
+5. Open **Other levels** and check that the links there belong to other levels.
+6. Reload: the tick for today must still be there.
+
+## B2 upgrade — Step 3c: more listening, reading and words
+
+Files: `ext-content.js` and `ext-glossary2.js`.
+
+- **20 new listening items and 20 new reading items**, from A2 to B2, each with 3 questions. They appear in the normal **Listening** and **Reading** tabs next to the originals.
+- **About 630 new words** for those items in `ext-glossary2.js`, plus 11 gap words (App, Bau, Café, Eis, elf, nun, per, Hof, Süd, TAN, Eva), so tapping a word in the new texts gives a real meaning.
+
+### How to test Step 3c
+
+1. Open **Listening** and **Reading**. There should be 20 more items in each than before, across A2 to B2.
+2. Open a new item, play it or read it, answer the 3 questions and tap Check Answers.
+3. Tap several words in the text. Each should show a meaning, and none should say that it is missing.
+4. Add a new word to your deck and check that it appears in **Words → My words**.
+5. Optional: `node tools/audit-vocab.js 30` lists words that appear in tests before they were taught (read-only).
+
+## B2 upgrade — Step 4: study blocks, kinder wording, clearer Today screen
+
+File: `ext-kind.js` (loaded last).
+
+- **Study blocks:** 6 blocks of 30 minutes make 3 hours a day. Do them at any time of day, in any order. Each block can be ticked and unticked, adds 30 minutes to "Time studied today" and counts as an active day for the streak. A block you skip never takes anything away.
+- **Kinder wording:** "Behind" becomes "Catching up", "Slightly behind" becomes "Nearly there", the "N behind" line is gone, the skill bars no longer show a where-you-should-be marker, and the words line no longer shows a target you "need" to hit.
+- **Clearer Today screen:** the day card, the study blocks, the quest and the real-German links come first. Streak, bonus, pace, skills, weekly review, milestones and badges sit under one **More** fold. Text and buttons are bigger and the next undone quest step is highlighted.
+
+Saved data: adds `state.german.fun.blocks`, and for each ticked block one `block-N` entry in `state.german.fun.res[date]` and +30 in `state.german.fun.minutes[date]`. Remove the script tag and the site behaves exactly as before.
+
+### How to test Step 4
+
+1. Open the Today tab. The order should be: day card, **Today's study time** (6 blocks), quest, **Real German for today**, then a **More** fold.
+2. Tap a block: it turns green, the counter shows "1 of 6 blocks · 0.5 of 3 h", and "Time studied today" under **More** goes up by 30 minutes. Tap it again to undo.
+3. Tick all 6 blocks: you should see a toast and confetti, and the bar should be full.
+4. Open **More**. The pace card should never say "Behind" or "N behind". The skill bars should have no marker line.
+5. In **Real German for today**, the "ticked today" number must not count the study blocks.
+6. Reload: the ticked blocks must still be there, and open or closed state of **More** should not break the page.
+7. Remove the `ext-kind.js` script tag locally: the site should look like Step 3b again, and nothing saved should be lost.
+
+## Still to do
+
+- Open every link in `ext-resources.js` live and replace any address that no longer works.
