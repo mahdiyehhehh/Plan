@@ -642,7 +642,18 @@
     "x|Krüger|surname|",
     "x|Sabine|first name|",
     "x|Leyla|first name|",
-    "x|Kaya|surname|"
+    "x|Kaya|surname|",
+    "n|die App,Apps|app (phone application)|app apps",
+    "n|der Bau,Bauten|construction; building (der Bau des Hauses)|bau bauten",
+    "n|das Café,Cafés|café|café cafés caf",
+    "n|das Eis,–|ice; ice cream|eis",
+    "x|elf|eleven|",
+    "x|nun|now (und nun = and now)|",
+    "x|per|by, via (per E-Mail = by email)|",
+    "n|der Hof,Höfe|yard, courtyard; farm|hof höfe",
+    "x|Süd|south (in names, e.g. Hallenbad Süd)|",
+    "n|die TAN,TANs|TAN (one-time code for online banking)|tan tans",
+    "x|Eva|first name|"
   ];
   if(!Array.isArray(window.XW_GLOSS_RAW)) window.XW_GLOSS_RAW = [];
   /* extra word forms for words that are already in ext-glossary.js (so they are not listed twice) */
