@@ -18,7 +18,7 @@ ext-words.js          → Step 2: words engine and Words tab
 ext-fun.js            → Step 3a: Today screen, quest, XP, badges, streak freeze
 ext-resources.js      → Step 3b: real-German links with "done today" ticks
 ext-content.js        → Step 3c: 20 new listening + 20 new reading items
-ext-kind.js           → Step 4 + 5: study blocks, kinder wording, clearer and calmer Today screen
+ext-kind.js           → Step 4 + 5 + 6: study blocks, kinder wording, calmer Today screen, plain text instead of emojis
 tools/audit-vocab.js  → read-only check: which words appear in tests before they are taught
 ```
 
@@ -116,11 +116,11 @@ Saved data: only adds `state.german.fun` (quest, badges, minutes, sentences, wee
 
 File: `ext-resources.js`. It adds a **Real German for today** card under the quest.
 
-- 19 links in five slots: listening, reading, speaking, writing, words. Examples: Nicos Weg A1 and Top-Thema (DW), Easy German, tagesschau, NDR, Radio Bremen, Nachrichtenleicht, Goethe-Institut practice pages, Forvo, dict.cc, Wiktionary, Tatoeba. For work and accounting German at B1 and B2: Studyflix (Buchungssätze), "Buchführung einfach erklärt" and Bibi Bilanzierung (Uni Gießen).
+- 19 links in five slots: listening, reading, speaking, writing, words. Examples: Nicos Weg A1 and Top-Thema (DW), Easy German, tagesschau, NDR, Radio Bremen, Nachrichtenleicht, Goethe-Institut practice pages, Forvo, dict.cc, Wiktionary, Tatoeba. For work and accounting German at B1 and B2 (all three in the Reading slot): Studyflix (Buchungssätze), "Buchführung einfach erklärt" and Bibi Bilanzierung (the free Uni Gießen textbook).
 - Only the links that fit your **current level** are shown. The rest sit under "Other levels".
 - Every link opens in a **new tab**. Nothing is embedded.
 - The round tick means "I did this today". It saves to `state.german.fun.res[date][id]`, counts for the streak, adds +10 XP and feeds the matching skill bar. Ticks are self-reported.
-- Of the 19 links, 3 were opened or came back from a search with their real page content, 8 are exact addresses quoted by other pages, and 8 are front pages. Not every address has been opened live yet (see the last section).
+- Of the 19 links, 6 were opened or came back from a search with their real page content (including the three accounting links, checked 2026-11-19), 5 are exact addresses quoted by other pages, and 8 are front pages. Not every address has been opened live yet (see the last section).
 
 ### How to test Step 3b
 
@@ -190,28 +190,29 @@ To go back to the Step 4 look, delete the `polishCss` block at the bottom of `ex
 
 ## B2 upgrade — Step 6: plain text on the Today screen, and how the pieces fit
 
-Text only: no saved data and no logic changes.
+File: `ext-kind.js` (the "Step 5b" block at the very bottom). Display only: it changes the text the Today screen shows, never saved data and never the logic.
 
 **How the pieces fit together:**
 
 - **The plan is the 6 study blocks (3 hours).** Each block is one kind of work: flashcards and new words, the lesson of the day, listening, reading, saying it aloud, and writing a few sentences.
-- **"Real German for today" is a menu, not extra homework.** Pick one link per block, not all of them. Its intro text now says this.
+- **"Real German for today" is a menu, not extra homework.** Pick one link per block, not all of them. Its intro text is reworded by `ext-kind.js` to say this ("This is the material for your study blocks, not extra homework…"). The original intro text in `ext-resources.js` is replaced on screen only.
 - **The 10-minute quest is the minimum for a bad day.** Its three steps (10 flashcards, 1 listening, 1 sentence) are done inside the study blocks, so a normal day covers it without extra work.
 - **Ticking a resource does not add study minutes.** Only the 6 study blocks do. A resource tick adds a little XP and feeds the skill bars.
 
-**Emojis removed from the Today screen:**
+**Emojis removed from the Today screen (displayed text only):**
 
-- The Today screen text is plain: "Listening", "Reading", "I said it out loud", "Hear it".
-- The streak strip uses words: "Streak", "Freezes", "Level".
+- `ext-kind.js` strips emojis from the text nodes inside the Today screen. The source text in `ext-fun.js` and `ext-resources.js` still contains them; they are removed when the page is drawn.
+- The speaker button shows the words "Hear it". The streak strip above the tabs uses words: "Streak", "Freezes", "Level".
 - Badges and the short pop-up toasts keep their emojis.
 
 ### How to test Step 6
 
 1. Open the Today tab. The resource rows and the strip at the top should show words only, with no emoji.
-2. Read the intro of **Real German for today**. It should say that you pick one link per block.
+2. Read the intro of **Real German for today**. It should say it is the material for your study blocks, not extra homework.
 3. Win a badge or tick a block: the toast and the badge may still show an emoji. That is intended.
-4. Reload: nothing saved should change.
+4. Remove the `ext-kind.js` script tag locally: the emojis and the old intro come back, and nothing saved is lost.
+5. Reload: nothing saved should change.
 
 ## Still to do
 
-- Open every link in `ext-resources.js` live and replace any address that no longer works. Not opened yet: the three accounting links added on 2026-11-19 (Studyflix, Buchführung einfach erklärt, Bibi Bilanzierung), the Nicos Weg A1 address, and all front-page links.
+- Open the remaining links in `ext-resources.js` live and replace any address that no longer works. Checked on 2026-11-19: the three accounting links (Studyflix, Buchführung einfach erklärt, Bibi Bilanzierung), Goethe "Erste Wege", Forvo and dict.cc. Not opened yet: the Nicos Weg A1 address, the Easy German and Goethe "Deutsch üben" addresses, and all front-page links.
