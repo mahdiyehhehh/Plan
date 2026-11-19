@@ -116,11 +116,11 @@ Saved data: only adds `state.german.fun` (quest, badges, minutes, sentences, wee
 
 File: `ext-resources.js`. It adds a **Real German for today** card under the quest.
 
-- 18 links in five slots: listening, reading, speaking, writing, words. Examples: Nicos Weg and Top-Thema (DW), Easy German, tagesschau, NDR, Radio Bremen, Nachrichtenleicht, Goethe-Institut practice pages, Forvo, dict.cc, Wiktionary, Tatoeba.
+- 19 links in five slots: listening, reading, speaking, writing, words. Examples: Nicos Weg A1 and Top-Thema (DW), Easy German, tagesschau, NDR, Radio Bremen, Nachrichtenleicht, Goethe-Institut practice pages, Forvo, dict.cc, Wiktionary, Tatoeba. For work and accounting German at B1 and B2: Studyflix (Buchungssätze), "Buchführung einfach erklärt" and Bibi Bilanzierung (Uni Gießen).
 - Only the links that fit your **current level** are shown. The rest sit under "Other levels".
 - Every link opens in a **new tab**. Nothing is embedded.
 - The round tick means "I did this today". It saves to `state.german.fun.res[date][id]`, counts for the streak, adds +10 XP and feeds the matching skill bar. Ticks are self-reported.
-- 4 of the 18 links are exact addresses quoted by course pages, and 14 are front pages. Not every address has been opened live yet (see the last section).
+- Of the 19 links, 3 were opened or came back from a search with their real page content, 8 are exact addresses quoted by other pages, and 8 are front pages. Not every address has been opened live yet (see the last section).
 
 ### How to test Step 3b
 
@@ -168,4 +168,4 @@ Saved data: adds `state.german.fun.blocks`, and for each ticked block one `block
 
 ## Still to do
 
-- Open every link in `ext-resources.js` live and replace any address that no longer works.
+- Open every link in `ext-resources.js` live and replace any address that no longer works. Not opened yet: the three accounting links added on 2026-11-19 (Studyflix, Buchführung einfach erklärt, Bibi Bilanzierung), the Nicos Weg A1 address, and all front-page links.
