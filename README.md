@@ -94,7 +94,7 @@ File: `ext-fun.js`. It adds a **Today** tab as the first tab of the A1 → B2 ar
 
 - **One 10-minute quest a day:** 10 flashcards, 1 short listening, 1 sentence to say or write. Finishing it gives +50 XP and confetti. Rest Days keep the streak alive.
 - **XP and levels**, worked out from your real records, so nothing double-counts. 26 badges (quests, streaks, words, listening, reading, weekly review, levels, lesson days, B1 and B2 mocks).
-- **Streak with an earned freeze:** every 7th active day in a row earns one ❄️ freeze, which quietly covers one missed day. Rest Days add nothing but never break the streak.
+- **Streak with an earned freeze:** every 7th active day in a row earns one freeze, which quietly covers one missed day. Rest Days add nothing but never break the streak.
 - **Five skill bars:** Wortschatz, Hören, Lesen, Sprechen, Schreiben. Speaking and writing are self-rated.
 - **Weekly mini-review:** 6 multiple-choice questions on words you collected recently (+40 XP).
 - **Milestones:** B1 checkpoint around day 120, B2 mock exams in month 8.
@@ -187,6 +187,30 @@ To go back to the Step 4 look, delete the `polishCss` block at the bottom of `ex
 3. Tap the **More** row: it opens and closes, and the chevron turns.
 4. Check that text is readable and nothing is cut off on a narrow screen.
 5. Open the Week, Month and Year views: they must look exactly as before.
+
+## B2 upgrade — Step 6: plain text on the Today screen, and how the pieces fit
+
+Text only: no saved data and no logic changes.
+
+**How the pieces fit together:**
+
+- **The plan is the 6 study blocks (3 hours).** Each block is one kind of work: flashcards and new words, the lesson of the day, listening, reading, saying it aloud, and writing a few sentences.
+- **"Real German for today" is a menu, not extra homework.** Pick one link per block, not all of them. Its intro text now says this.
+- **The 10-minute quest is the minimum for a bad day.** Its three steps (10 flashcards, 1 listening, 1 sentence) are done inside the study blocks, so a normal day covers it without extra work.
+- **Ticking a resource does not add study minutes.** Only the 6 study blocks do. A resource tick adds a little XP and feeds the skill bars.
+
+**Emojis removed from the Today screen:**
+
+- The Today screen text is plain: "Listening", "Reading", "I said it out loud", "Hear it".
+- The streak strip uses words: "Streak", "Freezes", "Level".
+- Badges and the short pop-up toasts keep their emojis.
+
+### How to test Step 6
+
+1. Open the Today tab. The resource rows and the strip at the top should show words only, with no emoji.
+2. Read the intro of **Real German for today**. It should say that you pick one link per block.
+3. Win a badge or tick a block: the toast and the badge may still show an emoji. That is intended.
+4. Reload: nothing saved should change.
 
 ## Still to do
 
