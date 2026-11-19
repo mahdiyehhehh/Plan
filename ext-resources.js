@@ -16,8 +16,9 @@
   const E = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const ALL = ["A1","A2","B1","B2"];
 
-  /* v: "cited" = this exact address is quoted by several independent course pages (checked by search, not opened live);
-        "home" = the site's front page only (stable, but I could not open it live from the build environment). */
+  /* v: "live"  = this exact address was opened and read on 2026-11-19;
+        "cited" = this exact address is quoted by several independent course pages (checked by search, not opened live);
+        "home"  = the site's front page only (stable, but not opened live). */
   const RES = [
     // ---- listening ----
     {id:"dw-nicos-a1", slot:"listen", lv:["A1"], t:"Nicos Weg A1 (DW)", n:"Short video episodes with exercises. Watch once with subtitles, once without.", u:"https://learngerman.dw.com/en/nicos-weg/c-36519789", v:"cited"},
@@ -31,13 +32,13 @@
     // ---- reading ----
     {id:"nachrichtenleicht", slot:"read", lv:["A2","B1"], t:"Nachrichtenleicht (Deutschlandfunk)", n:"Real news in simple German. Read one article, then say what happened in two sentences.", u:"https://www.nachrichtenleicht.de/", v:"home"},
     {id:"dw-topthema", slot:"read", lv:["B1","B2"], t:"Top-Thema mit Vokabeln (DW)", n:"Open DW Deutsch lernen, then Audios and Top-Thema. A short article with a word list and audio.", u:"https://learngerman.dw.com/de/", v:"home"},
-    {id:"goethe-ueben", slot:"read", lv:ALL, t:"Goethe-Institut: Deutsch üben", n:"Free practice material from A1 to B2 (reading, listening, grammar). Take one exercise at your level.", u:"https://www.goethe.de/de/spr/ueb.html", v:"home"},
-    {id:"goethe-mini", slot:"read", lv:["A1"], t:"Goethe-Institut: Miniserie", n:"A short story series for beginners with exercises.", u:"https://www.goethe.de/prj/mwd/de/deutschueben/miniserie.html", v:"cited"},
+    {id:"goethe-ueben", slot:"read", lv:ALL, t:"Goethe-Institut: Deutsch üben", n:"Free practice material from A1 to B2 (reading, listening, grammar). Take one exercise at your level.", u:"https://www.goethe.de/de/spr/ueb.html", v:"cited"},
+    {id:"goethe-mini", slot:"read", lv:["A1"], t:"Goethe-Institut: Erste Wege in Deutschland", n:"Nevin's first weeks in Germany: 8 short video episodes (bus, job search, doctor, flat) with exercises.", u:"https://www.goethe.de/prj/mwd/de/deu/ewd.html", v:"live"},
     // ---- speaking ----
     {id:"forvo", slot:"speak", lv:ALL, t:"Forvo", n:"Hear real people say a word. Pick 3 words from today, listen, then say each one twice.", u:"https://forvo.com/languages/de/", v:"home"},
     {id:"easy-german-shadow", slot:"speak", lv:["A2","B1","B2"], t:"Shadowing with Easy German", n:"Replay 30 seconds of one interview and speak along with the speaker, a little after them.", u:"https://www.youtube.com/@EasyGerman", v:"home"},
     // ---- writing ----
-    {id:"goethe-schreiben", slot:"write", lv:["A2","B1","B2"], t:"Goethe-Institut: Deutsch üben (writing)", n:"Write 3-5 sentences about a text you just read: an email, a forum post, or a short complaint. Self-checked.", u:"https://www.goethe.de/de/spr/ueb.html", v:"home"},
+    {id:"goethe-schreiben", slot:"write", lv:["A2","B1","B2"], t:"Goethe-Institut: Deutsch üben (writing)", n:"Write 3-5 sentences about a text you just read: an email, a forum post, or a short complaint. Self-checked.", u:"https://www.goethe.de/de/spr/ueb.html", v:"cited"},
     // ---- words ----
     {id:"dictcc", slot:"vocab", lv:ALL, t:"dict.cc", n:"Look up one word you met today and check its article and plural.", u:"https://www.dict.cc/", v:"home"},
     {id:"wiktionary", slot:"vocab", lv:ALL, t:"Wiktionary", n:"Forms, plural and an example for one word. Good for verbs (Präteritum and Partizip).", u:"https://en.wiktionary.org/", v:"home"},
