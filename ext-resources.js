@@ -56,7 +56,14 @@
       const m = /^(A1|A2|B1|B2)/.exec(phaseForDay(d).label); return m ? m[1] : "B1";
     }catch(e){ return "B1"; }
   }
-  const doneToday = () => { try{ return (FUN.data().res || {})[today()] || {}; }catch(e){ return {}; } };
+  /* ticks for today, without the study blocks that ext-kind.js stores under "block-N" in the same record */
+  const doneToday = () => {
+    try{
+      const r = (FUN.data().res || {})[today()] || {}, o = {};
+      Object.keys(r).forEach(k => { if(k.indexOf("block-") !== 0) o[k] = r[k]; });
+      return o;
+    }catch(e){ return {}; }
+  };
 
   function toggle(id){
     const r = RES.find(x => x.id === id); if(!r) return;

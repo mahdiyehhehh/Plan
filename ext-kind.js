@@ -5,7 +5,7 @@
      for the streak. Missing a block never takes anything away.
    - Kinder wording: "Behind" becomes "Catching up", no "N behind" line, no where-you-should-be marker on the skill bars,
      and the deck line no longer shows a target you "need" to hit.
-   - Clearer layout: the Today screen shows only what matters first (day, study blocks, quest). Streak, extras, pace,
+   - Clearer layout: the Today screen shows only what matters first (day, study blocks, quest, real-German links). Streak, extras, pace,
      skills, weekly review, milestones and badges sit under one "More" fold. Larger text, bigger buttons, and the next
      undone step is highlighted.
    SAVED DATA: only adds state.german.fun.blocks = { "YYYY-MM-DD": [block numbers done] } and, per ticked block,
@@ -101,6 +101,8 @@
   }
   function softenSkills(c){
     const s = c.querySelector(".fn-h small"); if(s) s.textContent = "your progress so far";
+    const sub = c.querySelector(".fn-sub");
+    if(sub) sub.textContent = "Bars come from your real records: deck, listening and reading checks, chunks and sentences said, texts written. Speaking is self-rated. The browser voice is robotic, so also use the real-voice links in \"Real German for today\".";
   }
 
   let patching = false, moreOpen = false;
@@ -121,7 +123,8 @@
         else if(/^Skills/.test(t)) softenSkills(c);
       });
       const nx = sec.querySelector(".fn-step:not(.done)"); if(nx) nx.classList.add("fk-next");
-      const rest = cards.filter(c => c !== day && c !== quest);
+      /* the "Real German for today" card (id rsCard, from ext-resources.js) stays visible next to the quest, not inside the fold */
+      const rest = cards.filter(c => c !== day && c !== quest && c.id !== "rsCard");
       if(rest.length){
         const d = document.createElement("details"); d.className = "fk-more"; if(moreOpen) d.open = true;
         const s = document.createElement("summary"); s.textContent = "More: streak, extras, pace, skills, badges"; d.appendChild(s);
