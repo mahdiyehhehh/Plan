@@ -8,6 +8,9 @@
    - Clearer layout: the Today screen shows only what matters first (day, study blocks, quest, real-German links). Streak, extras, pace,
      skills, weekly review, milestones and badges sit under one "More" fold. Larger text, bigger buttons, and the next
      undone step is highlighted.
+   - Step 5 look (second <style id="polishCss"> at the bottom): calmer, Apple-style Today screen. Soft cards without heavy
+     borders, one accent colour, sentence-case headings, tinted pill buttons, iOS-style "More" row. CSS only: delete the
+     polishCss block to get the old look back.
    SAVED DATA: only adds state.german.fun.blocks = { "YYYY-MM-DD": [block numbers done] } and, per ticked block,
    one entry in state.german.fun.res[date] ("block-N": "block") and +30 in state.german.fun.minutes[date].
    Remove the script tag and the site behaves exactly as before.
@@ -128,7 +131,7 @@
       const rest = cards.filter(c => c !== day && c !== quest && c.id !== "rsCard");
       if(rest.length){
         const d = document.createElement("details"); d.className = "fk-more"; if(moreOpen) d.open = true;
-        const s = document.createElement("summary"); s.textContent = "More: streak, extras, pace, skills, badges"; d.appendChild(s);
+        const s = document.createElement("summary"); s.innerHTML = '<span class="fk-more-t">More<small>Streak, pace, skills, badges</small></span>'; d.appendChild(s);
         rest[0].before(d);
         rest.forEach(c => d.appendChild(c));
         d.addEventListener("toggle", () => { moreOpen = d.open; });
@@ -174,4 +177,94 @@
   @media (min-width:640px){.fk-grid{grid-template-columns:1fr 1fr;}}
   `;
   document.head.appendChild(css);
+
+  /* ---- Step 5: calmer, Apple-style look. Every rule starts with "#germanView #germanToday" (two ids) so it always
+     wins over the rules above and over ext-fun.js / ext-resources.js, whatever order the styles were added in. ---- */
+  const polish = document.createElement("style"); polish.id = "polishCss";
+  polish.textContent = `
+  #germanView .fn-strip{border:0;background:transparent;box-shadow:none;padding:0 4px;margin:0 0 var(--g-space-3);gap:14px;font-size:13px;font-weight:500;color:var(--g-ink-faint);}
+  #germanView .fn-strip b{color:var(--g-ink);font-weight:650;}
+  #germanView #germanToday{padding-bottom:84px;}
+  #germanView #germanToday .fn-card{background:var(--g-surface);border:0;border-radius:var(--g-radius-md);box-shadow:var(--g-shadow-soft);padding:20px;margin:0 0 var(--g-space-3);color:var(--g-ink);}
+  #germanView #germanToday .fn-h{font-size:var(--g-heading);font-weight:650;letter-spacing:-.01em;text-transform:none;color:var(--g-ink);margin:0 0 var(--g-space-2);}
+  #germanView #germanToday .fn-h small{font-size:13px;font-weight:500;color:var(--g-ink-faint);}
+  #germanView #germanToday .fn-sub,#germanView #germanToday .fn-note{font-size:14px;line-height:1.55;color:var(--g-ink-soft);}
+  #germanView #germanToday .fn-eyebrow{color:var(--g-ink-faint);font-weight:600;letter-spacing:.06em;}
+  #germanView #germanToday .fn-day-n{font-size:44px;font-weight:700;letter-spacing:-.03em;color:var(--g-ink);}
+  #germanView #germanToday .fn-day-n span{font-size:17px;font-weight:500;letter-spacing:0;color:var(--g-ink-faint);}
+  #germanView #germanToday .fn-day-r{font-size:13px;color:var(--g-ink-faint);}
+  #germanView #germanToday .fn-day-r b{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--g-ink);}
+  #germanView #germanToday .fn-bar{height:6px;border-radius:var(--g-radius-pill);background:var(--g-hairline);}
+  #germanView #germanToday .fn-bar.thick{height:8px;margin-bottom:var(--g-space-3);}
+  #germanView #germanToday .fn-bar i{border-radius:var(--g-radius-pill);background:var(--g-crimson);}
+  #germanView #germanToday .fn-xp{font-size:12.5px;color:var(--g-ink-faint);}
+
+  #germanView #germanToday .fn-quest{border:0;box-shadow:var(--g-shadow-lift);}
+  #germanView #germanToday .fn-quest.done{box-shadow:var(--g-shadow-soft);}
+  #germanView #germanToday .fn-qtitle{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--g-ink);margin-bottom:6px;}
+  #germanView #germanToday .fn-go{min-height:52px;border-radius:14px;background:var(--g-crimson);color:#fff;font-size:17px;font-weight:650;letter-spacing:-.01em;margin:var(--g-space-3) 0;transition:transform .12s ease,background-color .15s ease;}
+  #germanView #germanToday .fn-go:active{transform:scale(.98);background:var(--g-crimson-deep);}
+  :root[data-theme="dark"] #germanView #germanToday .fn-go{color:#1c1413;}
+
+  #germanView #germanToday .fn-step{padding:14px 0;gap:14px;border-top:1px solid var(--g-hairline-soft);}
+  #germanView #germanToday .fn-step b{font-size:16px;font-weight:600;color:var(--g-ink);}
+  #germanView #germanToday .fn-step small{font-size:13.5px;line-height:1.45;color:var(--g-ink-faint);}
+  #germanView #germanToday .fn-step.done b{text-decoration:none;opacity:.5;}
+  #germanView #germanToday .fn-chk{flex:0 0 28px;height:28px;border:1.5px solid var(--g-crimson-line);background:transparent;color:var(--g-ink-faint);font-size:13px;font-weight:650;transition:background-color .15s ease,border-color .15s ease;}
+  #germanView #germanToday .fn-step.done .fn-chk{background:var(--g-crimson);border-color:var(--g-crimson);color:#fff;}
+  #germanView #germanToday .fn-step.fk-next{background:var(--g-crimson-wash);outline:0;border-radius:var(--g-radius-sm);padding:14px 12px;margin:0 -12px;border-top-color:transparent;}
+
+  #germanView #germanToday .fn-btn{min-height:44px;padding:8px 16px;border:0;border-radius:var(--g-radius-pill);background:var(--g-crimson-tint);color:var(--g-crimson);font-size:14px;font-weight:600;transition:background-color .15s ease,transform .12s ease;}
+  #germanView #germanToday .fn-btn:active{transform:scale(.97);}
+  #germanView #germanToday .fn-btn.ghost{background:transparent;padding:8px 10px;}
+  #germanView #germanToday .fn-btn:disabled{opacity:.4;}
+  #germanView #germanToday .fn-chip{min-height:44px;border:0;background:var(--g-warm-wash);color:var(--g-ink);border-radius:var(--g-radius-pill);padding:10px 16px;font-size:14px;font-weight:550;}
+  #germanView #germanToday .fn-chip.sm{min-height:34px;padding:6px 12px;font-size:13px;}
+  #germanView #germanToday .fn-pill{font-size:12px;font-weight:600;padding:4px 10px;}
+  #germanView #germanToday .fn-lines div{font-size:14px;line-height:1.55;color:var(--g-ink-soft);}
+  #germanView #germanToday .fn-lines b{color:var(--g-ink);}
+  #germanView #germanToday .fn-sent{background:var(--g-warm-wash);border:0;border-radius:var(--g-radius-sm);padding:14px;}
+  #germanView #germanToday .fn-sent #fnDraft{background:var(--g-surface);border:1px solid var(--g-hairline);border-radius:12px;padding:12px;font-size:16px;}
+
+  #germanView #germanToday .fk-title{font-size:var(--g-heading);font-weight:650;letter-spacing:-.01em;color:var(--g-ink);}
+  #germanView #germanToday .fk-count{font-size:13.5px;color:var(--g-ink-faint);}
+  #germanView #germanToday .fk-count b{font-size:15px;color:var(--g-ink);}
+  #germanView #germanToday .fk-grid{gap:10px;margin:var(--g-space-3) 0 var(--g-space-2);}
+  #germanView #germanToday .fk-b{border:0;background:var(--g-warm-wash);border-radius:14px;min-height:60px;padding:12px 14px;gap:14px;transition:background-color .15s ease,transform .12s ease;}
+  #germanView #germanToday .fk-b:active{transform:scale(.985);}
+  #germanView #germanToday .fk-b .fk-chk{flex:0 0 32px;border:1.5px solid var(--g-crimson-line);font-weight:650;color:var(--g-ink-faint);}
+  #germanView #germanToday .fk-b .fk-bt b{font-size:16px;font-weight:600;color:var(--g-ink);}
+  #germanView #germanToday .fk-b .fk-bt small{font-size:13.5px;color:var(--g-ink-faint);}
+  #germanView #germanToday .fk-b.on{background:var(--g-green-tint);}
+  #germanView #germanToday .fk-b.on .fk-chk{background:var(--g-green);border-color:var(--g-green);color:#fff;}
+  #germanView #germanToday .fk-note{font-size:13px;line-height:1.5;color:var(--g-ink-faint);}
+
+  #germanView #germanToday .fk-more{margin:0 0 var(--g-space-3);}
+  #germanView #germanToday .fk-more > summary{display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;background:var(--g-surface);box-shadow:var(--g-shadow-soft);border-radius:var(--g-radius-md);padding:18px 20px;font-size:16px;font-weight:600;color:var(--g-ink);}
+  #germanView #germanToday .fk-more > summary::after{content:"";flex:none;width:8px;height:8px;border-right:2px solid var(--g-ink-faint);border-bottom:2px solid var(--g-ink-faint);transform:rotate(45deg);margin-right:4px;transition:transform .2s ease;}
+  #germanView #germanToday .fk-more[open] > summary::after{transform:rotate(-135deg);}
+  #germanView #germanToday .fk-more-t small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--g-ink-faint);}
+
+  #germanView #germanToday .rs-slot{font-size:12px;font-weight:650;letter-spacing:.04em;color:var(--g-ink-faint);margin:var(--g-space-3) 0 2px;}
+  #germanView #germanToday .rs-lv{border:0;background:var(--g-warm-wash);color:var(--g-ink-faint);font-size:11px;font-weight:600;padding:2px 8px;}
+  #germanView #germanToday .rs-more summary{font-size:14px;font-weight:600;color:var(--g-crimson);}
+  #germanView #germanToday .rs-foot{font-size:12.5px;color:var(--g-ink-faint);}
+
+  #germanView #germanToday .fn-badge{border:0;background:var(--g-warm-wash);border-radius:var(--g-radius-sm);}
+  #germanView #germanToday .fn-badge.on{box-shadow:inset 0 0 0 1.5px var(--g-crimson-line);}
+  #germanView #germanToday .fn-streak div{background:var(--g-warm-wash);border-radius:var(--g-radius-sm);}
+  #germanView #germanToday .fn-opt{border:0;background:var(--g-warm-wash);border-radius:var(--g-radius-sm);font-size:16px;}
+  #germanView #germanToday .fn-opt.good{background:var(--g-green-tint);}
+  #germanView #germanToday .fn-opt.bad{background:var(--g-crimson-tint);}
+  #germanView #germanToday .fn-ms{border-top:1px solid var(--g-hairline-soft);}
+
+  @media (max-width:640px){
+    #germanView #germanToday .fn-card{padding:18px 16px;}
+    #germanView #germanToday .fn-day-n{font-size:38px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #germanView #germanToday *{transition:none !important;}
+  }
+  `;
+  document.head.appendChild(polish);
 })();
