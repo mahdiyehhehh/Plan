@@ -122,7 +122,8 @@
         if(/^Are you on track/.test(t)) softenPace(c);
         else if(/^Skills/.test(t)) softenSkills(c);
       });
-      const nx = sec.querySelector(".fn-step:not(.done)"); if(nx) nx.classList.add("fk-next");
+      /* only the quest's own steps get the "next" highlight, never a Real German row */
+      const nx = sec.querySelector(".fn-quest .fn-step:not(.done)"); if(nx) nx.classList.add("fk-next");
       /* the "Real German for today" card (id rsCard, from ext-resources.js) stays visible next to the quest, not inside the fold */
       const rest = cards.filter(c => c !== day && c !== quest && c.id !== "rsCard");
       if(rest.length){
