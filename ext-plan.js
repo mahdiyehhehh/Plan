@@ -3,8 +3,9 @@
    Tap a block -> a short list of tasks for those 30 minutes -> tap a task -> it opens the real lesson / flashcards /
    listening / reading and a "Back to my plan" button brings you home. The old Today cards are still there under
    "Show the old Today screen". Display + navigation only; nothing is deleted or renamed.
-   DAY PAGES: a day listed in DAY_PAGES has ONE page with everything for that day (words, grammar, practice, story,
-   speaking, writing). Its 6 tiles show that day's own titles, open the page, and read the ticks saved by the page.
+   DAY PAGES: every day listed in days-meta.js (window.DAY_META) has ONE page with everything for that day (words,
+   grammar, practice, story, speaking, writing). Its 6 tiles show that day's own titles, open the page, and read the
+   ticks saved by the page. To add a day, add a line to days-meta.js. This file does not change.
    SAVED DATA: only adds state.german.fun.plan = { "<day>": { done:{taskId:true}, items:{l:[ids], r:[ids]} } }
    and, when every task of a block is ticked, the same block record ext-kind.js uses (blocks / minutes / res).
    Remove the <script> tag and the site behaves exactly as before. */
@@ -24,12 +25,16 @@
   const levelOfDay = d => { try{ const m = /^(A1|A2|B1|B2)/.exec(phaseForDay(d).label); return m ? m[1] : "B2"; }catch(e){ return "B1"; } };
   const submitted = store => { const g = (state.german || {})[store] || {}; return new Set(Object.keys(g).filter(id => g[id] && (g[id].submitted || g[id].done))); };
 
-  /* ---------- days that have ONE full page with everything inside (add a day here when its page is added) ---------- */
-  const DAY_PAGES = {
-    31: {url:"day31.html", key:"day31.v1", titles:["20 new words", "war and hatte", "Modal verbs in the past", "Präteritum or Perfekt?", "Listen and read a story", "Say it aloud and write"]}
-  };
-  const pageFor = d => DAY_PAGES[d] || null;
+  /* ---------- days that have ONE full page with everything inside: listed in days-meta.js ---------- */
+  const pageFor = d => { const m = (window.DAY_META || {})[d]; return m ? {url:m.url || ("day.html?d=" + d), key:m.key || ("day" + d + ".v1"), titles:m.titles, topic:m.topic} : null; };
   const pageState = d => { try{ const pg = pageFor(d); return (pg && JSON.parse(localStorage.getItem(pg.key))) || {}; }catch(e){ return {}; } };
+  (function(){
+    try{
+      const s = document.createElement("script"); s.src = "days-meta.js?t=" + Date.now();
+      s.onload = () => { try{ if(host && !host.classList.contains("hidden")) render(); }catch(e){} };
+      document.head.appendChild(s);
+    }catch(e){ console.warn("ext-plan: could not load days-meta.js", e); }
+  })();
 
   /* ---------- saved plan record for the current day ---------- */
   function P(){
@@ -155,8 +160,8 @@
     view.block = null; lastOpen = null; render();
   }
   function home(bs, p){
-    const dc = list("GERMAN_DAYS")[day() - 1], topics = dc ? dc.lessons.map(l => l.topic).join(" and ") : "Daily habit day";
     const pg = pageFor(day());
+    const dc = list("GERMAN_DAYS")[day() - 1], topics = (pg && pg.topic) || (dc ? dc.lessons.map(l => l.topic).join(" and ") : "Daily habit day");
     const done = bs.filter(b => blockDone(p, b)).length;
     const tiles = bs.map((b, i) => {
       const d = b.tasks.filter(t => isDone(p, t)).length, all = blockDone(p, b), mins = b.tasks.reduce((s, t) => s + t.min, 0);
@@ -172,7 +177,7 @@
         <div class="pl-grow"><div class="pl-eye">${E(phaseForDay(day()).label)}</div><div class="pl-day">Day ${day()} <span>/ ${TOTAL}</span></div><div class="pl-topic">${E(topics)}</div></div>
         <button class="pl-sq" data-pl="next" ${day() >= TOTAL ? "disabled" : ""} aria-label="Next day">›</button></div>
       <div class="pl-prog"><b>${done} of 6 blocks</b> · ${done * 0.5} of 3 hours</div><div class="pl-bar"><i style="width:${done / 6 * 100}%"></i></div>
-      <div class="pl-hint">${pg ? "Everything for today is on one page: words, grammar, practice, a story and homework. Do the blocks in order." : "Pick a block. Do them in any order."}</div>${start}</div>
+      <div class="pl-hint">${pg ? "Everything for today is on one page: words, grammar, practice, a story and homework. Do the blocks in order." : "This day is not written yet. The old plan below still works. The new full page for it is coming."}</div>${start}</div>
       <div class="pl-tiles">${tiles}</div>${next}
       <button class="pl-link" data-pl="old">Show the old Today screen</button>`;
   }
