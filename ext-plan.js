@@ -3,6 +3,8 @@
    Tap a block -> a short list of tasks for those 30 minutes -> tap a task -> it opens the real lesson / flashcards /
    listening / reading and a "Back to my plan" button brings you home. The old Today cards are still there under
    "Show the old Today screen". Display + navigation only; nothing is deleted or renamed.
+   DAY PAGES: a day listed in DAY_PAGES has ONE page with everything for that day (words, grammar, practice, story,
+   speaking, writing). Its 6 tiles show that day's own titles, open the page, and read the ticks saved by the page.
    SAVED DATA: only adds state.german.fun.plan = { "<day>": { done:{taskId:true}, items:{l:[ids], r:[ids]} } }
    and, when every task of a block is ticked, the same block record ext-kind.js uses (blocks / minutes / res).
    Remove the <script> tag and the site behaves exactly as before. */
@@ -21,6 +23,13 @@
   const list = n => { try{ return (0,eval)("typeof " + n + " !== 'undefined' ? " + n + " : []"); }catch(e){ return []; } };
   const levelOfDay = d => { try{ const m = /^(A1|A2|B1|B2)/.exec(phaseForDay(d).label); return m ? m[1] : "B2"; }catch(e){ return "B1"; } };
   const submitted = store => { const g = (state.german || {})[store] || {}; return new Set(Object.keys(g).filter(id => g[id] && (g[id].submitted || g[id].done))); };
+
+  /* ---------- days that have ONE full page with everything inside (add a day here when its page is added) ---------- */
+  const DAY_PAGES = {
+    31: {url:"day31.html", key:"day31.v1", titles:["20 new words", "war and hatte", "Modal verbs in the past", "Präteritum or Perfekt?", "Listen and read a story", "Say it aloud and write"]}
+  };
+  const pageFor = d => DAY_PAGES[d] || null;
+  const pageState = d => { try{ const pg = pageFor(d); return (pg && JSON.parse(localStorage.getItem(pg.key))) || {}; }catch(e){ return {}; } };
 
   /* ---------- saved plan record for the current day ---------- */
   function P(){
@@ -82,7 +91,7 @@
     const hw = n ? Math.max(5, Math.floor(25 / n / 5) * 5) : 10;
     const b6 = lessons.map((l, i) => ({id:"b6-hw-" + i, min:hw, title:"Homework" + (n > 1 ? " " + (i + 1) : "") + ": " + l.topic, sub:l.homework, go:() => openDaily(".lesson-answer", i, true)}));
     b6.push({id:"b6-complete", min:5, title:"Tick “Mark this lesson complete”", sub:"This is what finishes Day " + day() + ".", go:() => openDaily(".g-done-row", n ? n - 1 : 0)});
-    return [
+    const out = [
       {when:"Morning", title:"New words", tasks:[
         {id:"b1-cards", min:15, title:"Flashcards", sub:"Review old cards and learn up to 20 new words.", go:() => openWords("cards")},
         {id:"b1-cloze", min:15, title:"Fill the gap", sub:"Type the missing word. The situation is your only clue.", go:() => openWords("cloze")}]},
@@ -99,11 +108,15 @@
         {id:"b5-chal", min:10, title:"Speaking challenge", sub:challenge, go:() => openDaily(".g-challenge", 0)}]},
       {when:"Evening", title:"Writing and finish", tasks:b6}
     ];
+    /* a day with its own full page: the tiles carry that day's titles and open the page */
+    const pg = pageFor(day());
+    if(pg) out.forEach((b, i) => { b.page = pg.url; b.idx = i + 1; if(pg.titles && pg.titles[i]) b.title = pg.titles[i]; });
+    return out;
   }
 
   /* ---------- ticking (a block counts as done when all its tasks are done) ---------- */
   const isDone = (p, t) => !!(t.auto ? (t.auto() || p.done[t.id]) : p.done[t.id]);
-  const blockDone = (p, b) => b.tasks.length > 0 && b.tasks.every(t => isDone(p, t));
+  const blockDone = (p, b) => b.page ? !!pageState(day())[b.idx] : (b.tasks.length > 0 && b.tasks.every(t => isDone(p, t)));
   function syncBlock(i, on){
     try{
       const f = F(), t = window.FUN.today();
@@ -143,19 +156,23 @@
   }
   function home(bs, p){
     const dc = list("GERMAN_DAYS")[day() - 1], topics = dc ? dc.lessons.map(l => l.topic).join(" and ") : "Daily habit day";
+    const pg = pageFor(day());
     const done = bs.filter(b => blockDone(p, b)).length;
     const tiles = bs.map((b, i) => {
       const d = b.tasks.filter(t => isDone(p, t)).length, all = blockDone(p, b), mins = b.tasks.reduce((s, t) => s + t.min, 0);
-      return `<button class="pl-tile ${all ? "done" : ""}" data-pl="open" data-b="${i}"><span class="pl-num">${all ? "✓" : i + 1}</span>
-        <span class="pl-tx"><small>${b.when} · 30 min</small><b>${E(b.title)}</b><em>${b.tasks.length} tasks · ${d} done${mins !== 30 ? " · " + mins + " min" : ""}</em></span><span class="pl-chev">›</span></button>`;
+      const em = b.page ? (all ? "Done" : "30 min · tap to open") : `${b.tasks.length} tasks · ${d} done${mins !== 30 ? " · " + mins + " min" : ""}`;
+      const act = b.page ? `data-pl="page" data-href="${E(b.page)}"` : `data-pl="open" data-b="${i}"`;
+      return `<button class="pl-tile ${all ? "done" : ""}" ${act}><span class="pl-num">${all ? "✓" : i + 1}</span>
+        <span class="pl-tx"><small>${b.when} · 30 min</small><b>${E(b.title)}</b><em>${em}</em></span><span class="pl-chev">›</span></button>`;
     }).join("");
+    const start = pg ? `<button class="pl-main" data-pl="page" data-href="${E(pg.url)}">${done === 6 ? "Open Day " + day() + " again" : "Start Day " + day() + " · everything is on one page"}</button>` : "";
     const next = done === 6 && day() < TOTAL ? `<button class="pl-main" data-pl="next-day">Day ${day()} finished — go to Day ${day() + 1}</button>` : "";
     return `<div class="pl-card">
       <div class="pl-head"><button class="pl-sq" data-pl="prev" ${day() <= 1 ? "disabled" : ""} aria-label="Previous day">‹</button>
         <div class="pl-grow"><div class="pl-eye">${E(phaseForDay(day()).label)}</div><div class="pl-day">Day ${day()} <span>/ ${TOTAL}</span></div><div class="pl-topic">${E(topics)}</div></div>
         <button class="pl-sq" data-pl="next" ${day() >= TOTAL ? "disabled" : ""} aria-label="Next day">›</button></div>
       <div class="pl-prog"><b>${done} of 6 blocks</b> · ${done * 0.5} of 3 hours</div><div class="pl-bar"><i style="width:${done / 6 * 100}%"></i></div>
-      <div class="pl-hint">Pick a block. Do them in any order.</div></div>
+      <div class="pl-hint">${pg ? "Everything for today is on one page: words, grammar, practice, a story and homework. Do the blocks in order." : "Pick a block. Do them in any order."}</div>${start}</div>
       <div class="pl-tiles">${tiles}</div>${next}
       <button class="pl-link" data-pl="old">Show the old Today screen</button>`;
   }
@@ -182,6 +199,7 @@
   host.addEventListener("click", ev => {
     const b = ev.target.closest("[data-pl]"); if(!b || b.disabled) return;
     const a = b.dataset.pl, bs = blocks(), p = P();
+    if(a === "page"){ if(b.dataset.href) window.location.href = b.dataset.href; return; }
     if(a === "open"){ view.block = +b.dataset.b; render(); try{ window.scrollTo({top:0}); }catch(e){} return; }
     if(a === "home"){ view.block = null; render(); return; }
     if(a === "prev") return setDay(day() - 1);
@@ -211,6 +229,9 @@
   try{ new MutationObserver(sync).observe(sec, {attributes:true, attributeFilter:["class"]}); }catch(e){}
   nav.addEventListener("click", () => sync());                       /* runs after ext-fun's own tab handler */
   const vsw = document.getElementById("viewSwitch"); if(vsw) vsw.addEventListener("click", () => setTimeout(sync, 0));
+  /* coming back from a day page (browser back button): redraw so the ticks made there show up */
+  window.addEventListener("pageshow", () => { try{ if(!host.classList.contains("hidden")) render(); }catch(e){} });
+  document.addEventListener("visibilitychange", () => { try{ if(!document.hidden && !host.classList.contains("hidden")) render(); }catch(e){} });
 
   /* ---------- floating "back to my plan" button ---------- */
   const back = document.createElement("button"); back.id = "planBack"; back.className = "hidden"; back.type = "button"; document.body.appendChild(back);
