@@ -31,5 +31,17 @@ window.DAY_META = {
   44: {file: "days-38-45.js", topic: "Speaking and writing: invitations and phone calls",
     titles: ["20 useful phrases", "Family conversation", "Speaking questions", "Write to your family", "Write a work email", "Check and record"]},
   45: {file: "days-38-45.js", topic: "weil and dass: giving reasons and opinions",
-    titles: ["20 new words", "weil and dass", "Practice: weil and dass", "Dialogue: solving a small conflict", "Read: why I want to learn bookkeeping", "Say it aloud and write"]}
+    titles: ["20 new words", "weil and dass", "Practice: weil and dass", "Dialogue: solving a small conflict", "Read: why I want to learn bookkeeping", "Say it aloud and write"]},
+  46: {file: "days-46-48.js", topic: "wenn: conditions, habits and promises",
+    titles: ["20 new words", "wenn, als and ob", "Practice: wenn, als, ob", "Dialogue: running late", "Read: our family rules", "Say it aloud and write"]},
+  47: {file: "days-46-48.js", topic: "obwohl and giving your opinion",
+    titles: ["20 new words", "obwohl and opinion phrases", "Practice: obwohl and opinions", "Dialogue: Zug or Auto?", "Read: Ausbildung or Studium?", "Say it aloud and write"]},
+  48: {file: "days-46-48.js", topic: "Ausbildung in Germany: jobs and the way to them",
+    titles: ["20 new words", "How an Ausbildung works", "Practice: jobs and clauses", "Dialogue: a career advice appointment", "Read: a day as a trainee", "Say it aloud and write"]},
+  49: {file: "days-49-51.js", topic: "Nebensätze mixed: word order, ob and indirect questions",
+    titles: ["20 new words", "Word order in Nebensätze, ob and indirect questions", "Practice: word order drills", "Dialogue: the first day at work", "Read: my first week", "Say it aloud and write"]},
+  50: {file: "days-49-51.js", topic: "Week 3 review and test",
+    titles: ["Word check", "Nebensatz check", "Mixed test", "Conversation and reading", "Dictation", "Speak and self-check"]},
+  51: {file: "days-49-51.js", topic: "Speaking and writing: opinions, conflicts and Ausbildung",
+    titles: ["20 useful phrases", "Family conversation", "Speaking questions", "Write to a friend", "Write a formal email: ask about an Ausbildung", "Check and record"]}
 };
