@@ -8,6 +8,8 @@
    ticks saved by the page. To add a day, add a line to days-meta.js. This file does not change.
    SAVED DATA: only adds state.german.fun.plan = { "<day>": { done:{taskId:true}, items:{l:[ids], r:[ids]} } }
    and, when every task of a block is ticked, the same block record ext-kind.js uses (blocks / minutes / res).
+   LOOK: the header card (phase, Day N / 240, topic, progress, Start button) was restyled in an Apple-like way.
+   Only the markup of home() and the CSS at the bottom changed; every data-pl hook and saved value is the same.
    Remove the <script> tag and the site behaves exactly as before. */
 (function(){
   "use strict";
@@ -170,14 +172,18 @@
       return `<button class="pl-tile ${all ? "done" : ""}" ${act}><span class="pl-num">${all ? "✓" : i + 1}</span>
         <span class="pl-tx"><small>${b.when} · 30 min</small><b>${E(b.title)}</b><em>${em}</em></span><span class="pl-chev">›</span></button>`;
     }).join("");
-    const start = pg ? `<button class="pl-main" data-pl="page" data-href="${E(pg.url)}">${done === 6 ? "Open Day " + day() + " again" : "Start Day " + day() + " · everything is on one page"}</button>` : "";
+    const label = done === 6 ? "Open Day " + day() + " again" : (done > 0 ? "Continue Day " + day() : "Start Day " + day());
+    const start = pg ? `<button class="pl-main" data-pl="page" data-href="${E(pg.url)}">${label}</button>` : "";
     const next = done === 6 && day() < TOTAL ? `<button class="pl-main" data-pl="next-day">Day ${day()} finished — go to Day ${day() + 1}</button>` : "";
     return `<div class="pl-card">
       <div class="pl-head"><button class="pl-sq" data-pl="prev" ${day() <= 1 ? "disabled" : ""} aria-label="Previous day">‹</button>
-        <div class="pl-grow"><div class="pl-eye">${E(phaseForDay(day()).label)}</div><div class="pl-day">Day ${day()} <span>/ ${TOTAL}</span></div><div class="pl-topic">${E(topics)}</div></div>
+        <div class="pl-grow"><div class="pl-eye">${E(phaseForDay(day()).label)}</div><div class="pl-day">Day ${day()} <span>/ ${TOTAL}</span></div></div>
         <button class="pl-sq" data-pl="next" ${day() >= TOTAL ? "disabled" : ""} aria-label="Next day">›</button></div>
-      <div class="pl-prog"><b>${done} of 6 blocks</b> · ${done * 0.5} of 3 hours</div><div class="pl-bar"><i style="width:${done / 6 * 100}%"></i></div>
-      <div class="pl-hint">${pg ? "Everything for today is on one page: words, grammar, practice, a story and homework. Do the blocks in order." : "This day is not written yet. The old plan below still works. The new full page for it is coming."}</div>${start}</div>
+      <div class="pl-topic">${E(topics)}</div>
+      <div class="pl-prog"><b>${done} of 6 blocks</b><span>${done * 0.5} of 3 hours</span></div>
+      <div class="pl-bar" role="progressbar" aria-label="Blocks done today" aria-valuemin="0" aria-valuemax="6" aria-valuenow="${done}"><i style="width:${done / 6 * 100}%"></i></div>
+      ${start}
+      <div class="pl-hint">${pg ? "Everything for today is on one page: words, grammar, practice, a story and homework. Do the blocks in order." : "This day is not written yet. The old plan below still works. The new full page for it is coming."}</div></div>
       <div class="pl-tiles">${tiles}</div>${next}
       <button class="pl-link" data-pl="old">Show the old Today screen</button>`;
   }
@@ -255,47 +261,65 @@
   #planToday,#planOldBar{padding:4px 0 90px;}
   #planToday.hidden,#planOldBar.hidden,#planBack.hidden{display:none !important;}
   #planToday *{box-sizing:border-box;}
-  .pl-card{background:var(--g-surface,#fff);border-radius:var(--g-radius-lg,18px);box-shadow:var(--g-shadow-soft,0 1px 8px rgba(0,0,0,.08));padding:16px;margin:10px 0;}
-  .pl-head{display:flex;align-items:center;gap:10px;}
+  #planToday{--pl-on:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",Inter,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  :root[data-theme="dark"] #planToday{--pl-on:#1c0b09;}
+
+  /* header card */
+  .pl-card{background:var(--g-surface,#fff);border:1px solid var(--g-hairline,rgba(0,0,0,.08));border-radius:28px;box-shadow:var(--g-shadow-soft,0 1px 8px rgba(0,0,0,.08));padding:26px 24px 22px;margin:10px 0;}
+  .pl-head{display:flex;align-items:flex-start;gap:12px;}
   .pl-grow{flex:1;min-width:0;}
-  .pl-eye{font-size:13px;color:var(--g-ink-faint,#777);}
-  .pl-day{font-size:34px;font-weight:700;line-height:1.1;color:var(--g-ink,#111);}
-  .pl-day span{font-size:16px;font-weight:500;color:var(--g-ink-faint,#777);}
-  .pl-topic{font-size:16px;color:var(--g-ink,#111);margin-top:2px;}
-  .pl-sq{width:44px;height:44px;border-radius:50%;border:0;background:var(--g-warm-wash,#f3efe9);color:var(--g-ink,#111);font-size:24px;cursor:pointer;}
-  .pl-sq:disabled{opacity:.3;}
-  .pl-prog{margin-top:14px;font-size:16px;color:var(--g-ink,#111);}
-  .pl-bar{height:10px;border-radius:99px;background:var(--g-warm-wash,#eee);margin-top:6px;overflow:hidden;}
-  .pl-bar i{display:block;height:100%;background:var(--g-crimson,#c0152f);border-radius:99px;transition:width .3s;}
-  .pl-hint{font-size:15px;color:var(--g-ink-faint,#777);margin-top:10px;}
+  .pl-eye{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;line-height:1.35;color:var(--g-crimson,#c0152f);}
+  .pl-day{font-size:clamp(36px,10vw,48px);font-weight:700;line-height:1.05;letter-spacing:-.03em;color:var(--g-ink,#111);margin-top:6px;}
+  .pl-day span{font-size:20px;font-weight:500;letter-spacing:0;color:var(--g-ink-faint,#777);}
+  .pl-topic{font-size:19px;line-height:1.4;font-weight:500;letter-spacing:-.01em;color:var(--g-ink-soft,#444);margin:12px 0 0;}
+  .pl-sq{width:44px;height:44px;border-radius:50%;border:0;background:var(--g-warm-wash,#f3efe9);color:var(--g-ink-soft,#444);font-size:22px;line-height:1;cursor:pointer;flex:none;transition:background .15s ease,transform .15s ease;}
+  .pl-sq:hover:not(:disabled){background:var(--g-crimson-tint,#f7e8e6);}
+  .pl-sq:active:not(:disabled){transform:scale(.94);}
+  .pl-sq:disabled{opacity:.3;cursor:default;}
+  .pl-prog{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:24px;font-size:15px;color:var(--g-ink-faint,#777);}
+  .pl-prog b{font-size:16px;font-weight:600;color:var(--g-ink,#111);}
+  .pl-bar{height:4px;border-radius:99px;background:var(--g-hairline,rgba(0,0,0,.08));margin-top:10px;overflow:hidden;}
+  .pl-bar i{display:block;height:100%;background:var(--g-crimson,#c0152f);border-radius:99px;transition:width .4s cubic-bezier(.2,.8,.2,1);}
+  .pl-hint{font-size:14px;line-height:1.5;color:var(--g-ink-faint,#777);margin-top:12px;}
+  .pl-main + .pl-hint{text-align:center;margin-top:12px;}
+  .pl-main{display:block;width:100%;margin:22px 0 0;border:0;border-radius:16px;background:var(--g-crimson,#c0152f);color:var(--pl-on,#fff);font:inherit;font-size:17px;font-weight:600;letter-spacing:-.005em;min-height:56px;cursor:pointer;box-shadow:0 8px 20px -10px var(--g-crimson,#c0152f);transition:transform .15s ease,filter .15s ease,box-shadow .15s ease;}
+  .pl-main:hover{filter:brightness(1.07);box-shadow:0 12px 26px -10px var(--g-crimson,#c0152f);}
+  .pl-main:active{transform:scale(.985);filter:brightness(.95);}
+  .pl-tiles + .pl-main{margin-top:16px;}
+  #planToday button:focus-visible{outline:3px solid var(--g-crimson-line,rgba(154,43,43,.4));outline-offset:3px;}
+
+  /* block tiles */
   .pl-tiles{display:flex;flex-direction:column;gap:10px;}
-  .pl-tile{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:var(--g-surface,#fff);border-radius:var(--g-radius-lg,18px);box-shadow:var(--g-shadow-soft,0 1px 8px rgba(0,0,0,.08));padding:14px 16px;min-height:76px;cursor:pointer;color:var(--g-ink,#111);font:inherit;}
-  .pl-tile:active,.pl-start:active,.pl-main:active{transform:scale(.98);}
+  .pl-tile{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:1px solid var(--g-hairline,rgba(0,0,0,.06));background:var(--g-surface,#fff);border-radius:20px;box-shadow:var(--g-shadow-soft,0 1px 8px rgba(0,0,0,.08));padding:14px 16px;min-height:76px;cursor:pointer;color:var(--g-ink,#111);font:inherit;transition:transform .15s ease,box-shadow .15s ease;}
+  .pl-tile:hover{box-shadow:var(--g-shadow-lift,0 6px 20px rgba(0,0,0,.12));}
+  .pl-tile:active,.pl-start:active{transform:scale(.98);}
   .pl-tile.done{background:#e8f6ee;}
   :root[data-theme="dark"] .pl-tile.done{background:#14301f;}
-  .pl-num{width:40px;height:40px;border-radius:50%;background:var(--g-crimson,#c0152f);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex:none;}
-  .pl-tile.done .pl-num{background:#1f8a4c;}
+  .pl-num{width:38px;height:38px;border-radius:50%;background:var(--g-crimson,#c0152f);color:var(--pl-on,#fff);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:17px;flex:none;}
+  .pl-tile.done .pl-num{background:#1f8a4c;color:#fff;}
   .pl-tx{display:flex;flex-direction:column;flex:1;min-width:0;}
-  .pl-tx small{font-size:13px;color:var(--g-ink-faint,#777);}
-  .pl-tx b{font-size:19px;}
+  .pl-tx small{font-size:12.5px;color:var(--g-ink-faint,#777);}
+  .pl-tx b{font-size:18px;font-weight:600;letter-spacing:-.01em;}
   .pl-tx em{font-style:normal;font-size:14px;color:var(--g-ink-faint,#777);}
   .pl-chev{font-size:28px;color:var(--g-ink-faint,#999);}
   .pl-back,.pl-link{border:0;background:none;color:var(--g-crimson,#c0152f);font:inherit;font-size:16px;font-weight:600;padding:12px 4px;cursor:pointer;min-height:44px;}
   .pl-link{display:block;margin:12px auto 0;color:var(--g-ink-faint,#777);font-weight:500;}
+
+  /* tasks inside a block */
   .pl-list{display:flex;flex-direction:column;gap:10px;}
-  .pl-task{display:flex;align-items:flex-start;gap:12px;background:var(--g-surface,#fff);border-radius:var(--g-radius-lg,18px);box-shadow:var(--g-shadow-soft,0 1px 8px rgba(0,0,0,.08));padding:14px;}
+  .pl-task{display:flex;align-items:flex-start;gap:12px;background:var(--g-surface,#fff);border:1px solid var(--g-hairline,rgba(0,0,0,.06));border-radius:20px;box-shadow:var(--g-shadow-soft,0 1px 8px rgba(0,0,0,.08));padding:14px;}
   .pl-task.done{background:#e8f6ee;}
   :root[data-theme="dark"] .pl-task.done{background:#14301f;}
-  .pl-task b{display:block;font-size:17px;color:var(--g-ink,#111);}
+  .pl-task b{display:block;font-size:17px;font-weight:600;color:var(--g-ink,#111);}
   .pl-task small{display:block;font-size:14.5px;color:var(--g-ink-faint,#777);margin-top:3px;line-height:1.4;}
-  .pl-min{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:var(--g-crimson,#c0152f);}
+  .pl-min{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:600;color:var(--g-crimson,#c0152f);}
   .pl-tick{width:34px;height:34px;border-radius:50%;border:2px solid var(--g-ink-faint,#aaa);background:none;color:#fff;font-size:18px;flex:none;cursor:pointer;margin-top:2px;}
   .pl-task.done .pl-tick{background:#1f8a4c;border-color:#1f8a4c;}
-  .pl-start{flex:none;border:0;border-radius:99px;background:var(--g-crimson,#c0152f);color:#fff;font:inherit;font-size:15px;font-weight:700;padding:0 18px;min-height:44px;cursor:pointer;align-self:center;}
+  .pl-start{flex:none;border:0;border-radius:99px;background:var(--g-crimson,#c0152f);color:var(--pl-on,#fff);font:inherit;font-size:15px;font-weight:600;padding:0 18px;min-height:44px;cursor:pointer;align-self:center;transition:transform .15s ease;}
   .pl-task.done .pl-start{background:var(--g-warm-wash,#eee);color:var(--g-ink,#111);}
-  .pl-main{display:block;width:100%;margin:14px 0 0;border:0;border-radius:99px;background:var(--g-crimson,#c0152f);color:#fff;font:inherit;font-size:17px;font-weight:700;min-height:52px;cursor:pointer;}
   #planBack{position:fixed;left:12px;right:12px;bottom:14px;z-index:60;border:0;border-radius:99px;background:var(--g-crimson,#c0152f);color:#fff;font:inherit;font-size:16px;font-weight:700;min-height:52px;box-shadow:0 4px 18px rgba(0,0,0,.3);cursor:pointer;max-width:520px;margin:0 auto;}
-  @media (prefers-reduced-motion:reduce){.pl-tile:active,.pl-start:active,.pl-main:active{transform:none;}.pl-bar i{transition:none;}}`;
+  @media (max-width:480px){.pl-card{padding:22px 18px 18px;border-radius:24px;}.pl-topic{font-size:18px;}}
+  @media (prefers-reduced-motion:reduce){.pl-tile,.pl-start,.pl-main,.pl-sq{transition:none;}.pl-tile:active,.pl-start:active,.pl-main:active,.pl-sq:active{transform:none;}.pl-bar i{transition:none;}}`;
   document.head.appendChild(css);
 
   sync();
