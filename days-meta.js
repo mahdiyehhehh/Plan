@@ -16,6 +16,20 @@ window.DAY_META = {
     titles: ["Word check", "Verb forms check", "Mixed test", "Phone call and reading", "Dictation", "Speak and self-check"]},
   37: {file: "days-32-38.js", topic: "Speaking and writing: family and work",
     titles: ["20 useful phrases", "Family conversation", "Speaking questions", "Write to your family", "Write a work email", "Check and record"]},
-  38: {file: "days-32-38.js", topic: "Perfekt with haben: weekend and invitations",
-    titles: ["20 new words", "Perfekt with haben", "Practice: Partizip II", "Chat: a birthday invitation", "Read: my weekend", "Say it aloud and write"]}
+  38: {file: "days-38-45.js", topic: "Perfekt with haben: weekend and invitations",
+    titles: ["20 new words", "Perfekt with haben", "Practice: Partizip II", "Chat: a birthday invitation", "Read: my weekend", "Say it aloud and write"]},
+  39: {file: "days-38-45.js", topic: "Perfekt with haben: irregular verbs and a restaurant visit",
+    titles: ["20 new words", "Irregular Partizip II", "Practice: irregular verbs", "Dialogue: dinner at the restaurant", "Read: Sunday lunch at Oma's", "Say it aloud and write"]},
+  40: {file: "days-38-45.js", topic: "Perfekt with sein: trips and movement",
+    titles: ["20 new words", "Perfekt with sein", "Practice: haben or sein?", "Dialogue: back from a weekend trip", "Read: a trip to Berlin", "Say it aloud and write"]},
+  41: {file: "days-38-45.js", topic: "Separable verbs: my daily routine",
+    titles: ["20 new words", "Separable verbs", "Practice: separable verbs", "Dialogue: what does your day look like?", "Read: a normal day", "Say it aloud and write"]},
+  42: {file: "days-38-45.js", topic: "Phone calls, voicemail and email subjects",
+    titles: ["20 new words", "Phone phrases and the alphabet", "Practice: spelling, phrases, subjects", "Dialogue: leaving a message", "Read: voicemail and email", "Say it aloud and write"]},
+  43: {file: "days-38-45.js", topic: "Week 2 review and test",
+    titles: ["Word check", "Perfekt check", "Mixed test", "Phone call and reading", "Dictation", "Speak and self-check"]},
+  44: {file: "days-38-45.js", topic: "Speaking and writing: invitations and phone calls",
+    titles: ["20 useful phrases", "Family conversation", "Speaking questions", "Write to your family", "Write a work email", "Check and record"]},
+  45: {file: "days-38-45.js", topic: "weil and dass: giving reasons and opinions",
+    titles: ["20 new words", "weil and dass", "Practice: weil and dass", "Dialogue: solving a small conflict", "Read: why I want to learn bookkeeping", "Say it aloud and write"]}
 };
