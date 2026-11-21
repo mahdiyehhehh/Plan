@@ -55,4 +55,5 @@ Official Goethe B2 timing used for the exam weeks: Lesen 65 minutes, Hören abou
 
 1. **wenn is review in week 3.** Day 35 (week 1) already teaches als and wenn (als = one past event, wenn = repeated or present/future). In week 3 (Days 45-51) wenn is therefore a review and a deeper practice (conditions, repeated events), not a first introduction. New in week 3 are weil and dass (Day 45) and obwohl. When you reach wenn in week 3, quickly redo the Day 35 als/wenn table first, then continue with the new material.
 2. **The formal email comes early.** Day 34 (week 1) already contains a first formal email (Betreff, Sehr geehrte/r ..., Mit freundlichen Grüßen). The work track in later weeks (Day 42 phone and email subject, Day 44 formal email, and the application letters from week 7) builds on it, so Day 34 is the base, not a preview.
-3. **Exam day:** the table is the plan. If a day was written earlier than its row says, the content stays and the later row treats it as review.
+3. **General rule:** the table is the plan. If a day was written earlier than its row says, the content stays and the later row treats it as review.
+4. **Polite phrases before their grammar.** Könnten Sie ... (Day 42) and similar polite phrases are learned as fixed blocks first. The grammar behind them (Konjunktiv II) is taught in week 10.
