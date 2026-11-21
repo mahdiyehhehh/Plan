@@ -2,49 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
 <title>Daily lesson</title>
 <style>
-  :root{--bg:#fafafa;--card:#fff;--text:#1b1b1f;--muted:#6b6b76;--line:#e6e6ea;--accent:#c0152f;--soft:#fdecef;--ok:#1f8a4c;--okbg:#e8f6ee;--der:#1d5fd1;--die:#c0152f;--das:#1f8a4c}
-  @media (prefers-color-scheme:dark){:root{--bg:#111114;--card:#1b1b20;--text:#f2f2f5;--muted:#a0a0ab;--line:#2d2d35;--accent:#ff5d73;--soft:#33181d;--ok:#4cd387;--okbg:#14301f;--der:#6aa3ff;--die:#ff5d73;--das:#4cd387}}
+  /* Apple-style day page. Same class names and data-attributes as before, only the look changed. */
+  :root{
+    --bg:#f5f5f7;--card:#ffffff;--text:#1d1d1f;--muted:#6e6e73;--line:rgba(0,0,0,.09);
+    --accent:#c0152f;--soft:rgba(192,21,47,.07);--ok:#1f8a4c;--okbg:rgba(31,138,76,.08);
+    --der:#1d5fd1;--die:#c0152f;--das:#1f8a4c;
+    --bar:rgba(255,255,255,.78);
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 14px 34px -18px rgba(0,0,0,.16);
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",Inter,"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0b0b0d;--card:#1c1c1e;--text:#f5f5f7;--muted:#a1a1a6;--line:rgba(255,255,255,.11);
+      --accent:#ff6b7f;--soft:rgba(255,107,127,.13);--ok:#4cd387;--okbg:rgba(76,211,135,.10);
+      --der:#6aa3ff;--die:#ff6b7f;--das:#4cd387;--bar:rgba(28,28,30,.78);
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 34px -18px rgba(0,0,0,.7)}
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font:18px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-  .wrap{max-width:720px;margin:0 auto;padding:12px 16px 120px}
-  .back{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;padding:10px 0;min-height:44px}
-  h1{font-size:28px;margin:4px 0 4px}
-  h2{font-size:22px;margin:0 0 4px}
-  h3{font-size:18px;margin:20px 0 6px}
-  p{margin:8px 0}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .wrap{max-width:680px;margin:0 auto;padding:6px 20px calc(130px + env(safe-area-inset-bottom))}
+  .back{display:inline-flex;align-items:center;gap:4px;color:var(--accent);font-weight:500;font-size:16px;text-decoration:none;padding:10px 0;min-height:44px}
+  .back:hover{text-decoration:underline}
+
+  /* ---- header ---- */
+  .hero{padding:18px 0 4px}
+  .eyebrow{margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow span{color:var(--muted);font-weight:500}
+  h1{margin:0 0 14px;font-size:clamp(30px,7.2vw,44px);line-height:1.08;font-weight:700;letter-spacing:-.025em}
+  .lead{margin:0 0 26px;font-size:19px;line-height:1.55;color:var(--muted);max-width:36em}
+  .prog{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:16px 20px 18px}
+  .prog-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px}
+  .prog-top b{font-size:16px;font-weight:600}
+  .prog .track{height:6px;margin-top:12px}
+
+  h2{margin:6px 0 12px;font-size:26px;line-height:1.2;font-weight:700;letter-spacing:-.02em}
+  h3{margin:28px 0 8px;font-size:19px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
+  p{margin:10px 0}
   ul{padding-left:22px}
-  li{margin:4px 0}
+  li{margin:6px 0}
   .muted{color:var(--muted);font-size:16px}
-  .today{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
-  .today ol{margin:8px 0 0;padding-left:22px}
-  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:16px 0}
-  .block.done{border-color:var(--ok);background:var(--okbg)}
-  .time{font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
-  .goal{background:var(--soft);border-radius:10px;padding:8px 12px;margin:10px 0;font-size:16px}
-  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:17px}
-  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:14px;color:var(--muted);font-weight:600}
+
+  /* ---- today list ---- */
+  .today{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:24px 24px 20px;margin:20px 0}
+  .today h2{font-size:20px;margin:0 0 6px}
+  .today ol{list-style:none;counter-reset:n;margin:8px 0 6px;padding:0}
+  .today li{counter-increment:n;position:relative;margin:0;padding:12px 0 12px 44px;border-bottom:1px solid var(--line);font-size:17px;line-height:1.4}
+  .today li:last-child{border-bottom:0}
+  .today li::before{content:counter(n);position:absolute;left:0;top:11px;width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--accent);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center}
+  .today p.muted{font-size:15px;margin:12px 0 0}
+
+  /* ---- blocks ---- */
+  .block{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:28px 24px 22px;margin:20px 0}
+  .block.done{background:linear-gradient(var(--okbg),var(--okbg)),var(--card)}
+  .time{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .goal{background:var(--soft);border-radius:14px;padding:12px 16px;margin:12px 0 16px;font-size:16px;line-height:1.5}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:17px}
+  th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:break-word}
+  tr:last-child td{border-bottom:0}
+  th{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding-top:6px;padding-bottom:8px}
   .de{font-weight:600}
   .en{color:var(--muted)}
-  .key{background:var(--soft);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
-  .ex{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:8px 0}
-  .say{display:inline-block;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;font-size:14px;cursor:pointer;margin-left:6px;min-height:32px;font-family:inherit}
-  .say:active{transform:scale(.96)}
-  details{margin:6px 0}
+  .key{background:var(--soft);border-radius:14px;padding:14px 18px;margin:16px 0;font-size:16.5px;line-height:1.55}
+  .ex{border-left:2px solid var(--accent);padding:4px 0 4px 16px;margin:14px 0}
+  .say{display:inline-block;border:0;background:var(--soft);color:var(--accent);border-radius:999px;padding:4px 14px;font:600 13px/1.4 var(--font);cursor:pointer;margin-left:8px;min-height:32px;transition:transform .15s ease,filter .15s ease}
+  .say:hover{filter:brightness(.94)}
+  .say:active{transform:scale(.95)}
+  details{margin:10px 0}
   summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:32px}
-  .q{margin:10px 0;padding:8px 0;border-bottom:1px solid var(--line)}
-  .done-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);cursor:pointer;font-weight:700;min-height:48px}
-  .done-row input{width:26px;height:26px;accent-color:var(--ok)}
-  .bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;z-index:5}
-  .bar-in{max-width:720px;margin:0 auto}
-  .track{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
-  .fill{height:100%;width:0;background:var(--ok);transition:width .25s}
+  .q{margin:0;padding:12px 0;border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:0}
+  .done-row{display:flex;align-items:center;gap:14px;margin-top:24px;padding:14px 16px;border-radius:14px;background:var(--bg);cursor:pointer;font-weight:600;min-height:52px;transition:background .15s ease}
+  .done-row:hover{filter:brightness(.97)}
+  .done-row input{width:26px;height:26px;accent-color:var(--ok);flex:none}
   .der{color:var(--der)}.die{color:var(--die)}.das{color:var(--das)}
-  .text-de{font-size:19px;line-height:1.7}
+  .text-de{font-size:20px;line-height:1.75}
   mark{background:var(--soft);color:inherit;border-radius:4px;padding:0 3px}
+  .next{text-align:center;margin-top:32px}
+
+  /* ---- bottom progress bar ---- */
+  .bar{position:fixed;left:0;right:0;bottom:0;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line);padding:10px 20px calc(10px + env(safe-area-inset-bottom));z-index:5}
+  .bar-in{max-width:680px;margin:0 auto;font-size:14px}
+  .track{height:4px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+  .fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s cubic-bezier(.2,.8,.2,1)}
+
+  a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+  @media (max-width:480px){
+    .wrap{padding-left:16px;padding-right:16px}
+    .block,.today{padding:22px 18px 18px;border-radius:20px}
+    .lead{font-size:18px}
+    table{font-size:16px}
+    th,td{padding:11px 6px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
 </head>
 <body>
@@ -60,7 +115,7 @@
 <script>
 (function(){
   var d = parseInt(new URLSearchParams(location.search).get("d"), 10) || 0;
-  var KEY = "day" + d + ".v1", root = document.getElementById("root");
+  var KEY = "day" + d + ".v1", root = document.getElementById("root"), TOTAL = 240;
   function A(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
   function plain(s){ return String(s).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(); }
   function say(t, label){ return '<button class="say" data-say="' + A(plain(t)) + '">' + (label || "Hear it") + '</button>'; }
@@ -118,6 +173,7 @@
   function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
   var state = load();
 
+  function setText(id, t){ var el = document.getElementById(id); if(el) el.textContent = t; }
   function render(){
     var n = 0;
     document.querySelectorAll("[data-done]").forEach(function(b){
@@ -126,15 +182,21 @@
       if(b.checked) n++;
       var sec = b.closest(".block"); if(sec) sec.classList.toggle("done", b.checked);
     });
-    document.getElementById("pct").textContent = n + " of 6 blocks \u00b7 " + (n * 0.5) + " of 3 hours";
+    setText("pct", n + " of 6 blocks \u00b7 " + (n * 0.5) + " of 3 hours");
     document.getElementById("fill").style.width = (n / 6 * 100) + "%";
+    setText("pct2", n + " of 6 blocks");
+    setText("hrs2", (n * 0.5) + " of 3 hours");
+    var f2 = document.getElementById("fill2"); if(f2) f2.style.width = (n / 6 * 100) + "%";
   }
 
   function build(D){
     document.title = "Day " + d + ": " + D.title;
-    var html = "<h1>Day " + d + ": " + D.title + '</h1><p class="muted">' + D.level + ". " + D.intro + "</p>"
-      + '<div class="today"><b>What to do today (in this order):</b><ol>' + D.blocks.map(function(b){ return "<li>" + b.title + ' <span class="muted">(30 min)</span></li>'; }).join("")
-      + '</ol><p class="muted">Tap Hear it to hear German. Tap Show answers only after you try. Tick each block when you finish it.</p></div>';
+    var lvl = String(D.level || "").replace(/^Level\s+/i, "");
+    var html = '<header class="hero"><p class="eyebrow">' + (lvl ? lvl + " &middot; " : "") + "Day " + d + " <span>of " + TOTAL + "</span></p>"
+      + "<h1>" + D.title + '</h1><p class="lead">' + D.intro + "</p>"
+      + '<div class="prog"><div class="prog-top"><b id="pct2">0 of 6 blocks</b><span class="muted" id="hrs2">0 of 3 hours</span></div><div class="track"><div class="fill" id="fill2"></div></div></div></header>'
+      + '<div class="today"><h2>What to do today</h2><ol>' + D.blocks.map(function(b){ return "<li>" + b.title + ' <span class="muted">(30 min)</span></li>'; }).join("")
+      + '</ol><p class="muted">Do the blocks in this order. Tap Hear it to hear German. Tap Show answers only after you try. Tick each block when you finish it.</p></div>';
     D.blocks.forEach(function(b, i){
       html += '<section class="block" data-block="' + (i + 1) + '"><div class="time">Block ' + (i + 1) + " \u00b7 " + tm(i * 30) + " to " + tm(i * 30 + 30) + "</div><h2>" + b.title + "</h2>"
         + (b.goal ? '<div class="goal">' + b.goal + "</div>" : "")
@@ -142,7 +204,7 @@
         + '<label class="done-row"><input type="checkbox" data-done="' + (i + 1) + '"> Block ' + (i + 1) + " done</label></section>";
     });
     var nx = (window.DAY_META || {})[d + 1];
-    html += '<p class="muted" style="text-align:center;margin-top:28px">Day ' + d + " finished. " + (nx ? 'Tomorrow: <a href="' + (nx.url || ("day.html?d=" + (d + 1))) + '">Day ' + (d + 1) + "</a>." : "Tomorrow: Day " + (d + 1) + ".") + "</p>";
+    html += '<p class="muted next">Day ' + d + " finished. " + (nx ? 'Tomorrow: <a href="' + (nx.url || ("day.html?d=" + (d + 1))) + '">Day ' + (d + 1) + "</a>." : "Tomorrow: Day " + (d + 1) + ".") + "</p>";
     root.innerHTML = html;
     document.getElementById("bar").style.display = "block";
     render();
