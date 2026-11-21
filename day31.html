@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 31 — 3 hour plan</title>
+<style>
+  :root{--bg:#fafafa;--card:#fff;--text:#1b1b1f;--muted:#6b6b76;--line:#e6e6ea;--accent:#c0152f;--soft:#fdecef;--ok:#1f8a4c;--okbg:#e8f6ee;--der:#1d5fd1;--die:#c0152f;--das:#1f8a4c}
+  @media (prefers-color-scheme:dark){:root{--bg:#111114;--card:#1b1b20;--text:#f2f2f5;--muted:#a0a0ab;--line:#2d2d35;--accent:#ff5d73;--soft:#33181d;--ok:#4cd387;--okbg:#14301f;--der:#6aa3ff;--die:#ff5d73;--das:#4cd387}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:18px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:720px;margin:0 auto;padding:16px 16px 120px}
+  h1{font-size:28px;margin:8px 0 4px}
+  h2{font-size:22px;margin:0 0 4px}
+  h3{font-size:18px;margin:20px 0 6px}
+  p{margin:8px 0}
+  .muted{color:var(--muted);font-size:16px}
+  .today{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+  .today ol{margin:8px 0 0;padding-left:22px}
+  .today li{margin:4px 0}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:16px 0}
+  .block.done{border-color:var(--ok);background:var(--okbg)}
+  .time{font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  .goal{background:var(--soft);border-radius:10px;padding:8px 12px;margin:10px 0;font-size:16px}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:17px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:14px;color:var(--muted);font-weight:600}
+  .de{font-weight:600}
+  .en{color:var(--muted)}
+  .key{background:var(--soft);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+  .ex{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:8px 0}
+  .say{display:inline-block;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;font-size:14px;cursor:pointer;margin-left:6px;min-height:32px}
+  .say:active{transform:scale(.96)}
+  details{margin:6px 0}
+  summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:32px}
+  .q{margin:10px 0;padding:8px 0;border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:0}
+  .done-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);cursor:pointer;font-weight:700;min-height:48px}
+  .done-row input{width:26px;height:26px;accent-color:var(--ok)}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;z-index:5}
+  .bar-in{max-width:720px;margin:0 auto}
+  .track{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+  .fill{height:100%;width:0;background:var(--ok);transition:width .25s}
+  .der{color:var(--der)}.die{color:var(--die)}.das{color:var(--das)}
+  .text-de{font-size:19px;line-height:1.7}
+  mark{background:var(--soft);color:inherit;border-radius:4px;padding:0 3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Day 31 — your 3 hours</h1>
+<p class="muted">Level A2. One topic only: talking about the past with <b>war, hatte, konnte, musste, wollte</b>. Nothing else is needed today.</p>
+
+<div class="today">
+  <b>What to do today (in this order):</b>
+  <ol>
+    <li>Block 1 — 20 new words <span class="muted">(30 min)</span></li>
+    <li>Block 2 — <i>war</i> and <i>hatte</i> <span class="muted">(30 min)</span></li>
+    <li>Block 3 — konnte, musste, wollte, durfte, sollte, mochte <span class="muted">(30 min)</span></li>
+    <li>Block 4 — Präteritum or Perfekt? <span class="muted">(30 min)</span></li>
+    <li>Block 5 — Listen and read one short story <span class="muted">(30 min)</span></li>
+    <li>Block 6 — Say it aloud and write 8 sentences <span class="muted">(30 min)</span></li>
+  </ol>
+  <p class="muted">Tap the round "Hear it" buttons to hear German. Tap "Show answers" only after you try. Tick each block when finished.</p>
+</div>
+
+<!-- ============ BLOCK 1 ============ -->
+<section class="block" data-block="1">
+  <div class="time">Block 1 · 0:00 – 0:30</div>
+  <h2>20 new words</h2>
+  <div class="goal">Goal: you can say what each word means. Cover the English column and test yourself. Do this 2 times.</div>
+  <table>
+    <tr><th>German</th><th>English</th></tr>
+    <tr><td class="de">damals <button class="say" data-say="damals">Hear it</button></td><td class="en">back then</td></tr>
+    <tr><td class="de">früher <button class="say" data-say="früher">Hear it</button></td><td class="en">earlier, in the past</td></tr>
+    <tr><td class="de">als Kind <button class="say" data-say="als Kind">Hear it</button></td><td class="en">as a child</td></tr>
+    <tr><td class="de">letztes Jahr <button class="say" data-say="letztes Jahr">Hear it</button></td><td class="en">last year</td></tr>
+    <tr><td class="de">vorgestern <button class="say" data-say="vorgestern">Hear it</button></td><td class="en">the day before yesterday</td></tr>
+    <tr><td class="de">zuerst <button class="say" data-say="zuerst">Hear it</button></td><td class="en">first</td></tr>
+    <tr><td class="de">dann / danach <button class="say" data-say="dann, danach">Hear it</button></td><td class="en">then / afterwards</td></tr>
+    <tr><td class="de">endlich <button class="say" data-say="endlich">Hear it</button></td><td class="en">finally, at last</td></tr>
+    <tr><td class="de">plötzlich <button class="say" data-say="plötzlich">Hear it</button></td><td class="en">suddenly</td></tr>
+    <tr><td class="de">leider <button class="say" data-say="leider">Hear it</button></td><td class="en">unfortunately</td></tr>
+    <tr><td class="de">kaum <button class="say" data-say="kaum">Hear it</button></td><td class="en">hardly, barely</td></tr>
+    <tr><td class="de">müde <button class="say" data-say="müde">Hear it</button></td><td class="en">tired</td></tr>
+    <tr><td class="de">glücklich <button class="say" data-say="glücklich">Hear it</button></td><td class="en">happy</td></tr>
+    <tr><td class="de">voll <button class="say" data-say="voll">Hear it</button></td><td class="en">full</td></tr>
+    <tr><td class="de">besuchen <button class="say" data-say="besuchen">Hear it</button></td><td class="en">to visit</td></tr>
+    <tr><td class="de">warten <button class="say" data-say="warten">Hear it</button></td><td class="en">to wait</td></tr>
+    <tr><td class="de">einkaufen <button class="say" data-say="einkaufen">Hear it</button></td><td class="en">to go shopping</td></tr>
+    <tr><td class="de"><span class="der">der</span> Bahnhof <button class="say" data-say="der Bahnhof">Hear it</button></td><td class="en">train station</td></tr>
+    <tr><td class="de"><span class="der">der</span> Hafen <button class="say" data-say="der Hafen">Hear it</button></td><td class="en">harbour</td></tr>
+    <tr><td class="de"><span class="das">das</span> Wetter <button class="say" data-say="das Wetter">Hear it</button></td><td class="en">weather</td></tr>
+  </table>
+  <p class="muted">der = blue, die = red, das = green. Always learn the article with the noun.</p>
+  <label class="done-row"><input type="checkbox" data-done="1"> Block 1 done</label>
+</section>
+
+<!-- ============ BLOCK 2 ============ -->
+<section class="block" data-block="2">
+  <div class="time">Block 2 · 0:30 – 1:00</div>
+  <h2>Präteritum of <i>sein</i> and <i>haben</i></h2>
+  <div class="goal">Goal: say "I was", "you had", "we were" without thinking. Present tense → past tense.</div>
+
+  <table>
+    <tr><th></th><th>sein (to be)</th><th>haben (to have)</th></tr>
+    <tr><td>ich</td><td class="de">war</td><td class="de">hatte</td></tr>
+    <tr><td>du</td><td class="de">warst</td><td class="de">hattest</td></tr>
+    <tr><td>er / sie / es</td><td class="de">war</td><td class="de">hatte</td></tr>
+    <tr><td>wir</td><td class="de">waren</td><td class="de">hatten</td></tr>
+    <tr><td>ihr</td><td class="de">wart</td><td class="de">hattet</td></tr>
+    <tr><td>sie / Sie</td><td class="de">waren</td><td class="de">hatten</td></tr>
+  </table>
+  <div class="key"><b>Remember:</b> <i>ich</i> and <i>er/sie/es</i> always have the same form (war, hatte). In speech, people use war and hatte all the time, not "bin gewesen" or "habe gehabt".</div>
+
+  <h3>Examples — read aloud</h3>
+  <div class="ex"><span class="de">Ich war letztes Jahr in Berlin.</span> <button class="say" data-say="Ich war letztes Jahr in Berlin.">Hear it</button><br><span class="en">I was in Berlin last year.</span></div>
+  <div class="ex"><span class="de">Wir hatten keine Zeit.</span> <button class="say" data-say="Wir hatten keine Zeit.">Hear it</button><br><span class="en">We had no time.</span></div>
+  <div class="ex"><span class="de">Warst du gestern müde?</span> <button class="say" data-say="Warst du gestern müde?">Hear it</button><br><span class="en">Were you tired yesterday?</span></div>
+  <div class="ex"><span class="de">Als Kind hatte ich einen Hund.</span> <button class="say" data-say="Als Kind hatte ich einen Hund.">Hear it</button><br><span class="en">As a child I had a dog.</span></div>
+
+  <h3>Practice — fill the gap (write on paper first)</h3>
+  <div class="q">1. Gestern ___ ich sehr müde. (sein)</div>
+  <div class="q">2. Wir ___ im Sommer in Berlin. (sein)</div>
+  <div class="q">3. Du ___ gestern keine Zeit. (haben)</div>
+  <div class="q">4. Meine Eltern ___ ein kleines Haus. (haben)</div>
+  <div class="q">5. ___ ihr gestern im Kino? (sein)</div>
+  <div class="q">6. Er ___ als Kind einen Hund. (haben)</div>
+  <details><summary>Show answers</summary>
+    <p>1. war · 2. waren · 3. hattest · 4. hatten · 5. Wart · 6. hatte</p>
+  </details>
+  <label class="done-row"><input type="checkbox" data-done="2"> Block 2 done</label>
+</section>
+
+<!-- ============ BLOCK 3 ============ -->
+<section class="block" data-block="3">
+  <div class="time">Block 3 · 1:00 – 1:30</div>
+  <h2>Modal verbs in the past</h2>
+  <div class="goal">Goal: say "I had to / could / wanted to" about yesterday.</div>
+
+  <div class="key"><b>Rule:</b> take the verb, remove the umlaut, remove <i>-en</i>, add <b>-te</b>. Then the endings: ich -, du -st, er -, wir -n, ihr -t, sie -n.</div>
+
+  <table>
+    <tr><th>Infinitive</th><th>ich / er</th><th>du</th><th>wir / sie</th></tr>
+    <tr><td>können (can)</td><td class="de">konnte</td><td class="de">konntest</td><td class="de">konnten</td></tr>
+    <tr><td>müssen (must)</td><td class="de">musste</td><td class="de">musstest</td><td class="de">mussten</td></tr>
+    <tr><td>wollen (want)</td><td class="de">wollte</td><td class="de">wolltest</td><td class="de">wollten</td></tr>
+    <tr><td>dürfen (may)</td><td class="de">durfte</td><td class="de">durftest</td><td class="de">durften</td></tr>
+    <tr><td>sollen (should)</td><td class="de">sollte</td><td class="de">solltest</td><td class="de">sollten</td></tr>
+    <tr><td>mögen (like)</td><td class="de">mochte</td><td class="de">mochtest</td><td class="de">mochten</td></tr>
+  </table>
+  <p class="muted">ihr: konntet, musstet, wolltet, durftet, solltet, mochtet. Today focus on können, müssen, wollen. The others you only need to recognise.</p>
+
+  <div class="key"><b>Word order:</b> the modal verb is in position 2, the other verb goes to the end in its normal form.<br>
+  <span class="de">Ich musste gestern lange arbeiten.</span> <button class="say" data-say="Ich musste gestern lange arbeiten.">Hear it</button></div>
+
+  <h3>Examples — read aloud</h3>
+  <div class="ex"><span class="de">Ich musste viel arbeiten.</span> <button class="say" data-say="Ich musste viel arbeiten.">Hear it</button><br><span class="en">I had to work a lot.</span></div>
+  <div class="ex"><span class="de">Als Kind konnte ich nicht schwimmen.</span> <button class="say" data-say="Als Kind konnte ich nicht schwimmen.">Hear it</button><br><span class="en">As a child I couldn't swim.</span></div>
+  <div class="ex"><span class="de">Wir wollten ins Kino gehen.</span> <button class="say" data-say="Wir wollten ins Kino gehen.">Hear it</button><br><span class="en">We wanted to go to the cinema.</span></div>
+
+  <h3>Practice — fill the gap</h3>
+  <div class="q">1. Ich ___ gestern lange arbeiten. (müssen)</div>
+  <div class="q">2. Als Kind ___ ich nicht schwimmen. (können)</div>
+  <div class="q">3. Wir ___ ins Kino gehen, aber es war zu spät. (wollen)</div>
+  <div class="q">4. Du ___ nicht so spät nach Hause kommen. (dürfen)</div>
+  <div class="q">5. Sie ___ mehr schlafen, aber sie hatte keine Zeit. (sollen)</div>
+  <div class="q">6. Ihr ___ am Wochenende arbeiten. (müssen)</div>
+  <div class="q">7. Er ___ keinen Fisch. (mögen)</div>
+  <div class="q">8. Meine Schwester ___ Ärztin werden. (wollen)</div>
+  <details><summary>Show answers</summary>
+    <p>1. musste · 2. konnte · 3. wollten · 4. durftest · 5. sollte · 6. musstet · 7. mochte · 8. wollte</p>
+  </details>
+  <label class="done-row"><input type="checkbox" data-done="3"> Block 3 done</label>
+</section>
+
+<!-- ============ BLOCK 4 ============ -->
+<section class="block" data-block="4">
+  <div class="time">Block 4 · 1:30 – 2:00</div>
+  <h2>Präteritum or Perfekt?</h2>
+  <div class="goal">Goal: know which past tense to use when you speak and when you write.</div>
+
+  <table>
+    <tr><th>Situation</th><th>Use</th></tr>
+    <tr><td>Talking to a person (daily life)</td><td><b>Perfekt</b> for most verbs: <span class="de">Ich habe gearbeitet.</span></td></tr>
+    <tr><td>Talking, but with sein, haben or a modal verb</td><td><b>Präteritum</b>: <span class="de">Ich war müde. Ich hatte Zeit. Ich musste gehen.</span></td></tr>
+    <tr><td>Writing a story, a report or news</td><td><b>Präteritum</b>: <span class="de">Er arbeitete viel.</span></td></tr>
+  </table>
+  <div class="key"><b>One sentence to remember:</b> When you speak, use Perfekt, except war, hatte and the modal verbs, which stay in Präteritum.</div>
+
+  <h3>Same action, two ways</h3>
+  <table>
+    <tr><th>Spoken (Perfekt)</th><th>Written (Präteritum)</th></tr>
+    <tr><td class="de">Ich habe gestern gearbeitet.</td><td class="de">Ich arbeitete gestern viel.</td></tr>
+    <tr><td class="de">Wir sind nach Hause gegangen.</td><td class="de">Wir gingen nach Hause.</td></tr>
+    <tr><td class="de">Sie hat einen Kuchen gekauft.</td><td class="de">Sie kaufte einen Kuchen.</td></tr>
+    <tr><td class="de">Er hat Fußball gespielt.</td><td class="de">Er spielte Fußball.</td></tr>
+  </table>
+  <p class="muted">Today you only need to recognise the written forms (arbeitete, ging, kaufte, spielte). You do not need to produce them yet.</p>
+
+  <h3>Practice 1 — which tense would you say out loud?</h3>
+  <div class="q">1. "I was at home yesterday." → <span class="de">Ich ___ gestern zu Hause.</span></div>
+  <div class="q">2. "I worked yesterday." (speaking to a friend)</div>
+  <div class="q">3. "I had to work yesterday." (speaking to a friend)</div>
+  <div class="q">4. "I wanted to sleep." (speaking to a friend)</div>
+  <details><summary>Show answers</summary>
+    <p>1. war · 2. Ich habe gestern gearbeitet. · 3. Ich musste gestern arbeiten. · 4. Ich wollte schlafen.</p>
+  </details>
+
+  <h3>Practice 2 — turn into a written story (Präteritum)</h3>
+  <div class="q">1. Ich habe gestern gearbeitet.</div>
+  <div class="q">2. Sie hat einen Kuchen gekauft.</div>
+  <div class="q">3. Er hat Fußball gespielt.</div>
+  <div class="q">4. Wir haben im Park gewartet.</div>
+  <details><summary>Show answers</summary>
+    <p>1. Ich arbeitete gestern. · 2. Sie kaufte einen Kuchen. · 3. Er spielte Fußball. · 4. Wir warteten im Park.</p>
+  </details>
+  <label class="done-row"><input type="checkbox" data-done="4"> Block 4 done</label>
+</section>
+
+<!-- ============ BLOCK 5 ============ -->
+<section class="block" data-block="5">
+  <div class="time">Block 5 · 2:00 – 2:30</div>
+  <h2>Listen, then read</h2>
+  <div class="goal">Goal: understand a short story in the past tense. Follow the 4 steps.</div>
+  <ol>
+    <li><b>Listen</b> with the text hidden. Press the button 2 times. <button class="say" id="playStory">Hear the story</button></li>
+    <li><b>Read</b> the text below. Tap "Show translation" if you are stuck.</li>
+    <li><b>Answer</b> the 4 questions on paper.</li>
+    <li><b>Find</b> every <mark>war, hatte, konnte, musste, wollte</mark> in the text.</li>
+  </ol>
+
+  <details open><summary>Show / hide the text</summary>
+    <div class="text-de" id="story">
+      <b>Mein Wochenende in Hamburg</b><br>
+      Letztes Wochenende <mark>war</mark> ich in Hamburg. Ich <mark>wollte</mark> meine Freundin Lena besuchen, aber ich <mark>hatte</mark> zuerst keine Zeit. Am Freitag <mark>musste</mark> ich bis acht Uhr arbeiten. Dann <mark>konnte</mark> ich endlich zum Bahnhof fahren. Der Zug <mark>war</mark> voll, und ich <mark>hatte</mark> keinen Sitzplatz. Lena wartete am Bahnhof. Wir <mark>waren</mark> beide müde, aber glücklich. Am Samstag <mark>hatten</mark> wir schönes Wetter. Wir <mark>wollten</mark> am Hafen spazieren gehen, aber Lena <mark>musste</mark> zuerst einkaufen. Am Abend <mark>waren</mark> wir in einem kleinen Restaurant. Das Essen <mark>war</mark> super, und wir <mark>konnten</mark> lange reden.
+    </div>
+  </details>
+  <details><summary>Show translation</summary>
+    <p class="en">My weekend in Hamburg. Last weekend I was in Hamburg. I wanted to visit my friend Lena, but at first I had no time. On Friday I had to work until eight o'clock. Then I could finally go to the station. The train was full and I had no seat. Lena waited at the station. We were both tired but happy. On Saturday we had nice weather. We wanted to go for a walk at the harbour, but Lena had to go shopping first. In the evening we were in a small restaurant. The food was great and we could talk for a long time.</p>
+  </details>
+
+  <h3>Questions</h3>
+  <div class="q">1. Warum hatte die Person am Freitag keine Zeit?</div>
+  <div class="q">2. Wie war der Zug?</div>
+  <div class="q">3. Wie war das Wetter am Samstag?</div>
+  <div class="q">4. Wo waren die beiden am Abend?</div>
+  <details><summary>Show answers</summary>
+    <p>1. Sie musste bis acht Uhr arbeiten. · 2. Er war voll, und sie hatte keinen Sitzplatz. · 3. Das Wetter war schön. · 4. In einem kleinen Restaurant.</p>
+  </details>
+  <label class="done-row"><input type="checkbox" data-done="5"> Block 5 done</label>
+</section>
+
+<!-- ============ BLOCK 6 ============ -->
+<section class="block" data-block="6">
+  <div class="time">Block 6 · 2:30 – 3:00</div>
+  <h2>Say it aloud, then write</h2>
+
+  <h3>Part A — speak (15 min)</h3>
+  <div class="goal">Press "Hear it", then say each sentence 3 times out loud, as fast as the voice.</div>
+  <div class="ex"><span class="de">Ich war letztes Jahr in Berlin.</span> <button class="say" data-say="Ich war letztes Jahr in Berlin.">Hear it</button></div>
+  <div class="ex"><span class="de">Ich hatte keine Zeit.</span> <button class="say" data-say="Ich hatte keine Zeit.">Hear it</button></div>
+  <div class="ex"><span class="de">Ich musste viel arbeiten.</span> <button class="say" data-say="Ich musste viel arbeiten.">Hear it</button></div>
+  <div class="ex"><span class="de">Als Kind konnte ich nicht schwimmen.</span> <button class="say" data-say="Als Kind konnte ich nicht schwimmen.">Hear it</button></div>
+  <div class="ex"><span class="de">Wir wollten ins Kino gehen, aber es war zu spät.</span> <button class="say" data-say="Wir wollten ins Kino gehen, aber es war zu spät.">Hear it</button></div>
+  <div class="ex"><span class="de">Gestern war ich sehr müde.</span> <button class="say" data-say="Gestern war ich sehr müde.">Hear it</button></div>
+  <div class="ex"><span class="de">Damals hatten wir kein Auto.</span> <button class="say" data-say="Damals hatten wir kein Auto.">Hear it</button></div>
+  <div class="ex"><span class="de">Leider konnte ich nicht kommen.</span> <button class="say" data-say="Leider konnte ich nicht kommen.">Hear it</button></div>
+
+  <h3>Part B — write (15 min) · today's homework</h3>
+  <div class="goal">Write 8 sentences about your childhood or last year. Use each of these at least once: <b>war, hatte, konnte, musste, wollte</b>.</div>
+  <p>Starters you can copy and change:</p>
+  <ul>
+    <li><span class="de">Als Kind war ich ...</span></li>
+    <li><span class="de">Damals hatte ich ...</span></li>
+    <li><span class="de">Letztes Jahr musste ich ...</span></li>
+    <li><span class="de">Ich wollte immer ..., aber ich konnte nicht, weil ...</span></li>
+  </ul>
+  <details><summary>Show a model answer</summary>
+    <p class="de">Als Kind war ich sehr schüchtern. Damals hatte ich nur wenige Freunde. Ich wollte immer Gitarre spielen, aber ich hatte keine Gitarre. Letztes Jahr musste ich viel lernen. Ich war oft müde. Im Sommer konnte ich endlich Urlaub machen. Wir waren eine Woche am Meer. Das Wetter war schön.</p>
+  </details>
+
+  <h3>Final check (3 min)</h3>
+  <p>Without looking above, say these in German:</p>
+  <div class="q">1. "We were tired." · 2. "He had no time." · 3. "I had to work." · 4. "She wanted to sleep." · 5. "You (du) could not come."</div>
+  <details><summary>Show answers</summary>
+    <p>1. Wir waren müde. · 2. Er hatte keine Zeit. · 3. Ich musste arbeiten. · 4. Sie wollte schlafen. · 5. Du konntest nicht kommen.</p>
+  </details>
+  <label class="done-row"><input type="checkbox" data-done="6"> Block 6 done</label>
+</section>
+
+<p class="muted" style="text-align:center;margin-top:28px">Day 31 finished. Tomorrow: Day 32.</p>
+</div>
+
+<div class="bar"><div class="bar-in">
+  <b id="pct">0 of 6 blocks · 0 of 3 hours</b>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div></div>
+
+<script>
+(function(){
+  var KEY = "day31.v1";
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+  function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+  var state = load();
+
+  function render(){
+    var boxes = document.querySelectorAll("[data-done]");
+    var n = 0;
+    boxes.forEach(function(b){
+      var id = b.getAttribute("data-done");
+      b.checked = !!state[id];
+      if(b.checked) n++;
+      var sec = b.closest(".block");
+      if(sec) sec.classList.toggle("done", b.checked);
+    });
+    document.getElementById("pct").textContent = n + " of 6 blocks · " + (n * 0.5) + " of 3 hours";
+    document.getElementById("fill").style.width = (n / 6 * 100) + "%";
+  }
+  document.addEventListener("change", function(e){
+    var id = e.target && e.target.getAttribute && e.target.getAttribute("data-done");
+    if(!id) return;
+    state[id] = e.target.checked; save(state); render();
+  });
+
+  var voice = null;
+  function pickVoice(){
+    try{
+      var vs = speechSynthesis.getVoices();
+      voice = vs.filter(function(v){ return /^de(-|_)/i.test(v.lang); })[0] || null;
+    }catch(e){}
+  }
+  try{ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
+  function speak(text){
+    if(!("speechSynthesis" in window)){ alert("Your browser cannot read German aloud. Try Chrome or Safari."); return; }
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "de-DE"; u.rate = 0.9;
+    if(voice) u.voice = voice;
+    speechSynthesis.speak(u);
+  }
+  document.addEventListener("click", function(e){
+    var t = e.target.closest && e.target.closest(".say");
+    if(!t) return;
+    if(t.id === "playStory"){
+      var el = document.getElementById("story");
+      speak(el ? el.innerText.replace(/\s+/g, " ") : "");
+    } else {
+      speak(t.getAttribute("data-say") || "");
+    }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
