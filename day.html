@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily lesson</title>
+<style>
+  :root{--bg:#fafafa;--card:#fff;--text:#1b1b1f;--muted:#6b6b76;--line:#e6e6ea;--accent:#c0152f;--soft:#fdecef;--ok:#1f8a4c;--okbg:#e8f6ee;--der:#1d5fd1;--die:#c0152f;--das:#1f8a4c}
+  @media (prefers-color-scheme:dark){:root{--bg:#111114;--card:#1b1b20;--text:#f2f2f5;--muted:#a0a0ab;--line:#2d2d35;--accent:#ff5d73;--soft:#33181d;--ok:#4cd387;--okbg:#14301f;--der:#6aa3ff;--die:#ff5d73;--das:#4cd387}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:18px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:720px;margin:0 auto;padding:12px 16px 120px}
+  .back{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;padding:10px 0;min-height:44px}
+  h1{font-size:28px;margin:4px 0 4px}
+  h2{font-size:22px;margin:0 0 4px}
+  h3{font-size:18px;margin:20px 0 6px}
+  p{margin:8px 0}
+  ul{padding-left:22px}
+  li{margin:4px 0}
+  .muted{color:var(--muted);font-size:16px}
+  .today{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+  .today ol{margin:8px 0 0;padding-left:22px}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:16px 0}
+  .block.done{border-color:var(--ok);background:var(--okbg)}
+  .time{font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  .goal{background:var(--soft);border-radius:10px;padding:8px 12px;margin:10px 0;font-size:16px}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:17px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:14px;color:var(--muted);font-weight:600}
+  .de{font-weight:600}
+  .en{color:var(--muted)}
+  .key{background:var(--soft);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+  .ex{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:8px 0}
+  .say{display:inline-block;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;font-size:14px;cursor:pointer;margin-left:6px;min-height:32px;font-family:inherit}
+  .say:active{transform:scale(.96)}
+  details{margin:6px 0}
+  summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:32px}
+  .q{margin:10px 0;padding:8px 0;border-bottom:1px solid var(--line)}
+  .done-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);cursor:pointer;font-weight:700;min-height:48px}
+  .done-row input{width:26px;height:26px;accent-color:var(--ok)}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;z-index:5}
+  .bar-in{max-width:720px;margin:0 auto}
+  .track{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+  .fill{height:100%;width:0;background:var(--ok);transition:width .25s}
+  .der{color:var(--der)}.die{color:var(--die)}.das{color:var(--das)}
+  .text-de{font-size:19px;line-height:1.7}
+  mark{background:var(--soft);color:inherit;border-radius:4px;padding:0 3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" id="back" href="index.html">&lsaquo; Back to my plan</a>
+<div id="root"><p class="muted">Loading the lesson ...</p></div>
+</div>
+<div class="bar" id="bar" style="display:none"><div class="bar-in">
+  <b id="pct">0 of 6 blocks &middot; 0 of 3 hours</b>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div></div>
+
+<script>
+(function(){
+  var d = parseInt(new URLSearchParams(location.search).get("d"), 10) || 0;
+  var KEY = "day" + d + ".v1", root = document.getElementById("root");
+  function A(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+  function plain(s){ return String(s).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(); }
+  function say(t, label){ return '<button class="say" data-say="' + A(plain(t)) + '">' + (label || "Hear it") + '</button>'; }
+  function art(s){ return s.replace(/^(der|die|das) /, '<span class="$1">$1</span> '); }
+  function li(a){ return a.map(function(x){ return "<li>" + x + "</li>"; }).join(""); }
+  function tm(m){ return Math.floor(m / 60) + ":" + ("0" + (m % 60)).slice(-2); }
+  function fail(msg){ root.innerHTML = '<p>' + msg + '</p><p class="muted">Go back to your plan and open another day.</p>'; }
+
+  var R = {
+    h: function(p){ return "<h3>" + p.h + "</h3>"; },
+    p: function(p){ return '<p class="muted">' + p.h + "</p>"; },
+    key: function(p){ return '<div class="key">' + p.h + "</div>"; },
+    list: function(p){ return (p.title ? "<h3>" + p.title + "</h3>" : "") + "<ul>" + li(p.items) + "</ul>"; },
+    words: function(p){
+      return '<table><tr><th>German</th><th>English</th></tr>' + p.rows.map(function(r){
+        return '<tr><td class="de">' + art(r[0]) + " " + say(r[0]) + '</td><td class="en">' + r[1] + "</td></tr>";
+      }).join("") + "</table>";
+    },
+    table: function(p){
+      var de = p.de || [];
+      return "<table><tr>" + p.head.map(function(h){ return "<th>" + h + "</th>"; }).join("") + "</tr>" + p.rows.map(function(r){
+        return "<tr>" + r.map(function(c, i){ return "<td" + (de.indexOf(i) > -1 ? ' class="de"' : "") + ">" + c + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</table>";
+    },
+    ex: function(p){
+      return p.items.map(function(x){
+        return '<div class="ex"><span class="de">' + x[0] + "</span> " + say(x[0]) + (x[1] ? '<br><span class="en">' + x[1] + "</span>" : "") + "</div>";
+      }).join("");
+    },
+    q: function(p){
+      return (p.title ? "<h3>" + p.title + "</h3>" : "") + (p.goal ? '<div class="goal">' + p.goal + "</div>" : "")
+        + p.items.map(function(x){ return '<div class="q">' + x + "</div>"; }).join("")
+        + (p.ans ? "<details><summary>Show answers</summary><p>" + p.ans + "</p></details>" : "");
+    },
+    text: function(p){
+      return (p.title ? "<h3>" + p.title + "</h3>" : "")
+        + "<p>" + say(p.de, "Hear the text") + ' <span class="muted">' + (p.hide ? "Listen first, without reading." : "Listen first with the text hidden.") + "</span></p>"
+        + "<details" + (p.hide ? "" : " open") + '><summary>Show / hide the text</summary><div class="text-de">' + p.de + "</div></details>"
+        + (p.en ? '<details><summary>Show translation</summary><p class="en">' + p.en + "</p></details>" : "")
+        + (p.note ? '<p class="muted">' + p.note + "</p>" : "")
+        + (p.qs ? R.q({title: "Questions", items: p.qs, ans: p.ans}) : "");
+    },
+    say: function(p){
+      return (p.title ? "<h3>" + p.title + "</h3>" : "") + (p.goal ? '<div class="goal">' + p.goal + "</div>" : "")
+        + R.ex({items: p.items.map(function(x){ return [x, ""]; })});
+    },
+    write: function(p){
+      return (p.title ? "<h3>" + p.title + "</h3>" : "") + '<div class="goal">' + p.goal + "</div>"
+        + (p.starters ? "<p>Starters you can copy and change:</p><ul>" + li(p.starters) + "</ul>" : "")
+        + (p.model ? '<details><summary>Show a model answer</summary><p class="de">' + p.model + "</p></details>" : "");
+    }
+  };
+
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+  function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+  var state = load();
+
+  function render(){
+    var n = 0;
+    document.querySelectorAll("[data-done]").forEach(function(b){
+      var id = b.getAttribute("data-done");
+      b.checked = !!state[id];
+      if(b.checked) n++;
+      var sec = b.closest(".block"); if(sec) sec.classList.toggle("done", b.checked);
+    });
+    document.getElementById("pct").textContent = n + " of 6 blocks \u00b7 " + (n * 0.5) + " of 3 hours";
+    document.getElementById("fill").style.width = (n / 6 * 100) + "%";
+  }
+
+  function build(D){
+    document.title = "Day " + d + ": " + D.title;
+    var html = "<h1>Day " + d + ": " + D.title + '</h1><p class="muted">' + D.level + ". " + D.intro + "</p>"
+      + '<div class="today"><b>What to do today (in this order):</b><ol>' + D.blocks.map(function(b){ return "<li>" + b.title + ' <span class="muted">(30 min)</span></li>'; }).join("")
+      + '</ol><p class="muted">Tap Hear it to hear German. Tap Show answers only after you try. Tick each block when you finish it.</p></div>';
+    D.blocks.forEach(function(b, i){
+      html += '<section class="block" data-block="' + (i + 1) + '"><div class="time">Block ' + (i + 1) + " \u00b7 " + tm(i * 30) + " to " + tm(i * 30 + 30) + "</div><h2>" + b.title + "</h2>"
+        + (b.goal ? '<div class="goal">' + b.goal + "</div>" : "")
+        + b.parts.map(function(p){ return R[p.t](p); }).join("")
+        + '<label class="done-row"><input type="checkbox" data-done="' + (i + 1) + '"> Block ' + (i + 1) + " done</label></section>";
+    });
+    var nx = (window.DAY_META || {})[d + 1];
+    html += '<p class="muted" style="text-align:center;margin-top:28px">Day ' + d + " finished. " + (nx ? 'Tomorrow: <a href="' + (nx.url || ("day.html?d=" + (d + 1))) + '">Day ' + (d + 1) + "</a>." : "Tomorrow: Day " + (d + 1) + ".") + "</p>";
+    root.innerHTML = html;
+    document.getElementById("bar").style.display = "block";
+    render();
+  }
+
+  document.addEventListener("change", function(e){
+    var id = e.target && e.target.getAttribute && e.target.getAttribute("data-done");
+    if(!id) return;
+    state[id] = e.target.checked; save(state); render();
+  });
+
+  var voice = null;
+  function pickVoice(){ try{ voice = speechSynthesis.getVoices().filter(function(v){ return /^de(-|_)/i.test(v.lang); })[0] || null; }catch(e){} }
+  try{ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
+  function speak(text){
+    if(!("speechSynthesis" in window)){ alert("Your browser cannot read German aloud. Try Chrome or Safari."); return; }
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text); u.lang = "de-DE"; u.rate = 0.9;
+    if(voice) u.voice = voice;
+    speechSynthesis.speak(u);
+  }
+  document.addEventListener("click", function(e){
+    var t = e.target.closest && e.target.closest(".say");
+    if(t) speak(t.getAttribute("data-say") || "");
+  });
+  document.getElementById("back").addEventListener("click", function(e){
+    if(document.referrer && history.length > 1){ e.preventDefault(); history.back(); }
+  });
+
+  function loadScript(src, ok, bad){ var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }
+  if(!d){ fail("No day was chosen."); return; }
+  loadScript("days-meta.js?t=" + Date.now(), function(){
+    var m = (window.DAY_META || {})[d];
+    if(!m || !m.file){ fail("Day " + d + " is not written yet."); return; }
+    loadScript(m.file + "?t=" + Date.now(), function(){
+      var D = (window.DAYS || {})[d];
+      if(!D){ fail("Day " + d + " could not be loaded."); return; }
+      build(D);
+    }, function(){ fail("The lesson file for Day " + d + " could not be loaded."); });
+  }, function(){ fail("The day list could not be loaded."); });
+})();
+</script>
+</body>
+</html>
